@@ -10,6 +10,7 @@ namespace TetroXNA
 {
     public class SingleBlockHelper
     {
+        //this class is for single block properties
         private Random random = new Random();
         private BlockConFigClass blockConFigClass;
         private int rotateState = 0;
@@ -60,8 +61,7 @@ namespace TetroXNA
             pattern = patt;
             index = inx;
             blockConFigClass = new BlockConFigClass(pattern, index, block1);
-            locationX = blockConFigClass.resetPattern("X");
-            locationY = blockConFigClass.resetPattern("Y");
+            resetPlayerBlockPos();
             store = st;
         }
 
@@ -199,6 +199,12 @@ namespace TetroXNA
             locationX = blockConFigClass.resetPattern("X");
             locationY = blockConFigClass.resetPattern("Y");
             rotateState = 0;
+        }
+
+        public void resetPlayerBlockPos()
+        {
+            locationX = blockConFigClass.resetPattern("X");
+            locationY = blockConFigClass.resetPattern("Y");
         }
 
         private void checkBounds(bool[,] store)

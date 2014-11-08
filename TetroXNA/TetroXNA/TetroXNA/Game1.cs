@@ -148,6 +148,7 @@ namespace TetroXNA
                             for (int i = 0; i < activeBlocks.Length; i++)
                             {
                                 activeBlocks[i].setStore(store);
+                                activeBlocks[i].resetPlayerBlockPos();
                             }
                             blockHelper.setLevel(1);
                             blockHelper.setScore(0);
@@ -174,6 +175,7 @@ namespace TetroXNA
                             for (int i = 0; i < activeBlocks.Length; i++)
                             {
                                 activeBlocks[i].setStore(store);
+                                activeBlocks[i].resetPlayerBlockPos();
                             }
                             blockHelper.setLevel(saveGameClass.getLoadedLevel());
                             blockHelper.setScore(saveGameClass.getLoadedScore());
