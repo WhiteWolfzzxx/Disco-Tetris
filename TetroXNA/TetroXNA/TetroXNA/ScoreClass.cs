@@ -53,11 +53,11 @@ namespace TetroXNA
 						textHighScores1[i] = "0";
 					}
 				}
-
 				theScoreRead.Close();
 				theFileRead.Close();
 			}
-			catch {
+			catch 
+            {
 				boolWorkingFileIO = false;
 			}
 		}
@@ -70,17 +70,23 @@ namespace TetroXNA
 			retriveScores ();
 
 			//if there ar no file problems continue
-			if (boolWorkingFileIO) {
+			if (boolWorkingFileIO) 
+            {
 				int j = 0;
 
-				for (int i = 0; i < 10; i++) {
-					if (sc > Convert.ToInt32 (textHighScores1 [i]) && i == j) {
+				for (int i = 0; i < 10; i++) 
+                {
+					if (sc > Convert.ToInt32 (textHighScores1 [i]) && i == j) 
+                    {
 						textHighScores2 [i] = sc.ToString();
 						i++;
-						if (i < 10) {
+						if (i < 10) 
+                        {
 							textHighScores2 [i] = textHighScores1 [j];
 						}
-					} else {
+					}
+                    else 
+                    {
 						textHighScores2 [i] = textHighScores1 [j];
 					}
 					j++;
@@ -102,14 +108,16 @@ namespace TetroXNA
 				theScoreWrite.Close();
 				theFileWrite.Close();
 			}
-			catch{
+			catch
+            {
 				boolWorkingFileIO = false;
 			}
 		}
 
 		public void Draw(SpriteBatch spriteBatch, SpriteFont font)
 		{
-			for (int i = 0; i < 10; i++){
+			for (int i = 0; i < 10; i++)
+            {
 				spriteBatch.DrawString (font, ((i + 1).ToString() + "     " + textHighScores1[i]),
 				                        new Vector2(200, (200 + (i*25))), Color.White);
 			}

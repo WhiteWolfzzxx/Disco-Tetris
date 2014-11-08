@@ -113,32 +113,26 @@ namespace TetroXNA
                 case 1:
                     //Playing
                     return 1;
-                    break;
 
                 case 2:
                     //High Scores
                     return 2;
-                    break;
 
                 case 3:
                     //Controls
                     return 3;
-                    break;
 
                 case 4:
                     //Exit
                     return 4;
-                    break;
 
                 case 5:
                     //Load Game
                     return 5;
-                    break;
 
                 default:
                     //Nothing is happening
                     return 0;
-                    break;
             }
         }
 

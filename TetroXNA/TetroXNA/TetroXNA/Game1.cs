@@ -24,12 +24,11 @@ namespace TetroXNA
 
         Texture2D scoreBackground;
 
-        SpriteFont testFont;
-        SpriteFont playFont;
+        SpriteFont bigFont;
+        SpriteFont smallFont;
 
         Song playBGM;
         Song menuBGM;
-        Song gameOverBGM;
 
         Vector2[,] lines = new Vector2[10, 20]; 		//block placeing grid
         bool[,] store = new bool[10, 20];				//Block storeing
@@ -79,13 +78,12 @@ namespace TetroXNA
             spriteBatch = new SpriteBatch(GraphicsDevice);
             //TODO: use this.Content to load your game content here 
 
-            testFont = Content.Load<SpriteFont>(@"Fonts\Font1");
-            playFont = Content.Load<SpriteFont>(@"Fonts\expFont");
+            smallFont = Content.Load<SpriteFont>(@"Fonts\smallFont");
+            bigFont = Content.Load<SpriteFont>(@"Fonts\bigFont");
 
             //BGM
             playBGM = Content.Load<Song>(@"Audio\discoTetrisTitleScreenMainMenu");
             menuBGM = Content.Load<Song>(@"Audio\song2");
-            gameOverBGM = Content.Load<Song>(@"Audio\MenuBGM");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(menuBGM);
 
@@ -103,11 +101,11 @@ namespace TetroXNA
             activeBlocks = blockHelper.loadPlayerBlocks(Content);
 
             //MainMenuClass
-            mainMenuClass = new MainMenuClass(testFont, playFont);
+            mainMenuClass = new MainMenuClass(smallFont, bigFont);
             mainMenuClass.LoadContent(Content);
 
             //CreditClass
-            creditClass = new CreditClass(testFont, playFont);
+            creditClass = new CreditClass(smallFont, bigFont);
 
             //ControlsClass
             settingsClass.Load(Content);
@@ -351,26 +349,26 @@ namespace TetroXNA
             if ((gameState == GameStates.Playing) ||
                 (gameState == GameStates.PauseGame))
             {
-                spriteBatch.DrawString(playFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(325, 300), Color.White);
-                spriteBatch.DrawString(playFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(325, 350), Color.White);
-                spriteBatch.DrawString(playFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(325, 400), Color.White);
+                spriteBatch.DrawString(bigFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(325, 300), Color.White);
+                spriteBatch.DrawString(bigFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(325, 350), Color.White);
+                spriteBatch.DrawString(bigFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(325, 400), Color.White);
             }
 
             if (gameState == GameStates.Debug)
             {
-                spriteBatch.DrawString(testFont, "STORE: " + store[9, 19].ToString(), new Vector2(325, 400), Color.White);
-                spriteBatch.DrawString(testFont, "SO: " + saveGameClass.getSo().ToString(), new Vector2(325, 425), Color.White);
-                spriteBatch.DrawString(testFont, "Next Pattern: " + activeBlocks[0].getNextPattern().ToString(), new Vector2(325, 450), Color.White);
-                spriteBatch.DrawString(testFont, "Pattern: " + activeBlocks[0].getPattern().ToString(), new Vector2(325, 475), Color.White);
-                spriteBatch.DrawString(testFont, "Block Speed: " + activeBlocks[0].getMinTimer().ToString(), new Vector2(325, 500), Color.White);
-                spriteBatch.DrawString(testFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(325, 525), Color.White);
-                spriteBatch.DrawString(testFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(325, 550), Color.White);
-                spriteBatch.DrawString(testFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(325, 575), Color.White);
+                spriteBatch.DrawString(smallFont, "STORE: " + store[9, 19].ToString(), new Vector2(325, 400), Color.White);
+                spriteBatch.DrawString(smallFont, "SO: " + saveGameClass.getSo().ToString(), new Vector2(325, 425), Color.White);
+                spriteBatch.DrawString(smallFont, "Next Pattern: " + activeBlocks[0].getNextPattern().ToString(), new Vector2(325, 450), Color.White);
+                spriteBatch.DrawString(smallFont, "Pattern: " + activeBlocks[0].getPattern().ToString(), new Vector2(325, 475), Color.White);
+                spriteBatch.DrawString(smallFont, "Block Speed: " + activeBlocks[0].getMinTimer().ToString(), new Vector2(325, 500), Color.White);
+                spriteBatch.DrawString(smallFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(325, 525), Color.White);
+                spriteBatch.DrawString(smallFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(325, 550), Color.White);
+                spriteBatch.DrawString(smallFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(325, 575), Color.White);
             }
 
             if (gameState == GameStates.PauseGame)
             {
-                spriteBatch.DrawString(playFont, "PAUSE", new Vector2(325, 450), Color.White);
+                spriteBatch.DrawString(bigFont, "PAUSE", new Vector2(325, 450), Color.White);
             }
 
             if (gameState == GameStates.GameOver)
@@ -380,12 +378,12 @@ namespace TetroXNA
 
             if (gameState == GameStates.Controls)
             {
-                settingsClass.Draw(spriteBatch, playFont);
+                settingsClass.Draw(spriteBatch, bigFont);
             }
 
             if (gameState == GameStates.HighScoreScreen)
             {
-                scoreClass.Draw(spriteBatch, testFont);
+                scoreClass.Draw(spriteBatch, smallFont);
             }
 
             spriteBatch.End();

@@ -36,18 +36,20 @@ namespace TetroXNA
         private bool otherCantGoRight = false;
         private bool[,] store;
 
-        public void setStopActiveBlocks(bool stop) { stopActiveBlocks = stop; }
-        public void setCantRotateOtherBlocks(bool rotate) { cantRotateOtherBlock = rotate; }
-        public void setOtherCantGoLeft(bool left) { otherCantGoLeft = left; }
-        public void setOtherCantGoRight(bool right) { otherCantGoRight = right; }
-        public void setStore(bool[,] st) { store = st; }
-
         public bool getStopActiveBlocks() { return stopActiveBlocks; }
         public bool getCanRotateBlocks() { return canRotateBlocks; }
         public bool getCanGoLeft() { return canGoLeft; }
         public bool getCanGoRight() { return canGoRight; }
         public int getPattern() { return pattern; }
         public int getNextPattern() { return nextPattern; }
+        public float getMinTimer() { return minDownTimer; }
+
+        public void setStopActiveBlocks(bool stop) { stopActiveBlocks = stop; }
+        public void setCantRotateOtherBlocks(bool rotate) { cantRotateOtherBlock = rotate; }
+        public void setOtherCantGoLeft(bool left) { otherCantGoLeft = left; }
+        public void setOtherCantGoRight(bool right) { otherCantGoRight = right; }
+        public void setStore(bool[,] st) { store = st; }
+        public void setLevel(int lv) { level = lv; }
 
         public SingleBlockHelper(int locationX1, int locationY1, Texture2D block1, Vector2[,] lns, int patt, int inx, bool[,] st)
         {
@@ -88,13 +90,7 @@ namespace TetroXNA
                 locationY += 1;
                 downTimer = 0.0f;
             }
-
             return store;
-        }
-
-        public void setLevel(int lv)
-        {
-            level = lv;
         }
 
         //Checks to see if blocks can go right
@@ -140,12 +136,6 @@ namespace TetroXNA
             {
                 canRotateBlocks = true;
             }
-        }
-
-        //Temp
-        public float getMinTimer()
-        {
-            return minDownTimer;
         }
 
         private void HandleKeyboardInput(KeyboardState keyState, bool[,] store)
@@ -197,7 +187,6 @@ namespace TetroXNA
                     locationX += 1;
                     moveTimer = 0.0f;
                 }
-
                 checkBounds(store);
             }
         }

@@ -31,10 +31,37 @@ namespace TetroXNA
         private float minRandTimer = 0.01f;
         private Song playBGM;
 
+        public int getLevel() { return level; }
+        public int getTotalClearedLines() { return totalClearedLines; }
+        public int getScore() { return score; }
+        public SingleBlockHelper[] getActiveBlocks() { return activeBlocks; }
+
         public void setStore(bool[,] st) { store = st; }
         public void setScore(int sc) { score = sc; }
         public void setLevel(int lv) { level = lv; }
         public void setTotalClearedLine(int ln) { totalClearedLines = ln; }
+        public void setActiveBlocks(SingleBlockHelper[] atb) { activeBlocks = atb; }
+        public void setColors()
+        {
+            color[0] = Color.LightGray;
+            color[1] = Color.Blue;
+            color[2] = Color.Yellow;
+            color[3] = Color.Green;
+            color[4] = Color.Orange;
+            color[5] = Color.Purple;
+            color[6] = Color.Red;
+            color[7] = Color.Silver;
+            color[8] = Color.Brown;
+            color[9] = Color.MintCream;
+
+            for (int x = 0; x < 10; x++)
+            {
+                for (int y = 0; y < 20; y++)
+                {
+                    blockColor[x, y] = Color.LightGray;
+                }
+            }
+        }
 
         public BlockHelper(SingleBlockHelper[] atb, Vector2[,] ln, bool[,] st, Song pl)
         {
@@ -63,11 +90,6 @@ namespace TetroXNA
             }
         }
 
-        public int getLevel()
-        {
-            return level;
-        }
-
         private void levelDetection()
         {
             if (clearedLines >= 10)
@@ -84,29 +106,6 @@ namespace TetroXNA
             {
                 blockColor[random.Next(0, 10), random.Next(0, 20)] = color[random.Next(0, 10)];
                 randTimer = 0.0f;
-            }
-        }
-
-        //Change to add colors
-        public void setColors()
-        {
-            color[0] = Color.LightGray;
-            color[1] = Color.Blue;
-            color[2] = Color.Yellow;
-            color[3] = Color.Green;
-            color[4] = Color.Orange;
-            color[5] = Color.Purple;
-            color[6] = Color.Red;
-            color[7] = Color.Silver;
-            color[8] = Color.Brown;
-            color[9] = Color.MintCream;
-
-            for (int x = 0; x < 10; x++)
-            {
-                for (int y = 0; y < 20; y++)
-                {
-                    blockColor[x, y] = Color.LightGray;
-                }
             }
         }
 
@@ -139,21 +138,6 @@ namespace TetroXNA
                 }
                 lineCheckTimer = 0.0f;
             }
-            else
-            {
-                //lineCheckTimer = 0.0f;
-            }
-        }
-
-        public int getTotalClearedLines()
-        {
-            return totalClearedLines;
-        }
-
-        //return score
-        public int getScore()
-        {
-            return score;
         }
 
         //Resets player blocks for the next pattern
@@ -262,16 +246,6 @@ namespace TetroXNA
             }
         }
 
-        public void setActiveBlocks(SingleBlockHelper[] atb)
-        {
-            activeBlocks = atb;
-        }
-
-        public SingleBlockHelper[] getActiveBlocks()
-        {
-            return activeBlocks;
-        }
-
         public SingleBlockHelper[] loadPlayerBlocks(ContentManager Content)
         {
             for (int i = 0; i < activeBlocks.Length; i++)
@@ -300,9 +274,7 @@ namespace TetroXNA
                     }
                 }
             }
-
         }
-
     }
 }
 

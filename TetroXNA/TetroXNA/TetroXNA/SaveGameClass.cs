@@ -45,7 +45,6 @@ namespace TetroXNA
                         saveWrite.WriteLine(st[x, y].ToString());
                     }
                 }
-
                 saveWrite.Close();
                 theFileWrite.Close();
             }
@@ -71,7 +70,6 @@ namespace TetroXNA
                         so[x, y] = Convert.ToBoolean(saveRead.ReadLine());
                     }
                 }
-
                 saveRead.Close();
                 theFileRead.Close();
             }
@@ -79,7 +77,6 @@ namespace TetroXNA
             {
 
             }
-
             return so;
         }
     }

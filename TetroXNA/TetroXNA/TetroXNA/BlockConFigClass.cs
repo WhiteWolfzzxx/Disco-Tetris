@@ -662,23 +662,6 @@ namespace TetroXNA
                 #endregion
 
                 rTimer = 0.0f;
-
-                if (xYR == 1)
-                {
-                    return locationX;
-                }
-                if (xYR == 2)
-                {
-                    return locationY;
-                }
-                if (xYR == 3)
-                {
-                    return rotateState;
-                }
-                else
-                {
-                    return 0;
-                }
             }
             if (xYR == 1)
             {
