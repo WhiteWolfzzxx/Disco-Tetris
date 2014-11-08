@@ -16,8 +16,11 @@ namespace TetroXNA
         StreamReader saveRead;
         StreamWriter saveWrite;
         private bool[,] so = new bool[10, 20];
+        private int loadedScore;
+        private int loadedLevel;
 
-        public bool getSo() { return so[9, 19]; }
+        public int getLoadedScore() { return loadedScore; }
+        public int getLoadedLevel() { return loadedLevel; }
 
         public SaveGameClass()
         {
@@ -29,7 +32,7 @@ namespace TetroXNA
 
         }
 
-        public void recordGameData(bool[,] st)
+        public void recordGameData(bool[,] st, int sc, int lv)
         {
             try
             {
@@ -45,6 +48,9 @@ namespace TetroXNA
                         saveWrite.WriteLine(st[x, y].ToString());
                     }
                 }
+                saveWrite.WriteLine(sc.ToString());
+                saveWrite.WriteLine(lv.ToString());
+
                 saveWrite.Close();
                 theFileWrite.Close();
             }
@@ -70,6 +76,9 @@ namespace TetroXNA
                         so[x, y] = Convert.ToBoolean(saveRead.ReadLine());
                     }
                 }
+                loadedScore = Convert.ToInt32(saveRead.ReadLine());
+                loadedLevel = Convert.ToInt32(saveRead.ReadLine());
+
                 saveRead.Close();
                 theFileRead.Close();
             }

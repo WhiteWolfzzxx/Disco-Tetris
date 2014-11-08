@@ -175,6 +175,8 @@ namespace TetroXNA
                             {
                                 activeBlocks[i].setStore(store);
                             }
+                            blockHelper.setLevel(saveGameClass.getLoadedLevel());
+                            blockHelper.setScore(saveGameClass.getLoadedScore());
                             MediaPlayer.Play(playBGM);
                             gameState = GameStates.Playing;
                             break;
@@ -226,7 +228,9 @@ namespace TetroXNA
 
                 if (Keyboard.GetState().IsKeyDown(Keys.S))
                 {
-                    saveGameClass.recordGameData(store);
+                    saveGameClass.recordGameData(store,
+                        blockHelper.getScore(),
+                        blockHelper.getLevel());
                     MediaPlayer.Play(menuBGM);
                     gameState = GameStates.MainMenu;
                 }
@@ -357,7 +361,6 @@ namespace TetroXNA
             if (gameState == GameStates.Debug)
             {
                 spriteBatch.DrawString(smallFont, "STORE: " + store[9, 19].ToString(), new Vector2(325, 400), Color.White);
-                spriteBatch.DrawString(smallFont, "SO: " + saveGameClass.getSo().ToString(), new Vector2(325, 425), Color.White);
                 spriteBatch.DrawString(smallFont, "Next Pattern: " + activeBlocks[0].getNextPattern().ToString(), new Vector2(325, 450), Color.White);
                 spriteBatch.DrawString(smallFont, "Pattern: " + activeBlocks[0].getPattern().ToString(), new Vector2(325, 475), Color.White);
                 spriteBatch.DrawString(smallFont, "Block Speed: " + activeBlocks[0].getMinTimer().ToString(), new Vector2(325, 500), Color.White);
