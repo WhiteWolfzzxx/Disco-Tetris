@@ -362,7 +362,12 @@ namespace TetroXNA
 
             if (gameState == GameStates.Debug)
             {
+                for (int i = 0; i < activeBlocks.Length; i++ )
+                {
+                    spriteBatch.DrawString(smallFont, "stopFlags: " + activeBlocks[i].getBlockCollideBottom().ToString(), new Vector2(325, 300 + (i*25)), Color.White);
+                }
                 spriteBatch.DrawString(smallFont, "STORE: " + store[9, 19].ToString(), new Vector2(325, 400), Color.White);
+                spriteBatch.DrawString(smallFont, "Can go down: " + activeBlocks[0].getCanGoDown().ToString(), new Vector2(325,425), Color.White);
                 spriteBatch.DrawString(smallFont, "Next Pattern: " + activeBlocks[0].getNextPattern().ToString(), new Vector2(325, 450), Color.White);
                 spriteBatch.DrawString(smallFont, "Pattern: " + activeBlocks[0].getPattern().ToString(), new Vector2(325, 475), Color.White);
                 spriteBatch.DrawString(smallFont, "Block Speed: " + activeBlocks[0].getMinTimer().ToString(), new Vector2(325, 500), Color.White);

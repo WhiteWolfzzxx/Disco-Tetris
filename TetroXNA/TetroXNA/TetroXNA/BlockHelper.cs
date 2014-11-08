@@ -29,6 +29,8 @@ namespace TetroXNA
         private float minLineCheckTimer = 1.0f;
         private float randTimer;
         private float minRandTimer = 0.01f;
+        private float stopBlocksTimer;
+        private float minStopBlocksTimer = 0.8f;
         private Song playBGM;
 
         public int getLevel() { return level; }
@@ -75,6 +77,8 @@ namespace TetroXNA
         {
             lineCheckTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             randTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            stopBlocksTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            stopBlocks();
             syncActiveBlocks();
             canRotateBlocks();
             canGoLeft();
@@ -87,6 +91,37 @@ namespace TetroXNA
             for (int i = 0; i < activeBlocks.Length; i++)
             {
                 activeBlocks[i].setLevel(level);
+            }
+        }
+
+        private void stopBlocks()
+        {
+            if (activeBlocks[0].getBlockCollideBottom() ||
+                activeBlocks[1].getBlockCollideBottom() ||
+                activeBlocks[2].getBlockCollideBottom() ||
+                activeBlocks[3].getBlockCollideBottom())
+            {
+                for (int i = 0; i < activeBlocks.Length; i++)
+                {
+                    activeBlocks[i].setCanGoDown(false);
+                }
+                if (stopBlocksTimer >= activeBlocks[0].getMinTimer())
+                {
+                    for (int i = 0; i < activeBlocks.Length; i++)
+                    {
+                        activeBlocks[i].savePositions();
+                        activeBlocks[i].setBlockCollideBottom(false);
+                    }
+                    stopBlocksTimer = 0.0f;
+                }
+            }
+            else
+            {
+                stopBlocksTimer = 0.0f;
+                for (int i = 0; i < activeBlocks.Length; i++)
+                {
+                    activeBlocks[i].setCanGoDown(true);
+                }
             }
         }
 

@@ -36,7 +36,11 @@ namespace TetroXNA
         private bool canGoRight = true;
         private bool otherCantGoRight = false;
         private bool[,] store;
+        private bool blockCollideBottom = false;
+        private bool canGoDown = true;
 
+        public bool getCanGoDown() { return canGoDown;}
+        public bool getBlockCollideBottom() { return blockCollideBottom; }
         public bool getStopActiveBlocks() { return stopActiveBlocks; }
         public bool getCanRotateBlocks() { return canRotateBlocks; }
         public bool getCanGoLeft() { return canGoLeft; }
@@ -45,6 +49,8 @@ namespace TetroXNA
         public int getNextPattern() { return nextPattern; }
         public float getMinTimer() { return minDownTimer; }
 
+        public void setCanGoDown(bool cd) { canGoDown = cd; }
+        public void setBlockCollideBottom(bool bcb) { blockCollideBottom = bcb; } 
         public void setStopActiveBlocks(bool stop) { stopActiveBlocks = stop; }
         public void setCantRotateOtherBlocks(bool rotate) { cantRotateOtherBlock = rotate; }
         public void setOtherCantGoLeft(bool left) { otherCantGoLeft = left; }
@@ -80,17 +86,27 @@ namespace TetroXNA
             //Stores location of player controled blocks when collides
             if ((locationY == 19) || (store[locationX, (locationY + 1)] == true) || (stopActiveBlocks == true))
             {
-                stopActiveBlocks = true;
-                store[locationX, locationY] = true;
+                blockCollideBottom = true;
+                //savePositions();
+            }
+            else
+            {
+                blockCollideBottom = false;
             }
 
             //PlayerBlock will move downward forcefully HAHAHA!!!!
-            if (downTimer >= minDownTimer)
+            if ((downTimer >= minDownTimer) && canGoDown)
             {
                 locationY += 1;
                 downTimer = 0.0f;
             }
             return store;
+        }
+
+        public void savePositions()
+        {
+            stopActiveBlocks = true;
+            store[locationX, locationY] = true;
         }
 
         //Checks to see if blocks can go right
