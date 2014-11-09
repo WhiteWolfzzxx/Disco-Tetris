@@ -36,11 +36,11 @@ namespace TetroXNA
         private bool canGoRight = true;
         private bool otherCantGoRight = false;
         private bool[,] store;
-        private bool blockCollideBottom = false;
+        private bool blockCollideBottomFlag = false;
         private bool canGoDown = true;
 
         public bool getCanGoDown() { return canGoDown;}
-        public bool getBlockCollideBottom() { return blockCollideBottom; }
+        public bool getBlockCollideBottom() { return blockCollideBottomFlag; }
         public bool getStopActiveBlocks() { return stopActiveBlocks; }
         public bool getCanRotateBlocks() { return canRotateBlocks; }
         public bool getCanGoLeft() { return canGoLeft; }
@@ -50,7 +50,7 @@ namespace TetroXNA
         public float getMinTimer() { return minDownTimer; }
 
         public void setCanGoDown(bool cd) { canGoDown = cd; }
-        public void setBlockCollideBottom(bool bcb) { blockCollideBottom = bcb; } 
+        public void setBlockCollideBottom(bool bcb) { blockCollideBottomFlag = bcb; } 
         public void setStopActiveBlocks(bool stop) { stopActiveBlocks = stop; }
         public void setCantRotateOtherBlocks(bool rotate) { cantRotateOtherBlock = rotate; }
         public void setOtherCantGoLeft(bool left) { otherCantGoLeft = left; }
@@ -86,12 +86,12 @@ namespace TetroXNA
             //Stores location of player controled blocks when collides
             if ((locationY == 19) || (store[locationX, (locationY + 1)] == true) || (stopActiveBlocks == true))
             {
-                blockCollideBottom = true;
+                blockCollideBottomFlag = true;
                 //savePositions();
             }
             else
             {
-                blockCollideBottom = false;
+                blockCollideBottomFlag = false;
             }
 
             //PlayerBlock will move downward forcefully HAHAHA!!!!

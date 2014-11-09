@@ -30,7 +30,6 @@ namespace TetroXNA
         private float randTimer;
         private float minRandTimer = 0.01f;
         private float stopBlocksTimer;
-        private float minStopBlocksTimer = 0.8f;
         private Song playBGM;
 
         public int getLevel() { return level; }

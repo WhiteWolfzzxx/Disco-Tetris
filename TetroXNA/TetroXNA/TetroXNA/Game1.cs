@@ -94,7 +94,7 @@ namespace TetroXNA
             lines = boardClass.resetLinesGrid();
             blocks = boardClass.loadBlocksTexture(Content);
 
-            scoreBackground = Content.Load<Texture2D>(@"Textures\ScoreBackground");
+            scoreBackground = Content.Load<Texture2D>(@"Textures\TetroBorder");
 
             //Load the player controled blocks
             blockHelper = new BlockHelper(activeBlocks, lines, store, playBGM);
@@ -343,6 +343,7 @@ namespace TetroXNA
             {
 
                 spriteBatch.Draw(scoreBackground, new Vector2(300, 0), Color.White);
+                spriteBatch.Draw(scoreBackground, new Vector2(-16, 0), Color.White);
 
                 //Draws the player controled blocks
                 for (int i = 0; i < activeBlocks.Length; i++)
