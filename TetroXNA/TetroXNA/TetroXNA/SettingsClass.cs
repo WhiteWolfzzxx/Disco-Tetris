@@ -55,6 +55,7 @@ namespace TetroXNA
         {
             spriteBatch.Draw(settingsTitle, new Vector2(25, 50), Color.Red);
             spriteBatch.DrawString(font, "Press F to fullscreen", new Vector2(67,200), Color.White);
+            spriteBatch.DrawString(font, "Press Space to go back", new Vector2(58, 500), Color.White);
         }
     }
 }
