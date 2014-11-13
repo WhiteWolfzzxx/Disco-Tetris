@@ -13,7 +13,7 @@ namespace TetroXNA
     public class GameOverClass
     {
         private SpriteFont font;
-        private PlayerNameClass nameClass = new PlayerNameClass();
+        private StringInputClass nameClass = new StringInputClass();
 
         public GameOverClass(SpriteFont f)
         {

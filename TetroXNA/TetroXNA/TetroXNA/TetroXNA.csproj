@@ -78,7 +78,6 @@
     <Compile Include="CreditClass.cs" />
     <Compile Include="GameOverClass.cs" />
     <Compile Include="MainMenuClass.cs" />
-    <Compile Include="PlayerNameClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
@@ -86,6 +85,7 @@
     <Compile Include="ScoreClass.cs" />
     <Compile Include="SettingsClass.cs" />
     <Compile Include="SingleBlockHelper.cs" />
+    <Compile Include="StringInputClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
