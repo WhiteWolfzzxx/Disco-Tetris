@@ -15,7 +15,7 @@ namespace TetroXNA
         private bool fDidSomething = false;
         private bool toggleFullScreen = false;
         private Texture2D settingsTitle;
-
+       
         public bool getFull() { return toggleFullScreen; }
 
         public void SettingClass()

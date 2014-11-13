@@ -43,6 +43,7 @@ namespace TetroXNA
         BoardClass boardClass;
         BlockHelper blockHelper;
         CreditClass creditClass;
+        GameOverClass gameOverClass;
         KeyboardState keyState;
         bool escapeDidSomething = false;
         bool spaceDidSomething = false;
@@ -111,6 +112,8 @@ namespace TetroXNA
 
             //ControlsClass
             settingsClass.Load(Content);
+
+            gameOverClass = new GameOverClass(bigFont);
             #endregion
         }
 
@@ -257,6 +260,7 @@ namespace TetroXNA
 
             if (gameState == GameStates.GameOver)
             {
+                gameOverClass.Update(gameTime);
                 //Main Menu
                 if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
                 {
@@ -386,7 +390,8 @@ namespace TetroXNA
 
             if (gameState == GameStates.GameOver)
             {
-
+                gameOverClass.Draw(spriteBatch);
+                spriteBatch.DrawString(bigFont, "Your score is: " + blockHelper.getScore().ToString(), new Vector2(125,150), Color.White);
             }
 
             if (gameState == GameStates.Controls)
