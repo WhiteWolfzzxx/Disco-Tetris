@@ -39,7 +39,7 @@ namespace TetroXNA
         MainMenuClass mainMenuClass;
         ScoreClass scoreClass = new ScoreClass();
         SaveGameClass saveGameClass = new SaveGameClass();
-        SettingsClass settingsClass = new SettingsClass();
+        SettingsClass settingsClass;
         BoardClass boardClass;
         BlockHelper blockHelper;
         CreditClass creditClass;
@@ -111,6 +111,7 @@ namespace TetroXNA
             creditClass = new CreditClass(smallFont, bigFont);
 
             //ControlsClass
+            settingsClass = new SettingsClass(smallFont, bigFont);
             settingsClass.Load(Content);
 
             gameOverClass = new GameOverClass(bigFont);
@@ -284,42 +285,48 @@ namespace TetroXNA
             if (gameState == GameStates.Controls)
             {
                 settingsClass.Update(gameTime);
-                if (settingsClass.getFull())
-                {
-                    graphics.ToggleFullScreen();
-                }
-
                 if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
                 {
-                    gameState = GameStates.MainMenu;
+                    switch (settingsClass.changeSetting())
+                    {
+                        case 1:
+                            graphics.ToggleFullScreen();
+                            break;
+
+                        case 2:
+                            gameState = GameStates.MainMenu;
+                            break;
+
+                        default:
+
+                            break;
+                    }
+                }
+
+                //Single Key press escape
+                if (keyState.IsKeyDown(Keys.Escape) && escapeDidSomething)
+                {
+                    escapeDidSomething = true;
+                }
+                else
+                {
+                    escapeDidSomething = false;
+                }
+
+                //Single Key press Space
+                if (keyState.IsKeyDown(Keys.Space) && spaceDidSomething)
+                {
                     spaceDidSomething = true;
                 }
-            }
+                else
+                {
+                    spaceDidSomething = false;
+                }
 
-            //Single Key press escape
-            if (keyState.IsKeyDown(Keys.Escape) && escapeDidSomething)
-            {
-                escapeDidSomething = true;
+                // TODO: Add your update logic here			
+                base.Update(gameTime);
             }
-            else
-            {
-                escapeDidSomething = false;
-            }
-
-            //Single Key press Space
-            if (keyState.IsKeyDown(Keys.Space) && spaceDidSomething)
-            {
-                spaceDidSomething = true;
-            }
-            else
-            {
-                spaceDidSomething = false;
-            }
-
-            // TODO: Add your update logic here			
-            base.Update(gameTime);
         }
-
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -396,7 +403,7 @@ namespace TetroXNA
 
             if (gameState == GameStates.Controls)
             {
-                settingsClass.Draw(spriteBatch, bigFont);
+                settingsClass.Draw(spriteBatch);
             }
 
             if (gameState == GameStates.HighScoreScreen)
