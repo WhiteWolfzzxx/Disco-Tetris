@@ -15,6 +15,10 @@ namespace TetroXNA
         private bool fDidSomething = false;
         private bool toggleFullScreen = false;
         private Texture2D settingsTitle;
+        private int redIntensity;
+        private int greenIntensity;
+        private int blueIntensity;
+        private MenuProperties menuProperties = new MenuProperties();
        
         public bool getFull() { return toggleFullScreen; }
 
@@ -30,6 +34,11 @@ namespace TetroXNA
 
         public void Update(GameTime gameTime)
         {
+            redIntensity = menuProperties.getRed();
+            blueIntensity = menuProperties.getBlue();
+            greenIntensity = menuProperties.getGreen();
+            menuProperties.colorChanger();
+
             if (Keyboard.GetState().IsKeyDown(Keys.F) && !fDidSomething)
             {
                 toggleFullScreen = true;
@@ -53,7 +62,7 @@ namespace TetroXNA
 
         public void Draw(SpriteBatch spriteBatch, SpriteFont font)
         {
-            spriteBatch.Draw(settingsTitle, new Vector2(25, 50), Color.Red);
+            spriteBatch.Draw(settingsTitle, new Vector2(25, 50), new Color(redIntensity, greenIntensity, blueIntensity));
             spriteBatch.DrawString(font, "Press F to fullscreen", new Vector2(67,200), Color.White);
             spriteBatch.DrawString(font, "Press Space to go back", new Vector2(58, 500), Color.White);
         }
