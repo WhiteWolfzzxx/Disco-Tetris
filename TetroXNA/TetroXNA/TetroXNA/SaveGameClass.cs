@@ -81,6 +81,7 @@ namespace TetroXNA
                 }
                 loadedScore = Convert.ToInt32(saveRead.ReadLine());
                 loadedLevel = Convert.ToInt32(saveRead.ReadLine());
+                loadedTotalClearedLines = Convert.ToInt32(saveRead.ReadLine());
 
                 saveRead.Close();
                 theFileRead.Close();

@@ -14,17 +14,17 @@ namespace TetroXNA
     {
         private bool spaceDidSomething = false;
         private bool toggleFullScreen = false;
-        private Texture2D settingsTitle;
+        private bool fullScreen = false;
+        private int menuOption = 1;
         private int redIntensity;
         private int greenIntensity;
         private int blueIntensity;
-        private MenuProperties menuProperties = new MenuProperties();
-        private int menuOption = 1;
         private float menuChangeTimer;
         private float minMenuChangeTimer = 0.1f;
         private SpriteFont bigFont;
         private SpriteFont smallFont;
-        private bool fullScreen = false;
+        private Texture2D settingsTitle;
+        private MenuProperties menuProperties = new MenuProperties();
         KeyboardState keyState;
        
         public bool getFull() { return toggleFullScreen; }

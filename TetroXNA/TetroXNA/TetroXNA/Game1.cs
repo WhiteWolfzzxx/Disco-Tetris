@@ -206,6 +206,7 @@ namespace TetroXNA
                             }
                             blockHelper.setLevel(saveGameClass.getLoadedLevel());
                             blockHelper.setScore(saveGameClass.getLoadedScore());
+                            blockHelper.setTotalClearedLine(saveGameClass.getLoadedTotalClearedLines());
                             MediaPlayer.Play(playBGM);
                             gameState = GameStates.Playing;
                             break;
