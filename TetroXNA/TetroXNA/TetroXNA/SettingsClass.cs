@@ -124,8 +124,6 @@ namespace TetroXNA
                     spriteBatch.DrawString(bigFont, "Windowed", new Vector2(220, 320), Color.LightGray);
                 }
                 spriteBatch.DrawString(smallFont, "Main Menu", new Vector2(300, 440), Color.LightGray);
-
-                spriteBatch.DrawString(smallFont, fullScreen.ToString(), new Vector2(400, 400), Color.Blue);
             }
             if (menuOption == 2)
             {

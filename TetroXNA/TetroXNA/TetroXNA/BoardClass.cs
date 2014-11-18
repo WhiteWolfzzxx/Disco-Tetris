@@ -32,7 +32,7 @@ namespace TetroXNA
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    lines[z, i] = new Vector2((30 * z), (30 * i));
+                    lines[z, i] = new Vector2(16 + (30 * z), (30 * i));
                 }
             }
             return lines;

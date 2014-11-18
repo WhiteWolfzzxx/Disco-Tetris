@@ -15,6 +15,7 @@ namespace TetroXNA
         private float minChangeScreenTimer = 4.0f;
         private SpriteFont bigFont;
         private SpriteFont smallFont;
+        private Texture2D logo;
 
         public CreditClass(SpriteFont small, SpriteFont big)
         {
@@ -33,13 +34,20 @@ namespace TetroXNA
             return false;
         }
 
+        public void LoadContent(ContentManager Content)
+        {
+            logo = Content.Load<Texture2D>(@"Textures\Flash-Block Studio Logo");
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(bigFont, "FLASH BLOCK STUDIO", new Vector2(100, 50), Color.White);
-            spriteBatch.DrawString(smallFont, "Mitchell Loe", new Vector2(250, 200), Color.White);
-            spriteBatch.DrawString(smallFont, "Victoria Jubb", new Vector2(250, 250), Color.White);
-            spriteBatch.DrawString(smallFont, "Noah Kitson", new Vector2(250, 300), Color.White);
-            spriteBatch.DrawString(smallFont, "Aaron Hosler", new Vector2(250, 350), Color.White);
+            spriteBatch.Draw(logo, new Vector2(375, 175), Color.White);
+
+            spriteBatch.DrawString(bigFont, "FLASH BLOCK STUDIO", new Vector2(116, 50), Color.White);
+            spriteBatch.DrawString(smallFont, "Mitchell Loe", new Vector2(180, 200), Color.White);
+            spriteBatch.DrawString(smallFont, "Victoria Jubb", new Vector2(180, 250), Color.White);
+            spriteBatch.DrawString(smallFont, "Noah Kitson", new Vector2(180, 300), Color.White);
+            spriteBatch.DrawString(smallFont, "Aaron Hosler", new Vector2(180, 350), Color.White);
         }
     }
 }

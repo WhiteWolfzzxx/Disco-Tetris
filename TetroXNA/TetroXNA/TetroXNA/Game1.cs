@@ -109,6 +109,7 @@ namespace TetroXNA
 
             //CreditClass
             creditClass = new CreditClass(smallFont, bigFont);
+            creditClass.LoadContent(Content);
 
             //ControlsClass
             settingsClass = new SettingsClass(smallFont, bigFont);
@@ -356,8 +357,8 @@ namespace TetroXNA
                 (gameState == GameStates.Debug))
             {
 
-                spriteBatch.Draw(scoreBackground, new Vector2(300, 0), Color.White);
-                spriteBatch.Draw(scoreBackground, new Vector2(-16, 0), Color.White);
+                spriteBatch.Draw(scoreBackground, new Vector2(316, 0), Color.White);
+                spriteBatch.Draw(scoreBackground, Vector2.Zero, Color.White);
 
                 //Draws the player controled blocks
                 for (int i = 0; i < activeBlocks.Length; i++)
@@ -371,30 +372,30 @@ namespace TetroXNA
             if ((gameState == GameStates.Playing) ||
                 (gameState == GameStates.PauseGame))
             {
-                spriteBatch.DrawString(bigFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(325, 300), Color.White);
-                spriteBatch.DrawString(bigFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(325, 350), Color.White);
-                spriteBatch.DrawString(bigFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(325, 400), Color.White);
+                spriteBatch.DrawString(bigFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(350, 300), Color.White);
+                spriteBatch.DrawString(bigFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 350), Color.White);
+                spriteBatch.DrawString(bigFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 400), Color.White);
             }
 
             if (gameState == GameStates.Debug)
             {
                 for (int i = 0; i < activeBlocks.Length; i++ )
                 {
-                    spriteBatch.DrawString(smallFont, "stopFlags: " + activeBlocks[i].getBlockCollideBottom().ToString(), new Vector2(325, 300 + (i*25)), Color.White);
+                    spriteBatch.DrawString(smallFont, "stopFlags: " + activeBlocks[i].getBlockCollideBottom().ToString(), new Vector2(350, 300 + (i*25)), Color.White);
                 }
-                spriteBatch.DrawString(smallFont, "STORE: " + store[9, 19].ToString(), new Vector2(325, 400), Color.White);
-                spriteBatch.DrawString(smallFont, "Can go down: " + activeBlocks[0].getCanGoDown().ToString(), new Vector2(325,425), Color.White);
-                spriteBatch.DrawString(smallFont, "Next Pattern: " + activeBlocks[0].getNextPattern().ToString(), new Vector2(325, 450), Color.White);
-                spriteBatch.DrawString(smallFont, "Pattern: " + activeBlocks[0].getPattern().ToString(), new Vector2(325, 475), Color.White);
-                spriteBatch.DrawString(smallFont, "Block Speed: " + activeBlocks[0].getMinTimer().ToString(), new Vector2(325, 500), Color.White);
-                spriteBatch.DrawString(smallFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(325, 525), Color.White);
-                spriteBatch.DrawString(smallFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(325, 550), Color.White);
-                spriteBatch.DrawString(smallFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(325, 575), Color.White);
+                spriteBatch.DrawString(smallFont, "STORE: " + store[9, 19].ToString(), new Vector2(350, 400), Color.White);
+                spriteBatch.DrawString(smallFont, "Can go down: " + activeBlocks[0].getCanGoDown().ToString(), new Vector2(350,425), Color.White);
+                spriteBatch.DrawString(smallFont, "Next Pattern: " + activeBlocks[0].getNextPattern().ToString(), new Vector2(350, 450), Color.White);
+                spriteBatch.DrawString(smallFont, "Pattern: " + activeBlocks[0].getPattern().ToString(), new Vector2(350, 475), Color.White);
+                spriteBatch.DrawString(smallFont, "Block Speed: " + activeBlocks[0].getMinTimer().ToString(), new Vector2(350, 500), Color.White);
+                spriteBatch.DrawString(smallFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(350, 525), Color.White);
+                spriteBatch.DrawString(smallFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 550), Color.White);
+                spriteBatch.DrawString(smallFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 575), Color.White);
             }
 
             if (gameState == GameStates.PauseGame)
             {
-                spriteBatch.DrawString(bigFont, "PAUSE", new Vector2(325, 450), Color.White);
+                spriteBatch.DrawString(bigFont, "PAUSE", new Vector2(350, 450), Color.White);
             }
 
             if (gameState == GameStates.GameOver)
