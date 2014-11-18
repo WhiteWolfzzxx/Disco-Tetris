@@ -125,6 +125,26 @@ namespace TetroXNA
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //Single Key press escape
+            if (keyState.IsKeyDown(Keys.Escape) && escapeDidSomething)
+            {
+                escapeDidSomething = true;
+            }
+            else
+            {
+                escapeDidSomething = false;
+            }
+
+            //Single Key press Space
+            if (keyState.IsKeyDown(Keys.Space) && spaceDidSomething)
+            {
+                spaceDidSomething = true;
+            }
+            else
+            {
+                spaceDidSomething = false;
+            }
+
             // For Mobile devices, this logic will close the Game when the Back button is pressed
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
             {
@@ -238,7 +258,8 @@ namespace TetroXNA
                 {
                     saveGameClass.recordGameData(store,
                         blockHelper.getScore(),
-                        blockHelper.getLevel());
+                        blockHelper.getLevel(),
+                        blockHelper.getTotalClearedLines());
                     MediaPlayer.Play(menuBGM);
                     gameState = GameStates.MainMenu;
                 }
@@ -301,26 +322,7 @@ namespace TetroXNA
 
                             break;
                     }
-                }
-
-                //Single Key press escape
-                if (keyState.IsKeyDown(Keys.Escape) && escapeDidSomething)
-                {
-                    escapeDidSomething = true;
-                }
-                else
-                {
-                    escapeDidSomething = false;
-                }
-
-                //Single Key press Space
-                if (keyState.IsKeyDown(Keys.Space) && spaceDidSomething)
-                {
                     spaceDidSomething = true;
-                }
-                else
-                {
-                    spaceDidSomething = false;
                 }
 
                 // TODO: Add your update logic here			

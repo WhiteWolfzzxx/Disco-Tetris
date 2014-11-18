@@ -25,6 +25,7 @@ namespace TetroXNA
         private SpriteFont bigFont;
         private SpriteFont smallFont;
         private bool fullScreen = false;
+        KeyboardState keyState;
        
         public bool getFull() { return toggleFullScreen; }
 
@@ -47,6 +48,16 @@ namespace TetroXNA
             menuProperties.colorChanger();
 
             menuChangeTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            //Single Key press Space
+            if (keyState.IsKeyDown(Keys.Space) && spaceDidSomething)
+            {
+                spaceDidSomething = true;
+            }
+            else
+            {
+                spaceDidSomething = false;
+            }
 
             //Navigate the menu
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
@@ -76,23 +87,15 @@ namespace TetroXNA
                 menuOption = 2;
             }
 
-            //Single Key press Space
-            if (Keyboard.GetState().IsKeyDown(Keys.Space) && spaceDidSomething)
-            {
-                spaceDidSomething = false;
-            }
-            else
-            {
-                spaceDidSomething = true;
-            }
-
             if (menuOption == 1 && fullScreen == false && Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 fullScreen = true;
+                spaceDidSomething = true;
             }
             else if (menuOption == 1 && fullScreen == true && Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 fullScreen = false;
+                spaceDidSomething = true;
             }
         }
 

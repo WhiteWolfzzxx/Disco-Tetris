@@ -18,9 +18,11 @@ namespace TetroXNA
         private bool[,] so = new bool[10, 20];
         private int loadedScore;
         private int loadedLevel;
+        private int loadedTotalClearedLines;
 
         public int getLoadedScore() { return loadedScore; }
         public int getLoadedLevel() { return loadedLevel; }
+        public int getLoadedTotalClearedLines() { return loadedTotalClearedLines; }
 
         public SaveGameClass()
         {
@@ -32,7 +34,7 @@ namespace TetroXNA
 
         }
 
-        public void recordGameData(bool[,] st, int sc, int lv)
+        public void recordGameData(bool[,] st, int sc, int lv, int lns/*test*/)
         {
             try
             {
@@ -50,6 +52,7 @@ namespace TetroXNA
                 }
                 saveWrite.WriteLine(sc.ToString());
                 saveWrite.WriteLine(lv.ToString());
+                saveWrite.WriteLine(lns.ToString());
 
                 saveWrite.Close();
                 theFileWrite.Close();
