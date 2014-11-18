@@ -50,6 +50,7 @@ namespace TetroXNA
             menuChangeTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //Single Key press Space
+            //If key is still held down
             if (keyState.IsKeyDown(Keys.Space) && spaceDidSomething)
             {
                 spaceDidSomething = true;
@@ -86,17 +87,6 @@ namespace TetroXNA
             {
                 menuOption = 2;
             }
-
-            if (menuOption == 1 && fullScreen == false && Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                fullScreen = true;
-                spaceDidSomething = true;
-            }
-            else if (menuOption == 1 && fullScreen == true && Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                fullScreen = false;
-                spaceDidSomething = true;
-            }
         }
 
         public int changeSetting()
@@ -106,6 +96,7 @@ namespace TetroXNA
             {
                 case 1:
                     //Fullscreen
+                    fullScreen = !fullScreen;
                     return 1;
 
                 case 2:
@@ -124,15 +115,17 @@ namespace TetroXNA
             if (menuOption == 1)
             {
                 spriteBatch.DrawString(smallFont, "Main Menu", new Vector2(300, 250), Color.LightGray);
-                if (fullScreen == false)
+                if (!fullScreen)
                 {
                     spriteBatch.DrawString(bigFont, "Fullscreen", new Vector2(220, 320), Color.LightGray);
                 }
-                else
+                if (fullScreen)
                 {
                     spriteBatch.DrawString(bigFont, "Windowed", new Vector2(220, 320), Color.LightGray);
                 }
                 spriteBatch.DrawString(smallFont, "Main Menu", new Vector2(300, 440), Color.LightGray);
+
+                spriteBatch.DrawString(smallFont, fullScreen.ToString(), new Vector2(400, 400), Color.Blue);
             }
             if (menuOption == 2)
             {
