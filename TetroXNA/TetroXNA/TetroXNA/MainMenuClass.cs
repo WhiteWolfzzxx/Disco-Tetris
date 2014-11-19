@@ -17,12 +17,10 @@ namespace TetroXNA
         private int menuOption = 1;
         private float menuChangeTimer;
         private float minMenuChangeTimer = 0.1f;
-        private int redIntensity = 0;
-        private int greenIntensity = 50;
-        private int blueIntensity = 100;
-        private bool redIncrease = true;
-        private bool greenIncrease = true;
-        private bool blueIncrease = true;
+        private int redIntensity;
+        private int greenIntensity;
+        private int blueIntensity;
+        private MenuProperties menuProperties = new MenuProperties();
 
         public MainMenuClass(SpriteFont small, SpriteFont big)
         {
@@ -32,7 +30,10 @@ namespace TetroXNA
 
         public void Update(GameTime gameTime)
         {
-            colorChanger();
+            redIntensity = menuProperties.getRed();
+            blueIntensity = menuProperties.getBlue();
+            greenIntensity = menuProperties.getGreen();
+            menuProperties.colorChanger();
             menuChangeTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //Navigate the menu
@@ -71,7 +72,7 @@ namespace TetroXNA
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(title, new Vector2(50, 50), new Color(redIntensity, greenIntensity, blueIntensity));
+            spriteBatch.Draw(title, new Vector2(66, 50), new Color(redIntensity, greenIntensity, blueIntensity));
 
             if (menuOption == 1)
             {
@@ -133,62 +134,6 @@ namespace TetroXNA
                 default:
                     //Nothing is happening
                     return 0;
-            }
-        }
-
-        private void colorChanger()
-        {
-            if (redIncrease)
-            {
-                redIntensity++;
-                if (redIntensity >= 240)
-                {
-                    redIncrease = false;
-                }
-            }
-            else
-            {
-                redIntensity--;
-                if (redIntensity <= 20)
-                {
-                    redIncrease = true;
-                }
-            }
-
-            //blue
-            if (blueIncrease)
-            {
-                blueIntensity += 2;
-                if (blueIntensity >= 240)
-                {
-                    blueIncrease = false;
-                }
-            }
-            else
-            {
-                blueIntensity -= 2;
-                if (blueIntensity <= 20)
-                {
-                    blueIncrease = true;
-                }
-            }
-
-            //green
-            if (greenIncrease)
-            {
-                greenIntensity += 3;
-                if (greenIntensity >= 240)
-                {
-                    greenIncrease = false;
-                }
-            }
-            else
-            {
-                greenIntensity -= 3;
-                if (greenIntensity <= 20)
-                {
-                    greenIncrease = true;
-                }
             }
         }
     }

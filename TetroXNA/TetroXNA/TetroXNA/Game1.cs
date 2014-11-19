@@ -39,7 +39,7 @@ namespace TetroXNA
         MainMenuClass mainMenuClass;
         ScoreClass scoreClass = new ScoreClass();
         SaveGameClass saveGameClass = new SaveGameClass();
-        SettingsClass settingsClass = new SettingsClass();
+        SettingsClass settingsClass;
         BoardClass boardClass;
         BlockHelper blockHelper;
         CreditClass creditClass;
@@ -109,8 +109,10 @@ namespace TetroXNA
 
             //CreditClass
             creditClass = new CreditClass(smallFont, bigFont);
+            creditClass.LoadContent(Content);
 
             //ControlsClass
+            settingsClass = new SettingsClass(smallFont, bigFont);
             settingsClass.Load(Content);
 
             #endregion
@@ -123,6 +125,26 @@ namespace TetroXNA
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //Single Key press escape
+            if (keyState.IsKeyDown(Keys.Escape) && escapeDidSomething)
+            {
+                escapeDidSomething = true;
+            }
+            else
+            {
+                escapeDidSomething = false;
+            }
+
+            //Single Key press Space
+            if (keyState.IsKeyDown(Keys.Space) && spaceDidSomething)
+            {
+                spaceDidSomething = true;
+            }
+            else
+            {
+                spaceDidSomething = false;
+            }
+
             // For Mobile devices, this logic will close the Game when the Back button is pressed
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
             {
@@ -183,6 +205,7 @@ namespace TetroXNA
                             }
                             blockHelper.setLevel(saveGameClass.getLoadedLevel());
                             blockHelper.setScore(saveGameClass.getLoadedScore());
+                            blockHelper.setTotalClearedLine(saveGameClass.getLoadedTotalClearedLines());
                             MediaPlayer.Play(playBGM);
                             gameState = GameStates.Playing;
                             break;
@@ -236,7 +259,8 @@ namespace TetroXNA
                 {
                     saveGameClass.recordGameData(store,
                         blockHelper.getScore(),
-                        blockHelper.getLevel());
+                        blockHelper.getLevel(),
+                        blockHelper.getTotalClearedLines());
                     MediaPlayer.Play(menuBGM);
                     gameState = GameStates.MainMenu;
                 }
@@ -284,42 +308,29 @@ namespace TetroXNA
             if (gameState == GameStates.Controls)
             {
                 settingsClass.Update(gameTime);
-                if (settingsClass.getFull())
-                {
-                    graphics.ToggleFullScreen();
-                }
-
                 if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
                 {
-                    gameState = GameStates.MainMenu;
+                    switch (settingsClass.changeSetting())
+                    {
+                        case 1:
+                            graphics.ToggleFullScreen();
+                            break;
+
+                        case 2:
+                            gameState = GameStates.MainMenu;
+                            break;
+
+                        default:
+
+                            break;
+                    }
                     spaceDidSomething = true;
                 }
-            }
 
-            //Single Key press escape
-            if (keyState.IsKeyDown(Keys.Escape) && escapeDidSomething)
-            {
-                escapeDidSomething = true;
+                // TODO: Add your update logic here			
+                base.Update(gameTime);
             }
-            else
-            {
-                escapeDidSomething = false;
-            }
-
-            //Single Key press Space
-            if (keyState.IsKeyDown(Keys.Space) && spaceDidSomething)
-            {
-                spaceDidSomething = true;
-            }
-            else
-            {
-                spaceDidSomething = false;
-            }
-
-            // TODO: Add your update logic here			
-            base.Update(gameTime);
         }
-
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -347,8 +358,8 @@ namespace TetroXNA
                 (gameState == GameStates.Debug))
             {
 
-                spriteBatch.Draw(scoreBackground, new Vector2(300, 0), Color.White);
-                spriteBatch.Draw(scoreBackground, new Vector2(-16, 0), Color.White);
+                spriteBatch.Draw(scoreBackground, new Vector2(316, 0), Color.White);
+                spriteBatch.Draw(scoreBackground, Vector2.Zero, Color.White);
 
                 //Draws the player controled blocks
                 for (int i = 0; i < activeBlocks.Length; i++)
@@ -362,30 +373,30 @@ namespace TetroXNA
             if ((gameState == GameStates.Playing) ||
                 (gameState == GameStates.PauseGame))
             {
-                spriteBatch.DrawString(bigFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(325, 300), Color.White);
-                spriteBatch.DrawString(bigFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(325, 350), Color.White);
-                spriteBatch.DrawString(bigFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(325, 400), Color.White);
+                spriteBatch.DrawString(bigFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(350, 300), Color.White);
+                spriteBatch.DrawString(bigFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 350), Color.White);
+                spriteBatch.DrawString(bigFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 400), Color.White);
             }
 
             if (gameState == GameStates.Debug)
             {
                 for (int i = 0; i < activeBlocks.Length; i++ )
                 {
-                    spriteBatch.DrawString(smallFont, "stopFlags: " + activeBlocks[i].getBlockCollideBottom().ToString(), new Vector2(325, 300 + (i*25)), Color.White);
+                    spriteBatch.DrawString(smallFont, "stopFlags: " + activeBlocks[i].getBlockCollideBottom().ToString(), new Vector2(350, 300 + (i*25)), Color.White);
                 }
-                spriteBatch.DrawString(smallFont, "STORE: " + store[9, 19].ToString(), new Vector2(325, 400), Color.White);
-                spriteBatch.DrawString(smallFont, "Can go down: " + activeBlocks[0].getCanGoDown().ToString(), new Vector2(325,425), Color.White);
-                spriteBatch.DrawString(smallFont, "Next Pattern: " + activeBlocks[0].getNextPattern().ToString(), new Vector2(325, 450), Color.White);
-                spriteBatch.DrawString(smallFont, "Pattern: " + activeBlocks[0].getPattern().ToString(), new Vector2(325, 475), Color.White);
-                spriteBatch.DrawString(smallFont, "Block Speed: " + activeBlocks[0].getMinTimer().ToString(), new Vector2(325, 500), Color.White);
-                spriteBatch.DrawString(smallFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(325, 525), Color.White);
-                spriteBatch.DrawString(smallFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(325, 550), Color.White);
-                spriteBatch.DrawString(smallFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(325, 575), Color.White);
+                spriteBatch.DrawString(smallFont, "STORE: " + store[9, 19].ToString(), new Vector2(350, 400), Color.White);
+                spriteBatch.DrawString(smallFont, "Can go down: " + activeBlocks[0].getCanGoDown().ToString(), new Vector2(350,425), Color.White);
+                spriteBatch.DrawString(smallFont, "Next Pattern: " + activeBlocks[0].getNextPattern().ToString(), new Vector2(350, 450), Color.White);
+                spriteBatch.DrawString(smallFont, "Pattern: " + activeBlocks[0].getPattern().ToString(), new Vector2(350, 475), Color.White);
+                spriteBatch.DrawString(smallFont, "Block Speed: " + activeBlocks[0].getMinTimer().ToString(), new Vector2(350, 500), Color.White);
+                spriteBatch.DrawString(smallFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(350, 525), Color.White);
+                spriteBatch.DrawString(smallFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 550), Color.White);
+                spriteBatch.DrawString(smallFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 575), Color.White);
             }
 
             if (gameState == GameStates.PauseGame)
             {
-                spriteBatch.DrawString(bigFont, "PAUSE", new Vector2(325, 450), Color.White);
+                spriteBatch.DrawString(bigFont, "PAUSE", new Vector2(350, 450), Color.White);
             }
 
             if (gameState == GameStates.GameOver)
@@ -396,7 +407,7 @@ namespace TetroXNA
 
             if (gameState == GameStates.Controls)
             {
-                settingsClass.Draw(spriteBatch, bigFont);
+                settingsClass.Draw(spriteBatch);
             }
 
             if (gameState == GameStates.HighScoreScreen)
