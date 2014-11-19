@@ -113,7 +113,6 @@ namespace TetroXNA
             //ControlsClass
             settingsClass.Load(Content);
 
-            gameOverClass = new GameOverClass(bigFont);
             #endregion
         }
 
@@ -260,6 +259,7 @@ namespace TetroXNA
 
             if (gameState == GameStates.GameOver)
             {
+                gameOverClass = new GameOverClass(bigFont);
                 gameOverClass.Update(gameTime);
                 //Main Menu
                 if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
