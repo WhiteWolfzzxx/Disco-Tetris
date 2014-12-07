@@ -39,6 +39,7 @@ namespace TetroXNA
         MainMenuClass mainMenuClass;
         ScoreClass scoreClass = new ScoreClass();
         SaveGameClass saveGameClass = new SaveGameClass();
+        ErrorHandler errorHandler = new ErrorHandler();
         SettingsClass settingsClass;
         BoardClass boardClass;
         BlockHelper blockHelper;
@@ -66,6 +67,7 @@ namespace TetroXNA
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            errorHandler.recordError(1, 1, "Game1.cs", "Application Initialization");
             base.Initialize();
 
         }
@@ -86,7 +88,7 @@ namespace TetroXNA
 
             //BGM
             playBGM = Content.Load<Song>(@"Audio\discoTetrisTitleScreenMainMenu");
-            menuBGM = Content.Load<Song>(@"Audio\song2");
+            menuBGM = Content.Load<Song>(@"Audio\TetroMusic2");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(menuBGM);
 
@@ -114,6 +116,9 @@ namespace TetroXNA
             //ControlsClass
             settingsClass = new SettingsClass(smallFont, bigFont);
             settingsClass.Load(Content);
+
+            //GameOver Class
+            gameOverClass = new GameOverClass(bigFont);
 
             #endregion
         }
@@ -283,7 +288,7 @@ namespace TetroXNA
 
             if (gameState == GameStates.GameOver)
             {
-                gameOverClass = new GameOverClass(bigFont);
+                //gameOverClass = new GameOverClass(bigFont);
                 gameOverClass.Update(gameTime);
                 //Main Menu
                 if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)

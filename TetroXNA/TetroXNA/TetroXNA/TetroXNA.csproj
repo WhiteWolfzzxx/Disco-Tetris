@@ -70,6 +70,7 @@
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -81,6 +82,7 @@
     <Compile Include="BlockHelper.cs" />
     <Compile Include="BoardClass.cs" />
     <Compile Include="CreditClass.cs" />
+    <Compile Include="ErrorHandler.cs" />
     <Compile Include="GameOverClass.cs" />
     <Compile Include="MainMenuClass.cs" />
     <Compile Include="MenuProperties.cs" />
