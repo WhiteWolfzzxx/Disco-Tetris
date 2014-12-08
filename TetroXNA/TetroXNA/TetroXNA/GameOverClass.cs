@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
-using System.Drawing;
+//using System.Windows.Forms;
+//using System.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
@@ -17,16 +17,22 @@ namespace TetroXNA
         private string playerName;
         private SpriteFont font;
         private StringInputClass nameClass = new StringInputClass();
-        private Form form = new Form();
-        private Label label = new Label();
-        private TextBox textBox = new TextBox();
-        private Button buttonOk = new Button();
-        private Button buttonCancel = new Button();
+        //private Form form = new Form();
+        //private Label label = new Label();
+       // private TextBox textBox = new TextBox();
+       // private Button buttonOk = new Button();
+        //private Button buttonCancel = new Button();
+        private bool calledInputBox = false;
 
         public GameOverClass(SpriteFont f)
         {
             font = f;
+        }
 
+        public void Update(GameTime gameTime)
+        {
+            /*if (!calledInputBox)
+            {
             form.Text = "Player's Name";
             label.Text = "What is your name?";
             textBox.Text = "";
@@ -57,14 +63,13 @@ namespace TetroXNA
             form.CancelButton = buttonCancel;
 
             form.Visible = false;
-            DialogResult dialogResult = form.ShowDialog();
+                form.ShowDialog();
+                //DialogResult dialogResult = form.ShowDialog();
             playerName = textBox.Text;
-            //return dialogResult;*/
-        }
-
-        public void Update(GameTime gameTime)
-        {
+                //return dialogResult;
             
+                calledInputBox = true;
+            }*/
 
             nameClass.Update(gameTime);
             System.Console.WriteLine("Update Game Over");  
@@ -72,11 +77,10 @@ namespace TetroXNA
 
         public void Draw(SpriteBatch spriteBatch)
         {
-                       
             System.Console.WriteLine("Draw Game Over");
-            /*spriteBatch.DrawString(font, "Game Over", new Vector2(150, 50), Color.White);
+            spriteBatch.DrawString(font, "Game Over", new Vector2(150, 50), Color.White);
             spriteBatch.DrawString(font, "Enter your name:", new Vector2(150,200), Color.White);
-            spriteBatch.DrawString(font, nameClass.getName(), new Vector2(150, 250), Color.Blue);*/
+            spriteBatch.DrawString(font, nameClass.getName(), new Vector2(150, 250), Color.Blue);
         }
     }
 }
