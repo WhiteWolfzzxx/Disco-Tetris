@@ -23,7 +23,7 @@ namespace TetroXNA
         public ErrorHandler()
         {
             DialogResult dialogResult = MessageBox.Show(
-                "For Devloping Perposes\nMay FlashBlock Studio Collect Data in the following:\n-Computer Name\n-User Name\n-Computer Cerial Number", 
+                "For Devloping Perposes\nMay FlashBlock Studio Collect Data in the following:\n-Computer Name\n-User Name\n-Computer Serial Number", 
                 "Computer Sesitive Info Premission", 
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
