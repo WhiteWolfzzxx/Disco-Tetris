@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Management;
+using System.Diagnostics;
 
 namespace TetroXNA
 {
@@ -24,7 +25,8 @@ namespace TetroXNA
             DialogResult dialogResult = MessageBox.Show(
                 "For Devloping Perposes\nMay FlashBlock Studio Collect Data in the following:\n-Computer Name\n-User Name\n-Computer Cerial Number", 
                 "Computer Sesitive Info Premission", 
-                MessageBoxButtons.YesNo);
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
             if (dialogResult == DialogResult.Yes)
             {
                 collectPersonalPCInfo = true;
@@ -37,7 +39,7 @@ namespace TetroXNA
             gatherSystemInfo();
         }
 
-        public void recordError(int errorLevel, int errorNumber, String sourceFileName, String errorDetails)
+        public void recordError(int errorLevel, int errorCode, String helpfulInfo, String errorDetails)
         {
             try 
             {
@@ -89,17 +91,45 @@ namespace TetroXNA
                 if (errorLevel == 1)
                 {
                     sw.WriteLine(currentDateTime.ToString() + "\tINFORMATION");
-                    sw.WriteLine("\tError Number:\t" + errorNumber);
-                    sw.WriteLine("\tSource File:\t" + sourceFileName);
-                    sw.WriteLine("\tDetails:\t" + errorDetails);
+                    sw.WriteLine("   Error Code:\t\t" + errorCode);
+                    sw.WriteLine("   Helpful Info:\t" + helpfulInfo);
+                    sw.WriteLine("");
+                }
+                if (errorLevel == 2)
+                {
+                    sw.WriteLine(currentDateTime.ToString() + "\tWarning");
+                    sw.WriteLine("   Error Code:\t\t" + errorCode);
+                    sw.WriteLine("   Helpful Info:\t" + helpfulInfo);
+                    sw.WriteLine("   Details:");
+                    sw.WriteLine("   " + errorDetails);
+                    sw.WriteLine("");
+                }
+                if (errorLevel == 3)
+                {
+                    sw.WriteLine(currentDateTime.ToString() + "\tError");
+                    sw.WriteLine("   Error Code:\t\t" + errorCode);
+                    sw.WriteLine("   Helpful Info:\t" + helpfulInfo);
+                    sw.WriteLine("   Details:");
+                    sw.WriteLine("   " + errorDetails);
                     sw.WriteLine("");
                 }
                 sw.Close();
                 fs.Close();
+                if (errorLevel == 3)
+                {
+                    MessageBox.Show("Ciritical Error!\nError code: " + errorCode + "\nRefer to " + recordName +
+                        "\nLocation: " + Path.GetFullPath(recordName).ToString(), "TetroXNA Error", 
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Process.GetCurrentProcess().Kill();
+                }
             }
-            catch 
+            catch (Exception d)
             {
-                MessageBox.Show("Cirtical Error\nThis session of Tetro is unable to record error data.");
+                MessageBox.Show("WARNING:\nThis session of Tetro is unable to record error data.\n" + d.ToString(),
+                    "Error Record Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+                
             }
         }
 
@@ -134,9 +164,12 @@ namespace TetroXNA
                 fs.Close();
                 Console.WriteLine("Created Error Record Sucsessfully");
             }
-            catch
+            catch (Exception d)
             {
-                MessageBox.Show("WARNING:\nTetro is unable to create an error record for this system!");
+                MessageBox.Show("WARNING:\nTetro is unable to create an error record for this system!",
+                    "Warning TetroXNA",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
             }
         }
 
