@@ -25,7 +25,7 @@ namespace TetroXNA
 
         public GameOverClass(SpriteFont f)
         {
-            /*font = f;
+            font = f;
 
             form.Text = "Player's Name";
             label.Text = "What is your name?";
