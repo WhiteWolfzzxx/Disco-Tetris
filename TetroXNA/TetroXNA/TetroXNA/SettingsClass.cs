@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
 
 namespace TetroXNA
 {
@@ -144,5 +145,19 @@ namespace TetroXNA
                 }
             }
         }
+
+        // Noah wrote this
+        public void settingStartup()
+        {
+            if (File.Exists("settings.txt"))
+            {
+                //have to assign variables from a read file
+            }
+            else
+            { 
+                
+            }
+        }
+
     }
 }
