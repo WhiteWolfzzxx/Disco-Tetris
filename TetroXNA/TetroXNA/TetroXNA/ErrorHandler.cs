@@ -16,13 +16,13 @@ namespace TetroXNA
         private StreamReader sr;
         private DateTime currentDateTime = DateTime.Now;
         private string operatingSystem, computerName, computerManufacturer, 
-            numOfCPU, numOfLogicCPU, totalRAM, nameCPU, nameGPU, cerialNum, computerModel, userName, recordName;
-        private bool existingRecordFiles = true, collectPersonalPCInfo;
+            numOfCPU, numOfLogicCPU, totalRAM, nameCPU, nameGPU, serialNum, computerModel, userName, recordName;
+        private bool existingRecordFiles = true, collectPersonalPCInfo = true;
         private int numOfRecordFiles = 0, identifyRecordNum = 0;
 
         public ErrorHandler()
         {
-            DialogResult dialogResult = MessageBox.Show(
+            /*DialogResult dialogResult = MessageBox.Show(
                 "For Devloping Perposes\nMay FlashBlock Studio Collect Data in the following:\n-Computer Name\n-User Name\n-Computer Serial Number", 
                 "Computer Sesitive Info Premission", 
                 MessageBoxButtons.YesNo,
@@ -34,7 +34,7 @@ namespace TetroXNA
             else if (dialogResult == DialogResult.No)
             {
                 collectPersonalPCInfo = false;
-            }
+            }*/
 
             gatherSystemInfo();
         }
@@ -101,7 +101,7 @@ namespace TetroXNA
                     sw.WriteLine("   Error Code:\t\t" + errorCode);
                     sw.WriteLine("   Helpful Info:\t" + helpfulInfo);
                     sw.WriteLine("   Details:");
-                    sw.WriteLine("   " + errorDetails);
+                    sw.WriteLine(errorDetails);
                     sw.WriteLine("");
                 }
                 if (errorLevel == 3)
@@ -110,7 +110,7 @@ namespace TetroXNA
                     sw.WriteLine("   Error Code:\t\t" + errorCode);
                     sw.WriteLine("   Helpful Info:\t" + helpfulInfo);
                     sw.WriteLine("   Details:");
-                    sw.WriteLine("   " + errorDetails);
+                    sw.WriteLine(errorDetails);
                     sw.WriteLine("");
                 }
                 sw.Close();
@@ -151,7 +151,7 @@ namespace TetroXNA
                 sw.WriteLine("Current User:\t\t" + userName);
                 sw.WriteLine("Computer Manufacturer:\t" + computerManufacturer);
                 sw.WriteLine("Computer Model:\t\t" + computerModel);
-                sw.WriteLine("Computer Serial Number:\t" + cerialNum);
+                sw.WriteLine("Computer Serial Number:\t" + serialNum);
                 sw.WriteLine("Computer GPU:\t\t" + nameGPU);
                 sw.WriteLine("Computer CPU:\t\t" + nameCPU);
                 sw.WriteLine("Number of CPUs:\t\t" + numOfCPU);
@@ -166,7 +166,7 @@ namespace TetroXNA
             }
             catch (Exception d)
             {
-                MessageBox.Show("WARNING:\nTetro is unable to create an error record for this system!",
+                MessageBox.Show("WARNING:\nTetro is unable to create an error record for this system!/n" + d.ToString(),
                     "Warning TetroXNA",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
@@ -201,7 +201,7 @@ namespace TetroXNA
                             if (computerModel.Equals(data))
                             {
                                 data = sr.ReadLine().Substring(24);
-                                if (cerialNum.Equals(data))
+                                if (serialNum.Equals(data))
                                 {
                                     data = sr.ReadLine().Substring(15);
                                     if (nameGPU.Equals(data))
@@ -304,7 +304,7 @@ namespace TetroXNA
                 searcher = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_ComputerSystemProduct");
                 foreach (ManagementObject sysProduct in searcher.Get())
                 {
-                    cerialNum = sysProduct["IdentifyingNumber"].ToString();
+                    serialNum = sysProduct["IdentifyingNumber"].ToString();
                 }
                 Console.WriteLine("Cerial Number retrieved");
             }
@@ -316,7 +316,7 @@ namespace TetroXNA
             {
                 computerName = "NA";
                 userName = "NA";
-                cerialNum = "NA";
+                serialNum = "NA";
             }
         }
     }
