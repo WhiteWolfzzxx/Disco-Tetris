@@ -17,12 +17,12 @@ namespace TetroXNA
         private DateTime currentDateTime = DateTime.Now;
         private string operatingSystem, computerName, computerManufacturer, 
             numOfCPU, numOfLogicCPU, totalRAM, nameCPU, nameGPU, serialNum, computerModel, userName, recordName;
-        private bool existingRecordFiles = true, collectPersonalPCInfo;
+        private bool existingRecordFiles = true, collectPersonalPCInfo = true;
         private int numOfRecordFiles = 0, identifyRecordNum = 0;
 
         public ErrorHandler()
         {
-            DialogResult dialogResult = MessageBox.Show(
+            /*DialogResult dialogResult = MessageBox.Show(
                 "For Devloping Perposes\nMay FlashBlock Studio Collect Data in the following:\n-Computer Name\n-User Name\n-Computer Serial Number", 
                 "Computer Sesitive Info Premission", 
                 MessageBoxButtons.YesNo,
@@ -34,7 +34,7 @@ namespace TetroXNA
             else if (dialogResult == DialogResult.No)
             {
                 collectPersonalPCInfo = false;
-            }
+            }*/
 
             gatherSystemInfo();
         }
