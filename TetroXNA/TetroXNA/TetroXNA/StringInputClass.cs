@@ -14,8 +14,8 @@ namespace TetroXNA
     {
         private bool keyDidSomething = false;
         private bool keyPressed = false;
-        private KeyboardState keyboard;
         private string playerName = "";
+        private KeyboardState keyboard;
 
         public string getName() { return playerName; }
         public bool getKeyDidSomething() { return keyDidSomething; }

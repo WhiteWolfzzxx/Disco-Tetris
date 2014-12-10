@@ -11,14 +11,14 @@ namespace TetroXNA
 {
     public class SaveGameClass
     {
-        FileStream theFileRead;
-        FileStream theFileWrite;
-        StreamReader saveRead;
-        StreamWriter saveWrite;
         private bool[,] so = new bool[10, 20];
         private int loadedScore;
         private int loadedLevel;
         private int loadedTotalClearedLines;
+        FileStream theFileRead;
+        FileStream theFileWrite;
+        StreamReader saveRead;
+        StreamWriter saveWrite;
 
         public int getLoadedScore() { return loadedScore; }
         public int getLoadedLevel() { return loadedLevel; }

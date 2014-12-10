@@ -11,23 +11,6 @@ namespace TetroXNA
     public class SingleBlockHelper
     {
         //this class is for single block properties
-        private Random random = new Random();
-        private BlockConFigClass blockConFigClass;
-        private int rotateState = 0;
-        private int locationX;
-        private int locationY;
-        private int pattern;
-        private int nextPattern = 4;
-        private int index;
-        private int level;
-        private Texture2D block;
-        private Vector2[,] lines;
-        private float moveTimer = 0.0f;
-        private float minMoveTimer = 0.1f;
-        private float downTimer = 0.0f;
-        private float minDownTimer = 0.0f;
-        private float rotateTimer = 0.0f;
-        private float minRotateTimer = 0.2f;
         private bool stopActiveBlocks; 		//This is used to syic the blocks together
         private bool canRotateBlocks = true;
         private bool cantRotateOtherBlock = false;
@@ -38,6 +21,23 @@ namespace TetroXNA
         private bool[,] store;
         private bool blockCollideBottomFlag = false;
         private bool canGoDown = true;
+        private int rotateState = 0;
+        private int locationX;
+        private int locationY;
+        private int pattern;
+        private int nextPattern = 4;
+        private int index;
+        private int level;
+        private float moveTimer = 0.0f;
+        private float minMoveTimer = 0.1f;
+        private float downTimer = 0.0f;
+        private float minDownTimer = 0.0f;
+        private float rotateTimer = 0.0f;
+        private float minRotateTimer = 0.2f;
+        private Random random = new Random();
+        private BlockConFigClass blockConFigClass;
+        private Texture2D block;
+        private Vector2[,] lines;
 
         public bool getCanGoDown() { return canGoDown;}
         public bool getBlockCollideBottom() { return blockCollideBottomFlag; }
