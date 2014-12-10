@@ -13,7 +13,6 @@ namespace TetroXNA
     public class SettingsClass
     {
         private bool spaceDidSomething = false;
-        private bool toggleFullScreen = false;
         private bool fullScreen = false;
         private int menuOption = 1;
         private int redIntensity;
@@ -27,8 +26,7 @@ namespace TetroXNA
         private MenuProperties menuProperties = new MenuProperties();
         KeyboardState keyState;
        
-        public bool getFull() { return toggleFullScreen; }
-
+        
         public SettingsClass(SpriteFont small, SpriteFont big)
         {
             bigFont = big;
