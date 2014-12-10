@@ -11,14 +11,14 @@ namespace TetroXNA
 {
     public class ErrorHandler
     {
+        private bool existingRecordFiles = true, collectPersonalPCInfo = true;
+        private int numOfRecordFiles = 0, identifyRecordNum = 0;
+        private string operatingSystem, computerName, computerManufacturer,
+            numOfCPU, numOfLogicCPU, totalRAM, nameCPU, nameGPU, serialNum, computerModel, userName, recordName;
         private FileStream fs;
         private StreamWriter sw;
         private StreamReader sr;
         private DateTime currentDateTime = DateTime.Now;
-        private string operatingSystem, computerName, computerManufacturer, 
-            numOfCPU, numOfLogicCPU, totalRAM, nameCPU, nameGPU, serialNum, computerModel, userName, recordName;
-        private bool existingRecordFiles = true, collectPersonalPCInfo = true;
-        private int numOfRecordFiles = 0, identifyRecordNum = 0;
 
         public ErrorHandler()
         {

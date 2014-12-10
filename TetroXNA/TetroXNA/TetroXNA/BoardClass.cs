@@ -13,8 +13,8 @@ namespace TetroXNA
 {
     public class BoardClass
     {
-        private Texture2D[,] blocks;
         private bool[,] store;
+        private Texture2D[,] blocks;
         private Vector2[,] lines;
 
         public BoardClass(Texture2D[,] bl, bool[,] st, Vector2[,] ln)

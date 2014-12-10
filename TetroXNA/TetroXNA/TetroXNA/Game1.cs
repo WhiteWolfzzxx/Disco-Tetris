@@ -32,8 +32,10 @@ namespace TetroXNA
         Song playBGM;
         Song menuBGM;
 
+        bool escapeDidSomething = false;
+        bool spaceDidSomething = false;
+        bool[,] store = new bool[10, 20];				//Block storing
         Vector2[,] lines = new Vector2[10, 20]; 		//block placeing grid
-        bool[,] store = new bool[10, 20];				//Block storeing
         Texture2D[,] blocks = new Texture2D[10, 20];	//Block store show
         SingleBlockHelper[] activeBlocks = new SingleBlockHelper[4];	//Blocks that the player can move
         MainMenuClass mainMenuClass;
@@ -46,8 +48,6 @@ namespace TetroXNA
         CreditClass creditClass;
         GameOverClass gameOverClass;
         KeyboardState keyState;
-        bool escapeDidSomething = false;
-        bool spaceDidSomething = false;
 
         public Game1()
         {
