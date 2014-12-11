@@ -22,12 +22,8 @@ namespace TetroXNA
         private bool blockCollideBottomFlag = false;
         private bool canGoDown = true;
         private int rotateState = 0;
-        private int locationX;
-        private int locationY;
-        private int pattern;
+        private int locationX, locationY, pattern, index, level;
         private int nextPattern = 4;
-        private int index;
-        private int level;
         private float moveTimer = 0.0f;
         private float minMoveTimer = 0.1f;
         private float downTimer = 0.0f;

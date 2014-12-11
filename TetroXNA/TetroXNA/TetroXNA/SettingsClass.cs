@@ -16,13 +16,10 @@ namespace TetroXNA
         private bool spaceDidSomething = false;
         private bool fullScreen = false;
         private int menuOption = 1;
-        private int redIntensity;
-        private int greenIntensity;
-        private int blueIntensity;
+        private int redIntensity, greenIntensity, blueIntensity;
         private float menuChangeTimer;
         private float minMenuChangeTimer = 0.1f;
-        private SpriteFont bigFont;
-        private SpriteFont smallFont;
+        private SpriteFont bigFont, smallFont;
         private Texture2D settingsTitle;
         private MenuProperties menuProperties = new MenuProperties();
         KeyboardState keyState;
@@ -114,7 +111,7 @@ namespace TetroXNA
             if (menuOption == 1)
             {
                 spriteBatch.DrawString(smallFont, "Main Menu", new Vector2(300, 250), Color.LightGray);
-                if (!fullScreen)
+                if (!fullScreen) //If not fullscreen button displays fullscreen, while fullscreen button displays windowed.
                 {
                     spriteBatch.DrawString(bigFont, "Fullscreen", new Vector2(220, 320), Color.LightGray);
                 }

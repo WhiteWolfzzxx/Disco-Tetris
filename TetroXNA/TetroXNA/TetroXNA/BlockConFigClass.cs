@@ -10,10 +10,7 @@ namespace TetroXNA
 {
     public class BlockConFigClass
     {
-        private int pattern;
-        private int index;
-        private int locationX;
-        private int locationY;
+        private int pattern, index, locationX, locationY;
         private float rTimer;
         private Texture2D block;
 

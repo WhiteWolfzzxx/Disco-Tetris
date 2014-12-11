@@ -12,9 +12,7 @@ namespace TetroXNA
     public class SaveGameClass
     {
         private bool[,] so = new bool[10, 20];
-        private int loadedScore;
-        private int loadedLevel;
-        private int loadedTotalClearedLines;
+        private int loadedScore, loadedLevel, loadedTotalClearedLines;
         FileStream theFileRead;
         FileStream theFileWrite;
         StreamReader saveRead;

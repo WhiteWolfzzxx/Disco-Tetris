@@ -26,11 +26,9 @@ namespace TetroXNA
 
         Texture2D scoreBackground;
 
-        SpriteFont bigFont;
-        SpriteFont smallFont;
+        SpriteFont bigFont, smallFont;
 
-        Song playBGM;
-        Song menuBGM;
+        Song playBGM, menuBGM;
 
         bool escapeDidSomething = false;
         bool spaceDidSomething = false;

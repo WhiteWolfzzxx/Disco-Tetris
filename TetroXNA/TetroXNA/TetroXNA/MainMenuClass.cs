@@ -12,14 +12,11 @@ namespace TetroXNA
     public class MainMenuClass
     {
         private int menuOption = 1;
-        private int redIntensity;
-        private int greenIntensity;
-        private int blueIntensity;
+        private int redIntensity, blueIntensity, greenIntensity;
         private float menuChangeTimer;
         private float minMenuChangeTimer = 0.1f;
         private Texture2D title;
-        private SpriteFont bigFont;
-        private SpriteFont smallFont;
+        private SpriteFont bigFont, smallFont;
         private MenuProperties menuProperties = new MenuProperties();
 
         public MainMenuClass(SpriteFont small, SpriteFont big)
