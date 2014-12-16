@@ -13,6 +13,8 @@ namespace TetroXNA
     {
         private bool[,] so = new bool[10, 20];
         private int loadedScore, loadedLevel, loadedTotalClearedLines;
+        private static string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
+        private string path = baseFolder + @"Save Games\savedGameData.txt";
         FileStream theFileRead;
         FileStream theFileWrite;
         StreamReader saveRead;
@@ -24,7 +26,7 @@ namespace TetroXNA
 
         public SaveGameClass()
         {
-
+            System.IO.Directory.CreateDirectory("Save Games");
         }
 
         public void Update(GameTime gameTime)
@@ -36,7 +38,7 @@ namespace TetroXNA
         {
             try
             {
-                theFileWrite = new FileStream("savedGameData.txt",
+                theFileWrite = new FileStream(path,
                                               FileMode.Create,
                                               FileAccess.Write);
                 saveWrite = new StreamWriter(theFileWrite);
@@ -57,7 +59,7 @@ namespace TetroXNA
             }
             catch
             {
-
+                
             }
         }
 
@@ -65,7 +67,7 @@ namespace TetroXNA
         {
             try
             {
-                theFileRead = new FileStream("savedGameData.txt",
+                theFileRead = new FileStream(path,
                                              FileMode.Open,
                                              FileAccess.Read);
                 saveRead = new StreamReader(theFileRead);

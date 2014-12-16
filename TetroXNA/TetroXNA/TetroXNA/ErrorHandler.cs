@@ -37,6 +37,7 @@ namespace TetroXNA
             }*/
 
             gatherSystemInfo();
+            System.IO.Directory.CreateDirectory("Error Folder");
         }
 
         public void recordError(int errorLevel, int errorCode, String helpfulInfo, String errorDetails)
@@ -46,7 +47,7 @@ namespace TetroXNA
                 //checks to see how many record files
                 while (existingRecordFiles)
                 {
-                    if (File.Exists("Error_Record_" + (numOfRecordFiles + 1) + ".txt"))
+                    if (File.Exists(@"Error Folder\Error_Record_" + (numOfRecordFiles + 1) + ".txt"))
                     {
                         numOfRecordFiles++;
                         Console.WriteLine("Found Record File");
@@ -60,7 +61,7 @@ namespace TetroXNA
                 //Check to see if there is an exsisting record for current computer
                 for (int i = 1; i <= numOfRecordFiles; i++ )
                 {
-                    if (checkFileForComputerID("Error_Record_" + i + ".txt"))
+                    if (checkFileForComputerID(@"Error Folder\Error_Record_" + i + ".txt"))
                     {
                         identifyRecordNum = i;
                         continue;
@@ -72,7 +73,7 @@ namespace TetroXNA
                 {
                     Console.WriteLine("No Matching record");
                     Console.WriteLine("Current session will be recoreded in Error_Record_" + (numOfRecordFiles + 1) + ".txt");
-                    createNewRecord("Error_Record_" + (numOfRecordFiles + 1) + ".txt");
+                    createNewRecord(@"Error Folder\Error_Record_" + (numOfRecordFiles + 1) + ".txt");
                     recordName = "Error_Record_" + (numOfRecordFiles + 1) + ".txt";
                 }
                 else
@@ -83,7 +84,7 @@ namespace TetroXNA
                 }
 
                 //APPEND FILE
-                fs = new FileStream(recordName,
+                fs = new FileStream(@"Error Folder/" + recordName,
                             FileMode.Append,
                             FileAccess.Write);
                 sw = new StreamWriter(fs);
@@ -306,11 +307,11 @@ namespace TetroXNA
                 {
                     serialNum = sysProduct["IdentifyingNumber"].ToString();
                 }
-                Console.WriteLine("Cerial Number retrieved");
+                Console.WriteLine("Serial Number retrieved");
             }
             catch 
             {
-                Console.WriteLine("Cerial Number retrieval FAILED");
+                Console.WriteLine("Serial Number retrieval FAILED");
             }
             if (!collectPersonalPCInfo)
             {
