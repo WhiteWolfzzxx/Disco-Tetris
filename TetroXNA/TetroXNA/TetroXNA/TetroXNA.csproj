@@ -97,6 +97,7 @@
     <Compile Include="SettingsClass.cs" />
     <Compile Include="SingleBlockHelper.cs" />
     <Compile Include="StringInputClass.cs" />
+    <Compile Include="TutorialClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

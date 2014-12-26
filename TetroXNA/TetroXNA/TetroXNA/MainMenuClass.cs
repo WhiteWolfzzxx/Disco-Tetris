@@ -52,13 +52,13 @@ namespace TetroXNA
             }
 
             //Resets the menu options
-            if (menuOption > 5)
+            if (menuOption > 6)
             {
                 menuOption = 1;
             }
             if (menuOption < 1)
             {
-                menuOption = 5;
+                menuOption = 6;
             }
         }
 
@@ -75,17 +75,17 @@ namespace TetroXNA
             {
                 spriteBatch.DrawString(smallFont, "Load Game", new Vector2(75, 325), Color.LightGray);
                 spriteBatch.DrawString(bigFont, "Play", new Vector2(290, 300), Color.LightGray);
-                spriteBatch.DrawString(smallFont, "High Scores", new Vector2(540, 325), Color.LightGray);
+                spriteBatch.DrawString(smallFont, "Tutorial", new Vector2(540, 325), Color.LightGray);
             }
             if (menuOption == 2)
             {
                 spriteBatch.DrawString(smallFont, "Play", new Vector2(75, 325), Color.LightGray);
-                spriteBatch.DrawString(bigFont, "High Scores", new Vector2(200, 300), Color.LightGray);
+                spriteBatch.DrawString(bigFont, "Tutorial", new Vector2(200, 300), Color.LightGray);
                 spriteBatch.DrawString(smallFont, "Settings", new Vector2(540, 325), Color.LightGray);
             }
             if (menuOption == 3)
             {
-                spriteBatch.DrawString(smallFont, "High Scores", new Vector2(75, 325), Color.LightGray);
+                spriteBatch.DrawString(smallFont, "Tutorial", new Vector2(75, 325), Color.LightGray);
                 spriteBatch.DrawString(bigFont, "Settings", new Vector2(240, 300), Color.LightGray);
                 spriteBatch.DrawString(smallFont, "Exit", new Vector2(540, 325), Color.LightGray);
             }
@@ -93,11 +93,17 @@ namespace TetroXNA
             {
                 spriteBatch.DrawString(smallFont, "Settings", new Vector2(75, 325), Color.LightGray);
                 spriteBatch.DrawString(bigFont, "Exit", new Vector2(290, 300), Color.LightGray);
-                spriteBatch.DrawString(smallFont, "Load Game", new Vector2(540, 325), Color.LightGray);
+                spriteBatch.DrawString(smallFont, "High Scores", new Vector2(540, 325), Color.LightGray);
             }
             if (menuOption == 5)
             {
                 spriteBatch.DrawString(smallFont, "Exit", new Vector2(75, 325), Color.LightGray);
+                spriteBatch.DrawString(bigFont, "High Scores", new Vector2(200, 300), Color.LightGray);
+                spriteBatch.DrawString(smallFont, "Load Game", new Vector2(540, 325), Color.LightGray);
+            }
+            if (menuOption == 6)
+            {
+                spriteBatch.DrawString(smallFont, "High Scores", new Vector2(75, 325), Color.LightGray);
                 spriteBatch.DrawString(bigFont, "Load Game", new Vector2(200, 300), Color.LightGray);
                 spriteBatch.DrawString(smallFont, "Play", new Vector2(540, 325), Color.LightGray);
             }
@@ -113,11 +119,11 @@ namespace TetroXNA
                     return 1;
 
                 case 2:
-                    //High Scores
+                    //Tutroial
                     return 2;
 
                 case 3:
-                    //Controls
+                    //Settings
                     return 3;
 
                 case 4:
@@ -125,8 +131,12 @@ namespace TetroXNA
                     return 4;
 
                 case 5:
-                    //Load Game
+                    //High Scores
                     return 5;
+
+                case 6:
+                    //Load Game
+                    return 6;
 
                 default:
                     //Nothing is happening

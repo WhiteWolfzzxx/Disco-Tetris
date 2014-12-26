@@ -21,7 +21,7 @@ namespace TetroXNA
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        enum GameStates { CreditScreen, MainMenu, Playing, GameOver, HighScoreScreen, PauseGame, Debug, Controls };
+        enum GameStates { CreditScreen, MainMenu, Playing, GameOver, HighScoreScreen, PauseGame, Debug, Controls, Tutroial };
         GameStates gameState = GameStates.CreditScreen;
 
         Texture2D scoreBackground;
@@ -40,6 +40,7 @@ namespace TetroXNA
         ScoreClass scoreClass = new ScoreClass();
         SaveGameClass saveGameClass = new SaveGameClass();
         ErrorHandler errorHandler = new ErrorHandler();
+        TutorialClass tutorialClass = new TutorialClass();
         SettingsClass settingsClass;
         BoardClass boardClass;
         BlockHelper blockHelper;
@@ -197,7 +198,17 @@ namespace TetroXNA
                                 break;
 
                             case 2:
-                                gameState = GameStates.HighScoreScreen;
+                                store = boardClass.resetStore();
+                                for (int i = 0; i < activeBlocks.Length; i++)
+                                {
+                                    activeBlocks[i].setStore(store);
+                                    activeBlocks[i].resetPlayerBlockPos();
+                                }
+                                blockHelper.setLevel(1);
+                                blockHelper.setScore(0);
+                                gameState = GameStates.Tutroial;
+                                 MediaPlayer.Stop();
+                                MediaPlayer.Play(playBGM);
                                 break;
 
                             case 3:
@@ -209,6 +220,10 @@ namespace TetroXNA
                                 break;
 
                             case 5:
+                                gameState = GameStates.HighScoreScreen;
+                                break;
+
+                            case 6:
                                 store = saveGameClass.loadGameData();
                                 for (int i = 0; i < activeBlocks.Length; i++)
                                 {
@@ -231,7 +246,8 @@ namespace TetroXNA
                 }
 
                 if ((gameState == GameStates.Playing) ||
-                    (gameState == GameStates.Debug))
+                    (gameState == GameStates.Debug) ||
+                    (gameState == GameStates.Tutroial && !tutorialClass.getIsTutorialPaused())) //DO NOT update if tutorial needs to show hint
                 {
                     blockHelper.setActiveBlocks(activeBlocks);
                     blockHelper.BlockHelperUpdate(gameTime);		//The Method that asks questions about all player blocks
@@ -374,7 +390,8 @@ namespace TetroXNA
 
                 if ((gameState == GameStates.Playing) ||
                     (gameState == GameStates.PauseGame) ||
-                    (gameState == GameStates.Debug))
+                    (gameState == GameStates.Debug) ||
+                    (gameState == GameStates.Tutroial))
                 {
 
                     spriteBatch.Draw(scoreBackground, new Vector2(316, 0), Color.White);
