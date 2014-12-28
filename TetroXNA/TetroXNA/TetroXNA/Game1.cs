@@ -40,7 +40,7 @@ namespace TetroXNA
         ScoreClass scoreClass = new ScoreClass();
         SaveGameClass saveGameClass = new SaveGameClass();
         ErrorHandler errorHandler = new ErrorHandler();
-        TutorialClass tutorialClass = new TutorialClass();
+        TutorialClass tutorialClass;
         SettingsClass settingsClass;
         BoardClass boardClass;
         BlockHelper blockHelper;
@@ -120,6 +120,10 @@ namespace TetroXNA
 
                 //GameOver Class
                 gameOverClass = new GameOverClass(bigFont);
+
+                //Tutorial Class
+                tutorialClass = new TutorialClass(smallFont);
+                tutorialClass.LoadContent(Content);
 
                 #endregion
             }
@@ -294,6 +298,11 @@ namespace TetroXNA
                     }
                 }
 
+                if (gameState == GameStates.Tutroial)
+                {
+                    tutorialClass.Update(gameTime);
+                }
+
                 if (gameState == GameStates.Debug)
                 {
 
@@ -449,6 +458,11 @@ namespace TetroXNA
                 if (gameState == GameStates.HighScoreScreen)
                 {
                     scoreClass.Draw(spriteBatch, smallFont);
+                }
+
+                if (gameState == GameStates.Tutroial)
+                {
+                    tutorialClass.Draw(spriteBatch);
                 }
 
                 spriteBatch.End();
