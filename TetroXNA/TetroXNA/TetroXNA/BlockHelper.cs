@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Media;
 namespace TetroXNA
 {
     //Class is for general properties of multiple block interactions
+    //Mainly for the interaction of the four blocks controlled by the player and how it interacts with the stored blocks
     public class BlockHelper
     {
         private SingleBlockHelper[] activeBlocks;
@@ -72,6 +73,7 @@ namespace TetroXNA
             playBGM = pl;
         }
 
+        //tasks in update order
         public void BlockHelperUpdate(GameTime gameTime) 			////////////////UPADATE!!!!!
         {
             lineCheckTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -87,6 +89,8 @@ namespace TetroXNA
             lineDetection();
             levelDetection();
             randomColors();
+
+            //corrects the blocks so they are on the same level
             for (int i = 0; i < activeBlocks.Length; i++)
             {
                 activeBlocks[i].setLevel(level);

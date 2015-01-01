@@ -11,26 +11,29 @@ namespace TetroXNA
     public class SingleBlockHelper
     {
         //this class is for single block properties
-        private bool stopActiveBlocks; 		//This is used to syic the blocks together
-        private bool canRotateBlocks = true;
-        private bool cantRotateOtherBlock = false;
-        private bool canGoLeft = true;
-        private bool otherCantGoLeft = false;
-        private bool canGoRight = true;
-        private bool otherCantGoRight = false;
         private bool[,] store;
-        private bool blockCollideBottomFlag = false;
-        private bool canGoDown = true;
-        private int rotateState = 0;
-        private int locationX, locationY, pattern, index, level;
-        private int redIntensity, blueIntensity, greenIntensity;
-        private int nextPattern = 4;
-        private float moveTimer = 0.0f;
-        private float minMoveTimer = 0.1f;
-        private float downTimer = 0.0f;
-        private float minDownTimer = 0.0f;
-        private float rotateTimer = 0.0f;
-        private float minRotateTimer = 0.2f;
+        private bool
+            stopActiveBlocks, 		//This is used to syic the blocks together
+            canRotateBlocksFlag = true,
+            cantRotateOtherBlockFlag = false,
+            canGoLeftFlag = true,
+            otherCantGoLeftFlag = false,
+            canGoRightFlag = true,
+            otherCantGoRightFlag = false,        
+            blockCollideBottomFlag = false,
+            canGoDown = true;
+        private int 
+            rotateState = 0,
+            locationX, locationY, pattern, index, level,
+            redIntensity, blueIntensity, greenIntensity,
+            nextPattern = 4;
+        private float 
+            moveTimer = 0.0f,
+            minMoveTimer = 0.1f,
+            downTimer = 0.0f,
+            minDownTimer = 0.0f,
+            rotateTimer = 0.0f,
+            minRotateTimer = 0.2f;
         private Random random = new Random();
         private MenuProperties menuProperties = new MenuProperties();
         private BlockConFigClass blockConFigClass;
@@ -40,9 +43,9 @@ namespace TetroXNA
         public bool getCanGoDown() { return canGoDown;}
         public bool getBlockCollideBottom() { return blockCollideBottomFlag; }
         public bool getStopActiveBlocks() { return stopActiveBlocks; }
-        public bool getCanRotateBlocks() { return canRotateBlocks; }
-        public bool getCanGoLeft() { return canGoLeft; }
-        public bool getCanGoRight() { return canGoRight; }
+        public bool getCanRotateBlocks() { return canRotateBlocksFlag; }
+        public bool getCanGoLeft() { return canGoLeftFlag; }
+        public bool getCanGoRight() { return canGoRightFlag; }
         public int getPattern() { return pattern; }
         public int getNextPattern() { return nextPattern; }
         public float getMinTimer() { return minDownTimer; }
@@ -50,9 +53,9 @@ namespace TetroXNA
         public void setCanGoDown(bool cd) { canGoDown = cd; }
         public void setBlockCollideBottom(bool bcb) { blockCollideBottomFlag = bcb; } 
         public void setStopActiveBlocks(bool stop) { stopActiveBlocks = stop; }
-        public void setCantRotateOtherBlocks(bool rotate) { cantRotateOtherBlock = rotate; }
-        public void setOtherCantGoLeft(bool left) { otherCantGoLeft = left; }
-        public void setOtherCantGoRight(bool right) { otherCantGoRight = right; }
+        public void setCantRotateOtherBlocks(bool rotate) { cantRotateOtherBlockFlag = rotate; }
+        public void setOtherCantGoLeft(bool left) { otherCantGoLeftFlag = left; }
+        public void setOtherCantGoRight(bool right) { otherCantGoRightFlag = right; }
         public void setStore(bool[,] st) { store = st; }
         public void setLevel(int lv) { level = lv; }
         public void setNextPattern(int patt) { nextPattern = patt; }
@@ -84,20 +87,13 @@ namespace TetroXNA
             greenIntensity = menuProperties.getGreen();
             menuProperties.colorChanger();
 
-            canRotateBlock();
-            checkLeft();
-            checkRight();
+            canRotateBlockFlag();
+            checkLeftFlag();
+            checkRightFlag();
 
-            //Stores location of player controled blocks when collides
-            if ((locationY == 19) || (store[locationX, (locationY + 1)] == true) || (stopActiveBlocks == true))
-            {
-                blockCollideBottomFlag = true;
-                //savePositions();
-            }
-            else
-            {
-                blockCollideBottomFlag = false;
-            }
+            //Flag if the bottom of the blocks are hitting something
+            //boolean if statment compressed
+            blockCollideBottomFlag = ((locationY == 19) || (store[locationX, (locationY + 1)] == true) || (stopActiveBlocks == true));
 
             //PlayerBlock will move downward forcefully HAHAHA!!!!
             if ((downTimer >= minDownTimer) && canGoDown)
@@ -108,6 +104,7 @@ namespace TetroXNA
             return store;
         }
 
+        //records the location of the player controlled blocks
         public void savePositions()
         {
             stopActiveBlocks = true;
@@ -115,83 +112,58 @@ namespace TetroXNA
         }
 
         //Checks to see if blocks can go right
-        private void checkRight()
+        private void checkRightFlag()
         {
-            if ((locationX == 9) ||
-                store[(locationX + 1), locationY])
-            {
-                canGoRight = false;
-            }
-            else
-            {
-                canGoRight = true;
-            }
+            canGoRightFlag = !((locationX == 9) || store[(locationX + 1), locationY]);
         }
 
         //Checks to see if blocks can go left
-        private void checkLeft()
+        private void checkLeftFlag()
         {
-            if ((locationX == 0) ||
-                store[(locationX - 1), locationY])
-            {
-                canGoLeft = false;
-            }
-            else
-            {
-                canGoLeft = true;
-            }
+            canGoLeftFlag = !((locationX == 0) || store[(locationX - 1), locationY]);
         }
 
         //Checks to detect other blocks or bounderies to rotate
-        private void canRotateBlock()
+        private void canRotateBlockFlag()
         {
-            if ((locationY == 0) ||
+            canRotateBlocksFlag = !(
+                (locationY == 0) ||
                 (locationX == 0) ||
                 (locationX == 9) ||
                 (store[(locationX - 1), locationY] == true) ||
-                (store[(locationX + 1), locationY] == true))
-            {
-                canRotateBlocks = false;
-            }
-            else
-            {
-                canRotateBlocks = true;
-            }
+                (store[(locationX + 1), locationY] == true));
         }
 
+        //CONTROL DETECTION AND FUNTION HERE
         private void HandleKeyboardInput(KeyboardState keyState, bool[,] store)
         {
-            if ((keyState.IsKeyDown(Keys.Up)) && canRotateBlocks && !cantRotateOtherBlock)
+            //Checks flags to rotate
+            if ((keyState.IsKeyDown(Keys.Up)) && canRotateBlocksFlag && !cantRotateOtherBlockFlag)
             {
                 locationX = blockConFigClass.rotatePattern(locationX, locationY, rotateTimer, minRotateTimer, rotateState, 1);
                 locationY = blockConFigClass.rotatePattern(locationX, locationY, rotateTimer, minRotateTimer, rotateState, 2);
                 rotateState = blockConFigClass.rotatePattern(locationX, locationY, rotateTimer, minRotateTimer, rotateState, 3);
 
                 if (blockConFigClass.getRotateTimer() == 0.0f)
-                {
                     rotateTimer = 0.0f;
-                }
             }
+            //Shorten the minDown Timer to make the blocks fall faster
+            //LEVEL INCRIMENT SPEED AGORITHEM IS HERE
             if (keyState.IsKeyDown(Keys.Down))
             {
                 minDownTimer = 0.05f;
                 if (locationY >= 19)
-                {
                     locationY = 19;
-                }
             }
             else
             {
                 if (level < 6)
-                {
                     minDownTimer = 1.0f - ((level - 1) * 0.2f);
-                }
                 else
-                {
                     minDownTimer = 0.1f;
-                }
             }
-            if (keyState.IsKeyDown(Keys.Left) && canGoLeft && !otherCantGoLeft)
+            //Checks flags to go left
+            if (keyState.IsKeyDown(Keys.Left) && canGoLeftFlag && !otherCantGoLeftFlag)
             {
                 if (moveTimer >= minMoveTimer)
                 {
@@ -199,9 +171,9 @@ namespace TetroXNA
                     moveTimer = 0.0f;
                 }
                 checkBounds(store);
-
             }
-            if (keyState.IsKeyDown(Keys.Right) && canGoRight && !otherCantGoRight)
+            //Checks flags to go right
+            if (keyState.IsKeyDown(Keys.Right) && canGoRightFlag && !otherCantGoRightFlag)
             {
                 if (moveTimer >= minMoveTimer)
                 {
@@ -212,40 +184,35 @@ namespace TetroXNA
             }
         }
 
+        //Constructor for player controled blocks
+        //PATTERN ALGORITHEM HERE
         public void resetBlocks()
         {
             pattern = nextPattern;
             nextPattern = random.Next(1, 8);		////////////THIS IS THE PATTERN RANDOMIZER: CHANGE WHEN TESTING!!!!!
             blockConFigClass = new BlockConFigClass(pattern, index, block);
-            locationX = blockConFigClass.resetPattern("X");
-            locationY = blockConFigClass.resetPattern("Y");
+            resetPlayerBlockPos();
             rotateState = 0;
         }
 
+        //Constructor refrance to relocate player controled blocks
         public void resetPlayerBlockPos()
         {
             locationX = blockConFigClass.resetPattern("X");
             locationY = blockConFigClass.resetPattern("Y");
         }
 
+        //Colision detections for player blocks
         private void checkBounds(bool[,] store)
         {
             if (locationX > 9)
-            {
                 locationX = 9;
-            }
             else if (locationX < 0)
-            {
                 locationX = 0;
-            }
             else if (store[locationX, locationY] == true)
-            {
                 locationX -= 1;
-            }
             else if (store[locationX, locationY] == true)
-            {
                 locationX += 1;
-            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
