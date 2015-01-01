@@ -15,23 +15,25 @@ namespace TetroXNA
     //Mainly for the interaction of the four blocks controlled by the player and how it interacts with the stored blocks
     public class BlockHelper
     {
+        private bool[,] store;
+        private int 
+            pattern = 2,
+            score,
+            level = 1,
+            totalClearedLines = 0,
+            clearedLines = 0;
+        private float 
+            lineCheckTimer = 0.2f,
+            minLineCheckTimer = 1.0f,
+            randTimer,
+            minRandTimer = 0.01f,
+            stopBlocksTimer;
+        private Song playBGM;
         private SingleBlockHelper[] activeBlocks;
         private Color[] color = new Color[10];
         private Color[,] blockColor = new Color[10, 20];
         private Random random = new Random();
         private Vector2[,] lines;
-        private bool[,] store;
-        private int pattern = 2;
-        private int score;
-        private int level = 1;
-        private int totalClearedLines = 0;
-        private int clearedLines = 0;
-        private float lineCheckTimer = 0.2f;
-        private float minLineCheckTimer = 1.0f;
-        private float randTimer;
-        private float minRandTimer = 0.01f;
-        private float stopBlocksTimer;
-        private Song playBGM;
 
         public int getLevel() { return level; }
         public int getTotalClearedLines() { return totalClearedLines; }
@@ -56,15 +58,16 @@ namespace TetroXNA
             color[8] = Color.Brown;
             color[9] = Color.MintCream;
 
+            //sets all colors
+            //TODO set to random color
             for (int x = 0; x < 10; x++)
             {
                 for (int y = 0; y < 20; y++)
-                {
-                    blockColor[x, y] = Color.LightGray;
-                }
+                    blockColor[x, y] = color[3];
             }
         }
 
+        //Constructor
         public BlockHelper(SingleBlockHelper[] atb, Vector2[,] ln, bool[,] st, Song pl)
         {
             activeBlocks = atb;
@@ -92,28 +95,28 @@ namespace TetroXNA
 
             //corrects the blocks so they are on the same level
             for (int i = 0; i < activeBlocks.Length; i++)
-            {
                 activeBlocks[i].setLevel(level);
-            }
         }
 
+        //block hits bottom algorithem
+        //controls the steps to eventally save the positions
         private void stopBlocks()
         {
-            if (activeBlocks[0].getBlockCollideBottom() ||
-                activeBlocks[1].getBlockCollideBottom() ||
-                activeBlocks[2].getBlockCollideBottom() ||
-                activeBlocks[3].getBlockCollideBottom())
+            //If one playerblock has something under it
+            //Stops other player blocks going down if one can't and timer counts down then save positions
+            if (activeBlocks[0].getBlockCollideBottomFlag() ||
+                activeBlocks[1].getBlockCollideBottomFlag() ||
+                activeBlocks[2].getBlockCollideBottomFlag() ||
+                activeBlocks[3].getBlockCollideBottomFlag())
             {
                 for (int i = 0; i < activeBlocks.Length; i++)
-                {
-                    activeBlocks[i].setCanGoDown(false);
-                }
+                    activeBlocks[i].setCanGoDownFlag(false);
                 if (stopBlocksTimer >= activeBlocks[0].getMinTimer())
                 {
                     for (int i = 0; i < activeBlocks.Length; i++)
                     {
                         activeBlocks[i].savePositions();
-                        activeBlocks[i].setBlockCollideBottom(false);
+                        activeBlocks[i].setBlockCollideBottomFlag(false);
                     }
                     stopBlocksTimer = 0.0f;
                 }
@@ -122,12 +125,11 @@ namespace TetroXNA
             {
                 stopBlocksTimer = 0.0f;
                 for (int i = 0; i < activeBlocks.Length; i++)
-                {
-                    activeBlocks[i].setCanGoDown(true);
-                }
+                    activeBlocks[i].setCanGoDownFlag(true);
             }
         }
 
+        //LEVEL ALGORITHEM
         private void levelDetection()
         {
             if (clearedLines >= 10)
@@ -138,6 +140,7 @@ namespace TetroXNA
             }
         }
 
+        //Save blocks color randomizer
         private void randomColors()
         {
             if (randTimer > minRandTimer)
@@ -147,10 +150,16 @@ namespace TetroXNA
             }
         }
 
+        //Controls how lines are cleared and found
+        //Controls scoreing when a line is cleared
         private void lineDetection()
         {
             if (lineCheckTimer >= minLineCheckTimer)
             {
+                //Logic:
+                //checks top to down for a full line
+                //from found line it shifts the block above down 1
+                //Timer is present to reduce bug errors
                 for (int i = 1; i < 20; i++)
                 {
                     if ((store[0, i] && store[1, i] && store[2, i] && store[3, i] && store[4, i] &&
@@ -181,10 +190,10 @@ namespace TetroXNA
         //Resets player blocks for the next pattern
         private void resetPlayerBlocks()
         {
-            if ((activeBlocks[0].getStopActiveBlocks() == true) &&
-                (activeBlocks[1].getStopActiveBlocks() == true) &&
-                (activeBlocks[2].getStopActiveBlocks() == true) &&
-                (activeBlocks[3].getStopActiveBlocks() == true))
+            if ((activeBlocks[0].getStopActiveBlocks()) &&
+                (activeBlocks[1].getStopActiveBlocks()) &&
+                (activeBlocks[2].getStopActiveBlocks()) &&
+                (activeBlocks[3].getStopActiveBlocks()))
             {
                 for (int i = 0; i < activeBlocks.Length; i++)
                 {
@@ -198,92 +207,79 @@ namespace TetroXNA
         private void UpdatePlayerClass(GameTime gameTime)
         {
             for (int i = 0; i < activeBlocks.Length; i++)
-            {
                 store = activeBlocks[i].SingleBlockHelperUpdate(gameTime);
-            }
         }
 
         //Detects other blocks to see if they can't go Right
         private void canGoRight()
         {
-            if ((activeBlocks[0].getCanGoRight() == true) &&
-                (activeBlocks[1].getCanGoRight() == true) &&
-                (activeBlocks[2].getCanGoRight() == true) &&
-                (activeBlocks[3].getCanGoRight() == true))
+            if ((activeBlocks[0].getCanGoRightFlag()) &&
+                (activeBlocks[1].getCanGoRightFlag()) &&
+                (activeBlocks[2].getCanGoRightFlag()) &&
+                (activeBlocks[3].getCanGoRightFlag()))
             {
                 for (int i = 0; i < activeBlocks.Length; i++)
-                {
-                    activeBlocks[i].setOtherCantGoRight(false);
-                }
+                    activeBlocks[i].setOtherCantGoRightFlag(false);
             }
             else
             {
                 for (int i = 0; i < activeBlocks.Length; i++)
-                {
-                    activeBlocks[i].setOtherCantGoRight(true);
-                }
+                    activeBlocks[i].setOtherCantGoRightFlag(true);
             }
         }
 
         //Detects other blocks to see if they can't go left
         private void canGoLeft()
         {
-            if ((activeBlocks[0].getCanGoLeft() == true) &&
-                (activeBlocks[1].getCanGoLeft() == true) &&
-                (activeBlocks[2].getCanGoLeft() == true) &&
-                (activeBlocks[3].getCanGoLeft() == true))
+            if ((activeBlocks[0].getCanGoLeftFlag()) &&
+                (activeBlocks[1].getCanGoLeftFlag()) &&
+                (activeBlocks[2].getCanGoLeftFlag()) &&
+                (activeBlocks[3].getCanGoLeftFlag()))
             {
                 for (int i = 0; i < activeBlocks.Length; i++)
-                {
-                    activeBlocks[i].setOtherCantGoLeft(false);
-                }
+                    activeBlocks[i].setOtherCantGoLeftFlag(false);
             }
             else
             {
                 for (int i = 0; i < activeBlocks.Length; i++)
-                {
-                    activeBlocks[i].setOtherCantGoLeft(true);
-                }
+                    activeBlocks[i].setOtherCantGoLeftFlag(true);
             }
         }
 
         //Block syic detect and reasign so all blocks stop
+        //AKA if one player controled block stops all stop
         private void syncActiveBlocks()
         {
-            if ((activeBlocks[0].getStopActiveBlocks() == true) ||
-                (activeBlocks[1].getStopActiveBlocks() == true) ||
-                (activeBlocks[2].getStopActiveBlocks() == true) ||
-                (activeBlocks[3].getStopActiveBlocks() == true))
+            if ((activeBlocks[0].getStopActiveBlocks()) ||
+                (activeBlocks[1].getStopActiveBlocks()) ||
+                (activeBlocks[2].getStopActiveBlocks()) ||
+                (activeBlocks[3].getStopActiveBlocks()))
             {
                 for (int i = 0; i < activeBlocks.Length; i++)
-                {
                     activeBlocks[i].setStopActiveBlocks(true);
-                }
             }
         }
 
         //Detects other blocks to see if they can't rotate and assigns other blocks to stop rotation
+        //If one player block can't rotate, none can
         private void canRotateBlocks()
         {
-            if ((activeBlocks[0].getCanRotateBlocks() == true) &&
-                (activeBlocks[1].getCanRotateBlocks() == true) &&
-                (activeBlocks[2].getCanRotateBlocks() == true) &&
-                (activeBlocks[3].getCanRotateBlocks() == true))
+            if ((activeBlocks[0].getCanRotateBlocksFlag() == true) &&
+                (activeBlocks[1].getCanRotateBlocksFlag() == true) &&
+                (activeBlocks[2].getCanRotateBlocksFlag() == true) &&
+                (activeBlocks[3].getCanRotateBlocksFlag() == true))
             {
                 for (int i = 0; i < activeBlocks.Length; i++)
-                {
-                    activeBlocks[i].setCantRotateOtherBlocks(false);
-                }
+                    activeBlocks[i].setCantRotateOtherBlocksFlag(false);
             }
             else
             {
                 for (int i = 0; i < activeBlocks.Length; i++)
-                {
-                    activeBlocks[i].setCantRotateOtherBlocks(true);
-                }
+                    activeBlocks[i].setCantRotateOtherBlocksFlag(true);
             }
         }
 
+        //Load textures for player blocks
         public SingleBlockHelper[] loadPlayerBlocks(ContentManager Content)
         {
             for (int i = 0; i < activeBlocks.Length; i++)
@@ -300,6 +296,8 @@ namespace TetroXNA
             return activeBlocks;
         }
 
+        //Draw all store[] blocks
+        //If store[z,i] == true then show that block on screen
         public void Draw(SpriteBatch spriteBatch, Texture2D[,] blocks)
         {
             for (int z = 0; z < 10; z++)
@@ -307,9 +305,7 @@ namespace TetroXNA
                 for (int i = 0; i < 20; i++)
                 {
                     if (store[z, i] == true)
-                    {
                         spriteBatch.Draw(blocks[z, i], lines[z, i], blockColor[z, i]);
-                    }
                 }
             }
         }

@@ -21,7 +21,7 @@ namespace TetroXNA
             canGoRightFlag = true,
             otherCantGoRightFlag = false,        
             blockCollideBottomFlag = false,
-            canGoDown = true;
+            canGoDownFlag = true;
         private int 
             rotateState = 0,
             locationX, locationY, pattern, index, level,
@@ -40,22 +40,22 @@ namespace TetroXNA
         private Texture2D block;
         private Vector2[,] lines;
 
-        public bool getCanGoDown() { return canGoDown;}
-        public bool getBlockCollideBottom() { return blockCollideBottomFlag; }
+        public bool getCanGoDownFlag() { return canGoDownFlag;}
+        public bool getBlockCollideBottomFlag() { return blockCollideBottomFlag; }
         public bool getStopActiveBlocks() { return stopActiveBlocks; }
-        public bool getCanRotateBlocks() { return canRotateBlocksFlag; }
-        public bool getCanGoLeft() { return canGoLeftFlag; }
-        public bool getCanGoRight() { return canGoRightFlag; }
+        public bool getCanRotateBlocksFlag() { return canRotateBlocksFlag; }
+        public bool getCanGoLeftFlag() { return canGoLeftFlag; }
+        public bool getCanGoRightFlag() { return canGoRightFlag; }
         public int getPattern() { return pattern; }
         public int getNextPattern() { return nextPattern; }
         public float getMinTimer() { return minDownTimer; }
 
-        public void setCanGoDown(bool cd) { canGoDown = cd; }
-        public void setBlockCollideBottom(bool bcb) { blockCollideBottomFlag = bcb; } 
+        public void setCanGoDownFlag(bool cd) { canGoDownFlag = cd; }
+        public void setBlockCollideBottomFlag(bool bcb) { blockCollideBottomFlag = bcb; } 
         public void setStopActiveBlocks(bool stop) { stopActiveBlocks = stop; }
-        public void setCantRotateOtherBlocks(bool rotate) { cantRotateOtherBlockFlag = rotate; }
-        public void setOtherCantGoLeft(bool left) { otherCantGoLeftFlag = left; }
-        public void setOtherCantGoRight(bool right) { otherCantGoRightFlag = right; }
+        public void setCantRotateOtherBlocksFlag(bool rotate) { cantRotateOtherBlockFlag = rotate; }
+        public void setOtherCantGoLeftFlag(bool left) { otherCantGoLeftFlag = left; }
+        public void setOtherCantGoRightFlag(bool right) { otherCantGoRightFlag = right; }
         public void setStore(bool[,] st) { store = st; }
         public void setLevel(int lv) { level = lv; }
         public void setNextPattern(int patt) { nextPattern = patt; }
@@ -96,7 +96,7 @@ namespace TetroXNA
             blockCollideBottomFlag = ((locationY == 19) || (store[locationX, (locationY + 1)] == true) || (stopActiveBlocks == true));
 
             //PlayerBlock will move downward forcefully HAHAHA!!!!
-            if ((downTimer >= minDownTimer) && canGoDown)
+            if ((downTimer >= minDownTimer) && canGoDownFlag)
             {
                 locationY += 1;
                 downTimer = 0.0f;
