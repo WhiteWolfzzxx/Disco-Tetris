@@ -15,6 +15,7 @@ namespace TetroXNA
     {
         private bool tutorialPaused = true;
         private bool showMessage = true;
+        private bool gotoMenu = false;
         private float timer = 0.0f;
         private float minTimer = 1.0f;
         private Texture2D tutorialBackground;
@@ -22,6 +23,10 @@ namespace TetroXNA
         private int messageNum = 1;
         private Vector2[] messageLinePos = new Vector2[10];
 
+        public void setGotoMenu(bool gt) { gotoMenu = gt; }
+        public void setMessageNum(int mn) { messageNum = mn; }
+
+        public bool getGotoMenu() { return gotoMenu; }
         public bool getIsTutorialPaused() { return tutorialPaused; }
 
         public TutorialClass(SpriteFont ft)
@@ -38,6 +43,10 @@ namespace TetroXNA
             tutorialBackground = Content.Load<Texture2D>(@"Textures\tutorialBack");
         }
 
+        //Tutorial Logic
+        //constructors at the menu will reset this class
+        //each state is the message num
+        //message num incriments every time the timer reachs it's set limit allowing the player to play
         public void Update(GameTime gameTime)
         {
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -114,7 +123,12 @@ namespace TetroXNA
             {
                 if (timer > 5.0f)
                 {
-
+                    tutorialPaused = true;
+                    showMessage = true;
+                    if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    {
+                        gotoMenu = true;
+                    }
                 }
             }
         }
@@ -160,6 +174,14 @@ namespace TetroXNA
                         spriteBatch.DrawString(font, "Hold the down arrow on ", messageLinePos[1], Color.White);
                         spriteBatch.DrawString(font, "your keyboard", messageLinePos[2], Color.White);
                         spriteBatch.DrawString(font, "Press the down arrow", messageLinePos[4], Color.White);
+                        break;
+                    case 6:
+                        spriteBatch.DrawString(font, "Congradulations", messageLinePos[0], Color.White);
+                        spriteBatch.DrawString(font, "you have completed the ", messageLinePos[1], Color.White);
+                        spriteBatch.DrawString(font, "tutorial.  Now go to", messageLinePos[2], Color.White);
+                        spriteBatch.DrawString(font, "menu and select play", messageLinePos[3], Color.White);
+                        spriteBatch.DrawString(font, "press space to exit", messageLinePos[5], Color.White);
+                        spriteBatch.DrawString(font, "the tutorial", messageLinePos[6], Color.White);
                         break;
                     default:
 

@@ -53,6 +53,7 @@ namespace TetroXNA
         public void setOtherCantGoRight(bool right) { otherCantGoRight = right; }
         public void setStore(bool[,] st) { store = st; }
         public void setLevel(int lv) { level = lv; }
+        public void setNextPattern(int patt) { nextPattern = patt; }
 
         public SingleBlockHelper(int locationX1, int locationY1, Texture2D block1, Vector2[,] lns, int patt, int inx, bool[,] st)
         {

@@ -202,16 +202,31 @@ namespace TetroXNA
                                 break;
 
                             case 2:
+                                //run constructors for tutorial
                                 store = boardClass.resetStore();
                                 for (int i = 0; i < activeBlocks.Length; i++)
                                 {
+                                    activeBlocks[i].setNextPattern(2);
+                                    activeBlocks[i].resetBlocks();
                                     activeBlocks[i].setStore(store);
                                     activeBlocks[i].resetPlayerBlockPos();
                                 }
+                                store[0, 19] = true;
+                                store[1, 19] = true;
+                                store[2, 19] = true;
+                                store[3, 19] = true;
+                                store[4, 19] = false;
+                                store[5, 19] = true;
+                                store[6, 19] = true;
+                                store[7, 19] = true;
+                                store[8, 19] = true;
+                                store[9, 19] = true;
                                 blockHelper.setLevel(1);
                                 blockHelper.setScore(0);
+                                tutorialClass.setMessageNum(1);
+                                tutorialClass.setGotoMenu(false);
                                 gameState = GameStates.Tutroial;
-                                 MediaPlayer.Stop();
+                                MediaPlayer.Stop();
                                 MediaPlayer.Play(playBGM);
                                 break;
 
@@ -301,6 +316,11 @@ namespace TetroXNA
                 if (gameState == GameStates.Tutroial)
                 {
                     tutorialClass.Update(gameTime);
+                    if (tutorialClass.getGotoMenu() && !spaceDidSomething)
+                    {
+                        gameState = GameStates.MainMenu;
+                        spaceDidSomething = true;
+                    }
                 }
 
                 if (gameState == GameStates.Debug)
@@ -463,6 +483,7 @@ namespace TetroXNA
                 if (gameState == GameStates.Tutroial)
                 {
                     tutorialClass.Draw(spriteBatch);
+                    spriteBatch.DrawString(smallFont, "game1 store " + store[9,19].ToString(), new Vector2(400,10), Color.Blue);
                 }
 
                 spriteBatch.End();
