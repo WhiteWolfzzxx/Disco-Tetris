@@ -44,14 +44,14 @@ namespace TetroXNA
         public void setActiveBlocks(SingleBlockHelper[] atb) { activeBlocks = atb; }
         public void setColors()
         {
-            color[0] = Color.LightGray;
-            color[1] = Color.Blue;
+            color[0] = Color.Red;
+            color[1] = Color.Orange;
             color[2] = Color.Yellow;
             color[3] = Color.Green;
-            color[4] = Color.Orange;
-            color[5] = Color.Purple;
-            color[6] = Color.Red;
-            color[7] = Color.Silver;
+            color[4] = Color.Blue;
+            color[5] = Color.Indigo;
+            color[6] = Color.Violet;
+            color[7] = Color.Pink;
             color[8] = Color.Brown;
             color[9] = Color.MintCream;
 

@@ -23,6 +23,7 @@ namespace TetroXNA
         private bool canGoDown = true;
         private int rotateState = 0;
         private int locationX, locationY, pattern, index, level;
+        private int redIntensity, blueIntensity, greenIntensity;
         private int nextPattern = 4;
         private float moveTimer = 0.0f;
         private float minMoveTimer = 0.1f;
@@ -31,6 +32,7 @@ namespace TetroXNA
         private float rotateTimer = 0.0f;
         private float minRotateTimer = 0.2f;
         private Random random = new Random();
+        private MenuProperties menuProperties = new MenuProperties();
         private BlockConFigClass blockConFigClass;
         private Texture2D block;
         private Vector2[,] lines;
@@ -75,6 +77,12 @@ namespace TetroXNA
             moveTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             downTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             rotateTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            //set colors
+            redIntensity = menuProperties.getRed();
+            blueIntensity = menuProperties.getBlue();
+            greenIntensity = menuProperties.getGreen();
+            menuProperties.colorChanger();
 
             canRotateBlock();
             checkLeft();
@@ -242,7 +250,7 @@ namespace TetroXNA
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(block, lines[locationX, locationY], Color.LightGray);
+            spriteBatch.Draw(block, lines[locationX, locationY], new Color(redIntensity, blueIntensity, greenIntensity));
             blockConFigClass.DrawNextPattern(spriteBatch, nextPattern);
         }
     }
