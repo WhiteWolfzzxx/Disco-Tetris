@@ -15,6 +15,7 @@ namespace TetroXNA
     {
         private bool spaceDidSomething = false;
         private bool fullScreen = false;
+        private bool consoleShown = true;
         private int menuOption = 1;
         private int redIntensity, greenIntensity, blueIntensity;
         private float menuChangeTimer;
@@ -75,13 +76,13 @@ namespace TetroXNA
             }
 
             //Resets the menu options
-            if (menuOption > 2)
+            if (menuOption > 3)
             {
                 menuOption = 1;
             }
             if (menuOption < 1)
             {
-                menuOption = 2;
+                menuOption = 3;
             }
         }
 
@@ -96,8 +97,13 @@ namespace TetroXNA
                     return 1;
 
                 case 2:
-                    //Back to Main
+                    //Shows-Hides the console
+                    consoleShown = !consoleShown;
                     return 2;
+
+                case 3:
+                    //Back to Main
+                    return 3;
 
                 default:
                     //Nothing is happening
@@ -110,7 +116,14 @@ namespace TetroXNA
 
             if (menuOption == 1)
             {
-                spriteBatch.DrawString(smallFont, "Main Menu", new Vector2(300, 250), Color.LightGray);
+                if (consoleShown)
+                {
+                    spriteBatch.DrawString(smallFont, "Hide Console", new Vector2(295, 250), Color.LightGray);
+                }
+                if (!consoleShown)
+                {
+                    spriteBatch.DrawString(smallFont, "Show Console", new Vector2(285, 250), Color.LightGray);
+                }
                 if (!fullScreen) //If not fullscreen button displays fullscreen, while fullscreen button displays windowed.
                 {
                     spriteBatch.DrawString(bigFont, "Fullscreen", new Vector2(220, 320), Color.LightGray);
@@ -123,22 +136,42 @@ namespace TetroXNA
             }
             if (menuOption == 2)
             {
-                if (fullScreen == false)
+                spriteBatch.DrawString(smallFont, "Main Menu", new Vector2(300, 250), Color.LightGray);
+                if (consoleShown)
                 {
-                    spriteBatch.DrawString(smallFont, "Fullscreen", new Vector2(300, 250), Color.LightGray);
+                    spriteBatch.DrawString(bigFont, "Hide Console", new Vector2(210, 320), Color.LightGray); 
                 }
-                else
+                if (!consoleShown)
                 {
-                    spriteBatch.DrawString(smallFont, "Windowed", new Vector2(300, 250), Color.LightGray);
-                }
-                spriteBatch.DrawString(bigFont, "Main Menu", new Vector2(220, 320), Color.LightGray);
-                if (fullScreen == false)
+                    spriteBatch.DrawString(bigFont, "Show Console", new Vector2(190, 320), Color.LightGray); 
+                }                
+                if (!fullScreen)
                 {
                     spriteBatch.DrawString(smallFont, "Fullscreen", new Vector2(300, 440), Color.LightGray);
                 }
-                else
+                if (fullScreen)
                 {
                     spriteBatch.DrawString(smallFont, "Windowed", new Vector2(300, 440), Color.LightGray);
+                }
+            }
+            if (menuOption == 3)
+            {
+                if (!fullScreen)
+                {
+                    spriteBatch.DrawString(smallFont, "Fullscreen", new Vector2(290, 250), Color.LightGray);
+                }
+                if (fullScreen)
+                {
+                    spriteBatch.DrawString(smallFont, "Windowed", new Vector2(290, 250), Color.LightGray);
+                }
+                spriteBatch.DrawString(bigFont, "Main Menu", new Vector2(220, 320), Color.LightGray);
+                if (consoleShown)
+                {
+                    spriteBatch.DrawString(smallFont, "Hide Console", new Vector2(295, 440), Color.LightGray);
+                }
+                if (!consoleShown)
+                {
+                    spriteBatch.DrawString(smallFont, "Show Console", new Vector2(285, 440), Color.LightGray);
                 }
             }
         }

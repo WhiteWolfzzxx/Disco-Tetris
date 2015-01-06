@@ -12,6 +12,7 @@ namespace TetroXNA
         {
             using (Game1 game = new Game1())
             {
+                Console.Title = "TetroDebug";
                 game.Run();
             }
         }

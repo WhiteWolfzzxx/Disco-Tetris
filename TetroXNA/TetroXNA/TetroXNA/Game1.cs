@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -33,6 +34,7 @@ namespace TetroXNA
         bool escapeDidSomething = false;
         bool spaceDidSomething = false;
         bool[,] store = new bool[10, 20];				//Block storing
+        string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
         Vector2[,] lines = new Vector2[10, 20]; 		//block placeing grid
         Texture2D[,] blocks = new Texture2D[10, 20];	//Block store show
         SingleBlockHelper[] activeBlocks = new SingleBlockHelper[4];	//Blocks that the player can move
@@ -47,6 +49,12 @@ namespace TetroXNA
         CreditClass creditClass;
         GameOverClass gameOverClass;
         KeyboardState keyState;
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
         public Game1()
         {
@@ -142,6 +150,8 @@ namespace TetroXNA
         {
             try
             {
+                IntPtr hWnd = FindWindow(null, "TetroDebug"); //Used for the show/hide console.
+
                 keyState = Keyboard.GetState();
 
                 //Single Key press escape,  if escape is still down it still already did something
@@ -361,6 +371,21 @@ namespace TetroXNA
                                 break;
 
                             case 2:
+                                if(hWnd != IntPtr.Zero)
+                                     {
+                                        //Hide the window
+                                        ShowWindow(hWnd, 0); // 0 = SW_HIDE
+                                     }
+ 
+                  
+                                if(hWnd != IntPtr.Zero)
+                                     {
+                                        //Show window again
+                                        ShowWindow(hWnd, 1); //1 = SW_SHOWNORMA
+                                     }
+                                break;
+
+                            case 3:
                                 gameState = GameStates.MainMenu;
                                 break;
 
