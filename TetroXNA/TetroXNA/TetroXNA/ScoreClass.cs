@@ -14,6 +14,7 @@ namespace TetroXNA
 {
     public class ScoreClass
     {
+        Int32 dummy; //Used for the write once.
         String[] textHighScores1 = new string[10];
         String[] textHighScores2 = new string[10];
         FileStream theFileRead;
@@ -95,18 +96,24 @@ namespace TetroXNA
 
 			//Write the new scores to the file
 			try{
-				theFileWrite = new FileStream("tetroHighScores.txt",
-				                              FileMode.Create,
-				                              FileAccess.Write);
-				theScoreWrite = new StreamWriter(theFileWrite);
+                dummy = 1;
+                while (dummy == 1)
+                {
+                    theFileWrite = new FileStream("tetroHighScores.txt",
+                                                      FileMode.Create,
+                                                      FileAccess.Write);
+                    theScoreWrite = new StreamWriter(theFileWrite);
 
-				for (int i = 0; i < 10; i++)
-				{
-					theScoreWrite.WriteLine(textHighScores2[i]);
-				}
+                    for (int i = 0; i < 10; i++)
+                    {
+                        theScoreWrite.WriteLine(textHighScores2[i]);
+                    }
 
-				theScoreWrite.Close();
-				theFileWrite.Close();
+                    theScoreWrite.Close();
+                    theFileWrite.Close();
+
+                    dummy = 0;
+                }
 			}
 			catch
             {
