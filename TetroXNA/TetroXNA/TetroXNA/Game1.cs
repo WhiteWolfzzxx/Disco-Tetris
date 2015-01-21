@@ -135,7 +135,7 @@ namespace TetroXNA
                 tutorialClass.LoadContent(Content);
 
                 //PauseGame Class
-                pauseGameClass = new PauseGameClass(bigFont);
+                pauseGameClass = new PauseGameClass(bigFont, smallFont);
 
                 #endregion
             }
@@ -331,13 +331,13 @@ namespace TetroXNA
 
                 if (gameState == GameStates.PauseGame)
                 {
+                    pauseGameClass.update(gameTime);
                     //unpause game
                     if (keyState.IsKeyDown(Keys.Escape) && !escapeDidSomething)
                     {
                         gameState = GameStates.Playing;
                         escapeDidSomething = true;
                     }
-                    pauseGameClass.update(gameTime);
                 }
 
                 if (gameState == GameStates.GameOver)
