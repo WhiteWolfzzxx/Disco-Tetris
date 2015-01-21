@@ -44,7 +44,7 @@ namespace TetroXNA
             {
                 if (menuChangeTimer > minMenuChangeTimer)
                 {
-                    menuOption++;
+                    menuOption--;
                     menuChangeTimer = 0.0f;
                 }
             }
@@ -52,7 +52,7 @@ namespace TetroXNA
             {
                 if (menuChangeTimer > minMenuChangeTimer)
                 {
-                    menuOption--;
+                    menuOption++;
                     menuChangeTimer = 0.0f;
                 }
             }
@@ -71,15 +71,21 @@ namespace TetroXNA
           //  spriteBatch.DrawString(bigFont, menuOption.ToString(), new Vector2(150, 250), Color.Firebrick);
             if (menuOption == 1)
             {
+                spriteBatch.DrawString(smallFont, "exit", new Vector2(110, 210), Color.White);
                 spriteBatch.DrawString(bigFont, "Resume", new Vector2(60, 250), Color.White);
+                spriteBatch.DrawString(smallFont, "save", new Vector2(110, 320), Color.White);
             }
             if (menuOption == 2)
             {
-                spriteBatch.DrawString(bigFont, "Save", new Vector2(60, 250), Color.White);
+                spriteBatch.DrawString(smallFont, "resume", new Vector2(110, 210), Color.White);
+                spriteBatch.DrawString(bigFont, "Save", new Vector2(80, 250), Color.White);
+                spriteBatch.DrawString(smallFont, "exit", new Vector2 (110, 320), Color.White);
             }
             if (menuOption == 3)
             {
-                spriteBatch.DrawString(bigFont, "Exit", new Vector2(60, 250), Color.White);
+                spriteBatch.DrawString(smallFont, "save", new Vector2(110, 210), Color.White);
+                spriteBatch.DrawString(bigFont, "Exit", new Vector2(80, 250), Color.White);
+                spriteBatch.DrawString(smallFont, "resume", new Vector2(110, 320), Color.White);
             }
 
         }
