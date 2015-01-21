@@ -14,7 +14,7 @@ namespace TetroXNA
 {
     /// <summary>
     /// Repo name is FPS
-    /// Test WhiteWolfzzxx
+    /// Test vjubb
     /// This is the main type for your game
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
