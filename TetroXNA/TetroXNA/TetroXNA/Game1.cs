@@ -42,6 +42,7 @@ namespace TetroXNA
         ScoreClass scoreClass = new ScoreClass();
         SaveGameClass saveGameClass = new SaveGameClass();
         ErrorHandler errorHandler = new ErrorHandler();
+        PauseGameClass pauseGameClass;
         TutorialClass tutorialClass;
         SettingsClass settingsClass;
         BoardClass boardClass;
@@ -132,6 +133,9 @@ namespace TetroXNA
                 //Tutorial Class
                 tutorialClass = new TutorialClass(smallFont);
                 tutorialClass.LoadContent(Content);
+
+                //PauseGame Class
+                pauseGameClass = new PauseGameClass(bigFont);
 
                 #endregion
             }
@@ -333,6 +337,7 @@ namespace TetroXNA
                         gameState = GameStates.Playing;
                         escapeDidSomething = true;
                     }
+                    pauseGameClass.update(gameTime);
                 }
 
                 if (gameState == GameStates.GameOver)
@@ -426,14 +431,9 @@ namespace TetroXNA
                     mainMenuClass.Draw(spriteBatch);
 
                 if ((gameState == GameStates.Playing) ||
-                    (gameState == GameStates.PauseGame) ||
                     (gameState == GameStates.Debug) ||
                     (gameState == GameStates.Tutroial))
                 {
-
-                    spriteBatch.Draw(scoreBackground, new Vector2(316, 0), Color.White);
-                    spriteBatch.Draw(scoreBackground, Vector2.Zero, Color.White);
-
                     //Draws the player controled blocks
                     for (int i = 0; i < activeBlocks.Length; i++)
                         activeBlocks[i].Draw(spriteBatch);
@@ -444,6 +444,8 @@ namespace TetroXNA
                 if ((gameState == GameStates.Playing) ||
                     (gameState == GameStates.PauseGame))
                 {
+                    spriteBatch.Draw(scoreBackground, new Vector2(316, 0), Color.White);
+                    spriteBatch.Draw(scoreBackground, Vector2.Zero, Color.White);
                     spriteBatch.DrawString(bigFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(350, 300), Color.White);
                     spriteBatch.DrawString(bigFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 350), Color.White);
                     spriteBatch.DrawString(bigFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 400), Color.White);
@@ -464,7 +466,10 @@ namespace TetroXNA
                 }
 
                 if (gameState == GameStates.PauseGame)
+                {
                     spriteBatch.DrawString(bigFont, "PAUSE", new Vector2(350, 450), Color.White);
+                    pauseGameClass.draw(spriteBatch);
+                }
 
                 if (gameState == GameStates.GameOver)
                 {
