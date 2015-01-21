@@ -71,7 +71,15 @@ namespace TetroXNA
           //  spriteBatch.DrawString(bigFont, menuOption.ToString(), new Vector2(150, 250), Color.Firebrick);
             if (menuOption == 1)
             {
-
+                spriteBatch.DrawString(bigFont, "Resume", new Vector2(60, 250), Color.White);
+            }
+            if (menuOption == 2)
+            {
+                spriteBatch.DrawString(bigFont, "Save", new Vector2(60, 250), Color.White);
+            }
+            if (menuOption == 3)
+            {
+                spriteBatch.DrawString(bigFont, "Exit", new Vector2(60, 250), Color.White);
             }
 
         }
