@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -17,11 +18,13 @@ namespace TetroXNA
         Int32 dummy; //Used for the write once.
         String[] textHighScores1 = new string[10];
         String[] textHighScores2 = new string[10];
-        FileStream theFileRead;
-        FileStream theFileWrite;
-        StreamReader theScoreRead;
-        StreamWriter theScoreWrite;
+        //FileStream theFileRead;
+        //FileStream theFileWrite;
+        //StreamReader theScoreRead;
+        //StreamWriter theScoreWrite;
         Boolean boolWorkingFileIO = true;
+        XmlDocument scoresWrite;
+        XmlDocument scoresRead;
 
         public ScoreClass ()
 		{
@@ -38,7 +41,7 @@ namespace TetroXNA
 		{
 			boolWorkingFileIO = true;
 
-			try
+			/*try
 			{
 				theFileRead = new FileStream("tetroHighScores.txt", 
 				                             FileMode.OpenOrCreate,
@@ -56,10 +59,39 @@ namespace TetroXNA
 				}
 				theScoreRead.Close();
 				theFileRead.Close();
-			}
+			}*/
+            try
+            {
+                scoresRead = new XmlDocument();
+                scoresRead.Load("tetroHighScores.xml");
+
+                for (int i = 0; i < 10; i++)
+                {
+                    textHighScores1[i] = scoresRead.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Score"].Value;
+
+                    if (textHighScores1[i] == "")
+                    {
+                        textHighScores1[i] = "0";
+                    }
+                }
+                scoresRead.Save("tetroHighScores.xml");
+            }
 			catch 
             {
 				boolWorkingFileIO = false;
+                XmlDocument create = new XmlDocument();
+                XmlNode rootNode = create.CreateElement("TetroScores");
+                create.AppendChild(rootNode);
+
+                for (int i = 1; i < 11; i++)
+                {
+                    XmlNode userNode = create.CreateElement("Score" + i);
+                    XmlAttribute attribute = create.CreateAttribute("Score");
+                    attribute.Value = "";
+                    userNode.Attributes.Append(attribute);
+                    rootNode.AppendChild(userNode);
+                }
+                create.Save("tetroHighScores.xml");
 			}
 		}
 
@@ -97,7 +129,7 @@ namespace TetroXNA
 			//Write the new scores to the file
 			try{
                 dummy = 1;
-                while (dummy == 1)
+                /*while (dummy == 1)
                 {
                     theFileWrite = new FileStream("tetroHighScores.txt",
                                                       FileMode.Create,
@@ -113,7 +145,7 @@ namespace TetroXNA
                     theFileWrite.Close();
 
                     dummy = 0;
-                }
+                }*/
 			}
 			catch
             {
@@ -125,8 +157,16 @@ namespace TetroXNA
 		{
 			for (int i = 0; i < 10; i++)
             {
-				spriteBatch.DrawString (font, ((i + 1).ToString() + "     " + textHighScores1[i]),
-				                        new Vector2(200, (200 + (i*25))), Color.White);
+                if (i < 9)
+                {
+                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textHighScores1[i]),
+                                                    new Vector2(200, (200 + (i * 25))), Color.White); 
+                }
+                else if(i == 9)
+                {
+                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textHighScores1[i]),
+                                                    new Vector2(188, (200 + (i * 25))), Color.White);
+                }
 			}
 		}
 	}
