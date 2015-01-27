@@ -42,6 +42,7 @@ namespace TetroXNA
         ScoreClass scoreClass = new ScoreClass();
         SaveGameClass saveGameClass = new SaveGameClass();
         ErrorHandler errorHandler = new ErrorHandler();
+        StringInputClass stringInputClass = new StringInputClass();
         PauseGameClass pauseGameClass;
         TutorialClass tutorialClass;
         SettingsClass settingsClass;
@@ -281,7 +282,7 @@ namespace TetroXNA
                     {
                         if (store[i, 0] == true)
                         {
-                            scoreClass.recordScore(blockHelper.getScore());
+                            scoreClass.recordScore(blockHelper.getScore(), stringInputClass.getName());
                             gameState = GameStates.GameOver;
                             MediaPlayer.Stop();
                             MediaPlayer.Play(menuBGM);

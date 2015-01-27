@@ -18,10 +18,8 @@ namespace TetroXNA
         Int32 dummy; //Used for the write once.
         String[] textHighScores1 = new string[10];
         String[] textHighScores2 = new string[10];
-        //FileStream theFileRead;
-        //FileStream theFileWrite;
-        //StreamReader theScoreRead;
-        //StreamWriter theScoreWrite;
+        String[] textNames1 = new string[10];
+        String[] textNames2 = new string[10];
         Boolean boolWorkingFileIO = true;
         XmlDocument scoresWrite;
         XmlDocument scoresRead;
@@ -41,25 +39,6 @@ namespace TetroXNA
 		{
 			boolWorkingFileIO = true;
 
-			/*try
-			{
-				theFileRead = new FileStream("tetroHighScores.txt", 
-				                             FileMode.OpenOrCreate,
-				                             FileAccess.Read);
-				theScoreRead = new StreamReader(theFileRead);
-
-				for (int i = 0; i < 10; i++)
-				{
-					textHighScores1[i] = theScoreRead.ReadLine();
-
-					if (textHighScores1[i] == null)
-					{
-						textHighScores1[i] = "0";
-					}
-				}
-				theScoreRead.Close();
-				theFileRead.Close();
-			}*/
             try
             {
                 scoresRead = new XmlDocument();
@@ -68,6 +47,7 @@ namespace TetroXNA
                 for (int i = 0; i < 10; i++)
                 {
                     textHighScores1[i] = scoresRead.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Score"].Value;
+                    textNames1[i] = scoresRead.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Name"].Value;
 
                     if (textHighScores1[i] == "")
                     {
@@ -89,6 +69,9 @@ namespace TetroXNA
                     XmlAttribute attribute = create.CreateAttribute("Score");
                     attribute.Value = "";
                     userNode.Attributes.Append(attribute);
+                    XmlAttribute nameAttribute = create.CreateAttribute("Name");
+                    nameAttribute.Value = "John Doe";
+                    userNode.Attributes.Append(nameAttribute);
                     rootNode.AppendChild(userNode);
                 }
                 create.Save("tetroHighScores.xml");
@@ -96,7 +79,7 @@ namespace TetroXNA
 		}
 
 		//Records Scores in a flat file on hard drive
-		public void recordScore(int sc)
+		public void recordScore(int sc, string n)
 		{
 			boolWorkingFileIO = true;
 
@@ -109,18 +92,21 @@ namespace TetroXNA
 
 				for (int i = 0; i < 10; i++) 
                 {
-					if (sc > Convert.ToInt32 (textHighScores1 [i]) && i == j) 
+					if (sc > Convert.ToInt32(textHighScores1[i]) && i == j) 
                     {
 						textHighScores2 [i] = sc.ToString();
+                        textNames2[i] = n.ToString();
 						i++;
 						if (i < 10) 
                         {
 							textHighScores2 [i] = textHighScores1 [j];
+                            textNames2[i] = textNames1[j];
 						}
 					}
                     else 
                     {
 						textHighScores2 [i] = textHighScores1 [j];
+                        textNames2[i] = textNames1[j];
 					}
 					j++;
 				}
@@ -129,27 +115,41 @@ namespace TetroXNA
 			//Write the new scores to the file
 			try{
                 dummy = 1;
-                /*while (dummy == 1)
+                
+                while (dummy == 1)
                 {
-                    theFileWrite = new FileStream("tetroHighScores.txt",
-                                                      FileMode.Create,
-                                                      FileAccess.Write);
-                    theScoreWrite = new StreamWriter(theFileWrite);
+                    scoresWrite = new XmlDocument();
 
+                    scoresWrite.Load("tetroHighScores.xml");
+                    
                     for (int i = 0; i < 10; i++)
-                    {
-                        theScoreWrite.WriteLine(textHighScores2[i]);
+                    {                        
+                        scoresWrite.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Score"].Value = textHighScores2[i];
+                        scoresWrite.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Name"].Value = textNames2[i];
                     }
-
-                    theScoreWrite.Close();
-                    theFileWrite.Close();
-
+                    scoresWrite.Save("tetroHighScores.xml");
                     dummy = 0;
-                }*/
+                }
 			}
 			catch
             {
 				boolWorkingFileIO = false;
+                XmlDocument create = new XmlDocument();
+                XmlNode rootNode = create.CreateElement("TetroScores");
+                create.AppendChild(rootNode);
+
+                for (int i = 1; i < 11; i++)
+                {
+                    XmlNode userNode = create.CreateElement("Score" + i);
+                    XmlAttribute attribute = create.CreateAttribute("Score");
+                    attribute.Value = "";
+                    userNode.Attributes.Append(attribute);
+                    XmlAttribute nameAttribute = create.CreateAttribute("Name");
+                    nameAttribute.Value = "John Doe";
+                    userNode.Attributes.Append(nameAttribute);
+                    rootNode.AppendChild(userNode);
+                }
+                create.Save("tetroHighScores.xml");
 			}
 		}
 
@@ -159,12 +159,12 @@ namespace TetroXNA
             {
                 if (i < 9)
                 {
-                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textHighScores1[i]),
+                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textHighScores1[i] + "     " + textNames1[i]),
                                                     new Vector2(200, (200 + (i * 25))), Color.White); 
                 }
                 else if(i == 9)
                 {
-                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textHighScores1[i]),
+                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textHighScores1[i] + "     " + textNames1[i]),
                                                     new Vector2(188, (200 + (i * 25))), Color.White);
                 }
 			}

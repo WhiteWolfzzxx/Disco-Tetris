@@ -72,7 +72,7 @@ namespace TetroXNA
             }*/
 
             nameClass.Update(gameTime);
-            System.Console.WriteLine("Update Game Over");  
+            System.Console.WriteLine("Update Game Over");
         }
 
         public void Draw(SpriteBatch spriteBatch)
