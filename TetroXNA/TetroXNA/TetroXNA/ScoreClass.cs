@@ -18,6 +18,8 @@ namespace TetroXNA
         Int32 dummy; //Used for the write once.
         String[] textHighScores1 = new string[10];
         String[] textHighScores2 = new string[10];
+        String[] encryptedHighScores1 = new string[10];
+        String[] encryptedHighScores2 = new string[10];
         String[] textNames1 = new string[10];
         String[] textNames2 = new string[10];
         Boolean boolWorkingFileIO = true;
@@ -46,9 +48,18 @@ namespace TetroXNA
 
                 for (int i = 0; i < 10; i++)
                 {
-                    textHighScores1[i] = scoresRead.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Score"].Value;
+                    encryptedHighScores1[i] = scoresRead.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Score"].Value;
                     textNames1[i] = scoresRead.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Name"].Value;
 
+                    if (encryptedHighScores1[i] != "")
+                    {
+                        textHighScores1[i] = StringCipher.Decrypt(encryptedHighScores1[i], "hello"); 
+                    }
+                    else
+                    {
+                        textHighScores1[i] = "0";
+                    }
+                    
                     if (textHighScores1[i] == "")
                     {
                         textHighScores1[i] = "0";
@@ -123,8 +134,9 @@ namespace TetroXNA
                     scoresWrite.Load("tetroHighScores.xml");
                     
                     for (int i = 0; i < 10; i++)
-                    {                        
-                        scoresWrite.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Score"].Value = textHighScores2[i];
+                    {
+                        encryptedHighScores2[i] = StringCipher.Encrypt(textHighScores2[i], "hello");
+                        scoresWrite.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Score"].Value = encryptedHighScores2[i];
                         scoresWrite.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Name"].Value = textNames2[i];
                     }
                     scoresWrite.Save("tetroHighScores.xml");

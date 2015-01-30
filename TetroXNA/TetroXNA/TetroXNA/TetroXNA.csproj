@@ -87,6 +87,7 @@
     <Compile Include="BlockConFigClass.cs" />
     <Compile Include="BlockHelper.cs" />
     <Compile Include="BoardClass.cs" />
+    <Compile Include="StringCipher.cs" />
     <Compile Include="CreditClass.cs" />
     <Compile Include="ErrorHandler.cs" />
     <Compile Include="GameOverClass.cs" />
