@@ -39,9 +39,11 @@ namespace TetroXNA
         bool fullscreen;
         bool[,] store = new bool[10, 20];				//Block storing
         string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
+        const int SW_HIDE = 0;
+        const int SW_SHOW = 5;
+        IntPtr handle = GetConsoleWindow();
         Vector2[,] lines = new Vector2[10, 20]; 		//block placeing grid
         Texture2D[,] blocks = new Texture2D[10, 20];	//Block store show
-        IntPtr hWnd = FindWindow(null, "TetroDebug"); //Used for the show/hide console.
         SingleBlockHelper[] activeBlocks = new SingleBlockHelper[4];	//Blocks that the player can move
         XmlDocument settingsRecord;
         MainMenuClass mainMenuClass;
@@ -58,8 +60,8 @@ namespace TetroXNA
         GameOverClass gameOverClass;
         KeyboardState keyState;
 
-        [DllImport("user32.dll")]
-        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        [DllImport("kernel32.dll")]
+        internal static extern IntPtr GetConsoleWindow();
 
         [DllImport("user32.dll")]
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
@@ -89,7 +91,7 @@ namespace TetroXNA
                     consoleShown = Convert.ToBoolean(settings.SelectSingleNode("/TetroSettings/ConsoleShown").InnerText.ToString());
                     if (!consoleShown)
                     {
-                        ShowWindow(hWnd, 0);
+                        ShowWindow(handle, SW_HIDE);
                     }
                 }
                 catch
@@ -438,17 +440,15 @@ namespace TetroXNA
                                 break;
 
                             case 2:
-                                if(hWnd != IntPtr.Zero)
+                                if(consoleShown)
                                      {
                                         //Hide the window
-                                        ShowWindow(hWnd, 0); // 0 = SW_HIDE
-                                     }
- 
-                  
-                                if(hWnd != IntPtr.Zero)
+                                        ShowWindow(handle, SW_HIDE); // 0 = SW_HIDE                                        
+                                     }                
+                                if(!consoleShown)
                                      {
                                         //Show window again
-                                        ShowWindow(hWnd, 1); //1 = SW_SHOWNORMA
+                                        ShowWindow(handle, SW_SHOW); //1 = SW_SHOWNORMA
                                      }
                                 consoleShown = !consoleShown;
                                 break;

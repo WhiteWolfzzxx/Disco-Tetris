@@ -16,7 +16,6 @@ namespace TetroXNA
         private bool spaceDidSomething = false;
         private bool fullScreen = false;
         private bool consoleShown = true;
-        private bool muted = false;
         private int menuOption = 1;
         private int redIntensity, greenIntensity, blueIntensity;
         private float menuChangeTimer;
