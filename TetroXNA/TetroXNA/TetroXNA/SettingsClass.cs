@@ -16,6 +16,7 @@ namespace TetroXNA
         private bool spaceDidSomething = false;
         private bool fullScreen = false;
         private bool consoleShown = true;
+        private bool muted = false;
         private int menuOption = 1;
         private int redIntensity, greenIntensity, blueIntensity;
         private float menuChangeTimer;
@@ -76,13 +77,13 @@ namespace TetroXNA
             }
 
             //Resets the menu options
-            if (menuOption > 3)
+            if (menuOption > 4)
             {
                 menuOption = 1;
             }
             if (menuOption < 1)
             {
-                menuOption = 3;
+                menuOption = 4;
             }
         }
 
@@ -102,8 +103,12 @@ namespace TetroXNA
                     return 2;
 
                 case 3:
-                    //Back to Main
+                    //Mute sound
                     return 3;
+
+                case 4:
+                    //Back to Main
+                    return 4;
 
                 default:
                     //Nothing is happening
@@ -136,7 +141,7 @@ namespace TetroXNA
             }
             if (menuOption == 2)
             {
-                spriteBatch.DrawString(smallFont, "Main Menu", new Vector2(300, 250), Color.LightGray);
+                spriteBatch.DrawString(smallFont, "Sound", new Vector2(325, 250), Color.LightGray);
                 if (consoleShown)
                 {
                     spriteBatch.DrawString(bigFont, "Hide Console", new Vector2(210, 320), Color.LightGray); 
@@ -156,6 +161,19 @@ namespace TetroXNA
             }
             if (menuOption == 3)
             {
+                spriteBatch.DrawString(smallFont, "Main Menu", new Vector2(300, 250), Color.LightGray);
+                spriteBatch.DrawString(bigFont, "Sound", new Vector2(275, 320), Color.LightGray);
+                if (consoleShown)
+                {
+                    spriteBatch.DrawString(smallFont, "Hide Console", new Vector2(295, 440), Color.LightGray);
+                }
+                if (!consoleShown)
+                {
+                    spriteBatch.DrawString(smallFont, "Show Console", new Vector2(285, 440), Color.LightGray);
+                }
+            }
+            if (menuOption == 4)
+            {
                 if (!fullScreen)
                 {
                     spriteBatch.DrawString(smallFont, "Fullscreen", new Vector2(290, 250), Color.LightGray);
@@ -165,14 +183,7 @@ namespace TetroXNA
                     spriteBatch.DrawString(smallFont, "Windowed", new Vector2(290, 250), Color.LightGray);
                 }
                 spriteBatch.DrawString(bigFont, "Main Menu", new Vector2(220, 320), Color.LightGray);
-                if (consoleShown)
-                {
-                    spriteBatch.DrawString(smallFont, "Hide Console", new Vector2(295, 440), Color.LightGray);
-                }
-                if (!consoleShown)
-                {
-                    spriteBatch.DrawString(smallFont, "Show Console", new Vector2(285, 440), Color.LightGray);
-                }
+                spriteBatch.DrawString(smallFont, "Sound", new Vector2(325, 440), Color.LightGray);
             }
         }
 

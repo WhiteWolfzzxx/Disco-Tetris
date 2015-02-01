@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Xml;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -33,11 +34,16 @@ namespace TetroXNA
 
         bool escapeDidSomething = false;
         bool spaceDidSomething = false;
+        bool muted;
+        bool consoleShown;
+        bool fullscreen;
         bool[,] store = new bool[10, 20];				//Block storing
         string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
         Vector2[,] lines = new Vector2[10, 20]; 		//block placeing grid
         Texture2D[,] blocks = new Texture2D[10, 20];	//Block store show
+        IntPtr hWnd = FindWindow(null, "TetroDebug"); //Used for the show/hide console.
         SingleBlockHelper[] activeBlocks = new SingleBlockHelper[4];	//Blocks that the player can move
+        XmlDocument settingsRecord;
         MainMenuClass mainMenuClass;
         ScoreClass scoreClass = new ScoreClass();
         SaveGameClass saveGameClass = new SaveGameClass();
@@ -64,7 +70,63 @@ namespace TetroXNA
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = 600;
             graphics.PreferredBackBufferWidth = 700;
-            graphics.IsFullScreen = false;
+            try 
+	        {
+                XmlDocument settings = new XmlDocument();
+                settings.Load("tetroSettings.xml");
+                try
+                {
+                    fullscreen = Convert.ToBoolean(settings.SelectSingleNode("/TetroSettings/Fullscreen").InnerText.ToString());
+                    graphics.IsFullScreen = fullscreen;
+                }
+                catch
+                {
+                    settings.SelectSingleNode("/TetroSettings/Fullscreen").InnerText = "false";
+                    graphics.IsFullScreen = false;
+                }
+                try
+                {
+                    consoleShown = Convert.ToBoolean(settings.SelectSingleNode("/TetroSettings/ConsoleShown").InnerText.ToString());
+                    if (!consoleShown)
+                    {
+                        ShowWindow(hWnd, 0);
+                    }
+                }
+                catch
+                {
+                    settings.SelectSingleNode("/TetroSettings/ConsoleShown").InnerText = "true";
+                }
+                try
+                {
+                    muted = Convert.ToBoolean(settings.SelectSingleNode("/TetroSettings/Muted").InnerText.ToString());
+                    if (muted)
+                    {
+                        MediaPlayer.IsMuted = muted;
+                    }
+                }
+                catch
+                {
+                    settings.SelectSingleNode("/TetroSettings/Muted").InnerText = "false";
+                }
+                settings.Save("tetroSettings.xml");
+	        }
+	        catch
+	        {
+		        XmlDocument settings = new XmlDocument();
+                XmlNode rootNode = settings.CreateElement("TetroSettings");
+                settings.AppendChild(rootNode);
+                XmlNode userNode = settings.CreateElement("Fullscreen");
+                userNode.InnerText = "false";                
+                rootNode.AppendChild(userNode);
+                userNode = settings.CreateElement("ConsoleShown");
+                userNode.InnerText = "true";
+                rootNode.AppendChild(userNode);
+                userNode = settings.CreateElement("Muted");
+                userNode.InnerText = "false";
+                rootNode.AppendChild(userNode);
+                settings.Save("tetroSettings.xml");
+                graphics.IsFullScreen = false;
+	        }            
         }
 
         /// <summary>
@@ -155,8 +217,6 @@ namespace TetroXNA
         {
             try
             {
-                IntPtr hWnd = FindWindow(null, "TetroDebug"); //Used for the show/hide console.
-
                 keyState = Keyboard.GetState();
 
                 //Single Key press escape,  if escape is still down it still already did something
@@ -374,6 +434,7 @@ namespace TetroXNA
                         {
                             case 1:
                                 graphics.ToggleFullScreen();
+                                fullscreen = !fullscreen;
                                 break;
 
                             case 2:
@@ -389,9 +450,21 @@ namespace TetroXNA
                                         //Show window again
                                         ShowWindow(hWnd, 1); //1 = SW_SHOWNORMA
                                      }
+                                consoleShown = !consoleShown;
                                 break;
 
-                            case 3:
+                            case 3:                                           
+                                MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
+                                muted = !muted;                           
+                                break;
+
+                            case 4:
+                                settingsRecord = new XmlDocument();
+                                settingsRecord.Load("tetroSettings.xml");
+                                settingsRecord.SelectSingleNode("/TetroSettings/Fullscreen").InnerText = fullscreen.ToString();
+                                settingsRecord.SelectSingleNode("/TetroSettings/ConsoleShown").InnerText = consoleShown.ToString();
+                                settingsRecord.SelectSingleNode("/TetroSettings/Muted").InnerText = muted.ToString();
+                                settingsRecord.Save("tetroSettings.xml");
                                 gameState = GameStates.MainMenu;
                                 break;
 
