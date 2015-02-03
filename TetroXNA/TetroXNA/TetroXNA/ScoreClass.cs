@@ -15,6 +15,7 @@ namespace TetroXNA
 {
     public class ScoreClass
     {
+        int redIntensity, blueIntensity, greenIntensity;
         Int32 dummy; //Used for the write once.
         String[] textHighScores1 = new string[10];
         String[] textHighScores2 = new string[10];
@@ -23,6 +24,9 @@ namespace TetroXNA
         String[] textNames1 = new string[10];
         String[] textNames2 = new string[10];
         Boolean boolWorkingFileIO = true;
+        MenuProperties menuProperties = new MenuProperties();
+        Texture2D scoreTitle;
+        Texture2D background;
         XmlDocument scoresWrite;
         XmlDocument scoresRead;
 
@@ -34,6 +38,10 @@ namespace TetroXNA
 		//High Score Screen Update
 		public void ScoreClassUpdate(GameTime gameTime)
 		{
+            redIntensity = menuProperties.getRed();
+            blueIntensity = menuProperties.getBlue();
+            greenIntensity = menuProperties.getGreen();
+            menuProperties.colorChanger();
 			retriveScores ();
 		}
 
@@ -165,19 +173,29 @@ namespace TetroXNA
 			}
 		}
 
+        public void Load(ContentManager Content)
+        {
+            scoreTitle = Content.Load<Texture2D>(@"Textures\ScoresTitle");
+            background = Content.Load<Texture2D>(@"Textures\Tetro Scores Background");
+        }
+
 		public void Draw(SpriteBatch spriteBatch, SpriteFont font)
 		{
+            spriteBatch.Draw(background, Vector2.Zero, Color.White);
+
+            spriteBatch.Draw(scoreTitle, new Vector2(5, 40), new Color(redIntensity, greenIntensity, blueIntensity));
+
 			for (int i = 0; i < 10; i++)
             {
                 if (i < 9)
                 {
                     spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textHighScores1[i] + "     " + textNames1[i]),
-                                                    new Vector2(200, (200 + (i * 25))), Color.White); 
+                                                    new Vector2(200, (250 + (i * 25))), Color.White); 
                 }
                 else if(i == 9)
                 {
                     spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textHighScores1[i] + "     " + textNames1[i]),
-                                                    new Vector2(188, (200 + (i * 25))), Color.White);
+                                                    new Vector2(188, (250 + (i * 25))), Color.White);
                 }
 			}
 		}

@@ -16,6 +16,7 @@ namespace TetroXNA
         private float menuChangeTimer;
         private float minMenuChangeTimer = 0.1f;
         private Texture2D title;
+        private Texture2D background;
         private SpriteFont bigFont, smallFont;
         private MenuProperties menuProperties = new MenuProperties();
 
@@ -65,10 +66,13 @@ namespace TetroXNA
         public void LoadContent(ContentManager Content)
         {
             title = Content.Load<Texture2D>(@"Textures\TetroTitle");
+            background = Content.Load<Texture2D>(@"Textures\Tetro Main Menu Background");
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Draw(background, Vector2.Zero, Color.White);
+
             spriteBatch.Draw(title, new Vector2(66, 50), new Color(redIntensity, greenIntensity, blueIntensity));
 
             if (menuOption == 1)

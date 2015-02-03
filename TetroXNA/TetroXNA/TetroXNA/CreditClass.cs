@@ -15,6 +15,7 @@ namespace TetroXNA
         private float minChangeScreenTimer = 4.0f;
         private SpriteFont bigFont, smallFont;
         private Texture2D logo;
+        private Texture2D background;
 
         public CreditClass(SpriteFont small, SpriteFont big)
         {
@@ -36,10 +37,13 @@ namespace TetroXNA
         public void LoadContent(ContentManager Content)
         {
             logo = Content.Load<Texture2D>(@"Textures\Flash-Block Studio Logo");
+            background = Content.Load<Texture2D>(@"Textures\Tetro Credits Background");
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Draw(background, Vector2.Zero, Color.White);
+
             spriteBatch.Draw(logo, new Vector2(375, 175), Color.White);
 
             spriteBatch.DrawString(bigFont, "FLASH BLOCK STUDIO", new Vector2(116, 50), Color.White);

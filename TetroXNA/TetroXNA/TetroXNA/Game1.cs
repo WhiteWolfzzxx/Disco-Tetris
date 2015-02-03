@@ -27,6 +27,7 @@ namespace TetroXNA
         GameStates gameState = GameStates.CreditScreen;
 
         Texture2D scoreBackground;
+        Texture2D gameBackground;
 
         SpriteFont bigFont, smallFont;
 
@@ -47,7 +48,7 @@ namespace TetroXNA
         SingleBlockHelper[] activeBlocks = new SingleBlockHelper[4];	//Blocks that the player can move
         XmlDocument settingsRecord;
         MainMenuClass mainMenuClass;
-        ScoreClass scoreClass = new ScoreClass();
+        ScoreClass scoreClass;
         SaveGameClass saveGameClass = new SaveGameClass();
         ErrorHandler errorHandler = new ErrorHandler();
         StringInputClass stringInputClass = new StringInputClass();
@@ -174,6 +175,7 @@ namespace TetroXNA
                 blocks = boardClass.loadBlocksTexture(Content);
 
                 scoreBackground = Content.Load<Texture2D>(@"Textures\TetroBorder");
+                gameBackground = Content.Load<Texture2D>(@"Textures\Tetro Game Background");
 
                 //Load the player controled blocks
                 blockHelper = new BlockHelper(activeBlocks, lines, store, playBGM);
@@ -191,6 +193,10 @@ namespace TetroXNA
                 //ControlsClass
                 settingsClass = new SettingsClass(smallFont, bigFont);
                 settingsClass.Load(Content);
+
+                //ScoreClass
+                scoreClass = new ScoreClass();
+                scoreClass.Load(Content);
 
                 //GameOver Class
                 gameOverClass = new GameOverClass(bigFont);
@@ -502,7 +508,18 @@ namespace TetroXNA
                     creditClass.Draw(spriteBatch);
 
                 if (gameState == GameStates.MainMenu)
-                    mainMenuClass.Draw(spriteBatch);
+                    mainMenuClass.Draw(spriteBatch);                
+
+                if ((gameState == GameStates.Playing) ||
+                    (gameState == GameStates.PauseGame))
+                {
+                    spriteBatch.Draw(gameBackground, Vector2.Zero, Color.White);
+                    spriteBatch.Draw(scoreBackground, new Vector2(316, 0), Color.White);
+                    spriteBatch.Draw(scoreBackground, Vector2.Zero, Color.White);
+                    spriteBatch.DrawString(bigFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(350, 300), Color.White);
+                    spriteBatch.DrawString(bigFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 350), Color.White);
+                    spriteBatch.DrawString(bigFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 400), Color.White);
+                }
 
                 if ((gameState == GameStates.Playing) ||
                     (gameState == GameStates.Debug) ||
@@ -513,16 +530,6 @@ namespace TetroXNA
                         activeBlocks[i].Draw(spriteBatch);
 
                     blockHelper.Draw(spriteBatch, blocks);
-                }
-
-                if ((gameState == GameStates.Playing) ||
-                    (gameState == GameStates.PauseGame))
-                {
-                    spriteBatch.Draw(scoreBackground, new Vector2(316, 0), Color.White);
-                    spriteBatch.Draw(scoreBackground, Vector2.Zero, Color.White);
-                    spriteBatch.DrawString(bigFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(350, 300), Color.White);
-                    spriteBatch.DrawString(bigFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 350), Color.White);
-                    spriteBatch.DrawString(bigFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 400), Color.White);
                 }
 
                 if (gameState == GameStates.Debug)
