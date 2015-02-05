@@ -25,10 +25,8 @@ namespace TetroXNA
         String[] textNames2 = new string[10];
         Boolean boolWorkingFileIO = true;
         MenuProperties menuProperties = new MenuProperties();
-        Texture2D scoreTitle;
-        Texture2D background;
-        XmlDocument scoresWrite;
-        XmlDocument scoresRead;
+        Texture2D scoreTitle, background;
+        XmlDocument scoresWrite, scoresRead;
 
         public ScoreClass ()
 		{

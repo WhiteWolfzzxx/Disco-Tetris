@@ -14,8 +14,7 @@ namespace TetroXNA
         private float changeScreenTimer = 0.0f;
         private float minChangeScreenTimer = 4.0f;
         private SpriteFont bigFont, smallFont;
-        private Texture2D logo;
-        private Texture2D background;
+        private Texture2D logo, background;
 
         public CreditClass(SpriteFont small, SpriteFont big)
         {

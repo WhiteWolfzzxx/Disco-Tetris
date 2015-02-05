@@ -36,11 +36,10 @@ namespace TetroXNA
         bool escapeDidSomething = false;
         bool spaceDidSomething = false;
         bool muted;
-        bool consoleShown;
-        bool fullscreen;
+        public static bool consoleShown, fullscreen;
         bool[,] store = new bool[10, 20];				//Block storing
         string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
-        const int SW_HIDE = 0;
+        const int SW_HIDE = 0; //Constant ints for show/hide console.
         const int SW_SHOW = 5;
         IntPtr handle = GetConsoleWindow();
         Vector2[,] lines = new Vector2[10, 20]; 		//block placeing grid
@@ -61,6 +60,8 @@ namespace TetroXNA
         GameOverClass gameOverClass;
         KeyboardState keyState;
 
+
+        //Importing commands for show/hide console.
         [DllImport("kernel32.dll")]
         internal static extern IntPtr GetConsoleWindow();
 
@@ -77,7 +78,7 @@ namespace TetroXNA
 	        {
                 XmlDocument settings = new XmlDocument();
                 settings.Load("tetroSettings.xml");
-                try
+                try //Nested try-catches to prevent total file rewrite.
                 {
                     fullscreen = Convert.ToBoolean(settings.SelectSingleNode("/TetroSettings/Fullscreen").InnerText.ToString());
                     graphics.IsFullScreen = fullscreen;
@@ -113,7 +114,7 @@ namespace TetroXNA
                 }
                 settings.Save("tetroSettings.xml");
 	        }
-	        catch
+	        catch //Creates the file should it not exist.
 	        {
 		        XmlDocument settings = new XmlDocument();
                 XmlNode rootNode = settings.CreateElement("TetroSettings");
@@ -454,7 +455,7 @@ namespace TetroXNA
                                 if(!consoleShown)
                                      {
                                         //Show window again
-                                        ShowWindow(handle, SW_SHOW); //1 = SW_SHOWNORMA
+                                        ShowWindow(handle, SW_SHOW); //5 = SW_SHOWNORMA
                                      }
                                 consoleShown = !consoleShown;
                                 break;
@@ -487,7 +488,7 @@ namespace TetroXNA
             }
             catch (Exception d)
             {
-                errorHandler.recordError( 3, 103, "Updateing has failed", d.ToString());
+                errorHandler.recordError( 3, 103, "Updating has failed", d.ToString());
             }
         }
         /// <summary>
