@@ -22,11 +22,12 @@ namespace TetroXNA
             otherCantGoRightFlag = false,        
             blockCollideBottomFlag = false,
             canGoDownFlag = true;
-        private int 
+        private int
             rotateState = 0,
             locationX, locationY, pattern, index, level,
             redIntensity, blueIntensity, greenIntensity,
-            nextPattern = 4;
+            nextPattern = 4,
+            score = 0;
         private float 
             moveTimer = 0.0f,
             minMoveTimer = 0.1f,
@@ -48,6 +49,7 @@ namespace TetroXNA
         public bool getCanGoRightFlag() { return canGoRightFlag; }
         public int getPattern() { return pattern; }
         public int getNextPattern() { return nextPattern; }
+        public int getScore() { return score; }
         public float getMinTimer() { return minDownTimer; }
 
         public void setCanGoDownFlag(bool cd) { canGoDownFlag = cd; }
@@ -101,6 +103,10 @@ namespace TetroXNA
                 locationY += 1;
                 downTimer = 0.0f;
             }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                score = level;
+            else
+                score = 0;
             return store;
         }
 

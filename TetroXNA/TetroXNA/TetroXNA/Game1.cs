@@ -380,17 +380,6 @@ namespace TetroXNA
                         gameState = GameStates.PauseGame;
                         escapeDidSomething = true;
                     }
-
-                    //save game
-                    if (Keyboard.GetState().IsKeyDown(Keys.S))
-                    {
-                        saveGameClass.recordGameData(store,
-                            blockHelper.getScore(),
-                            blockHelper.getLevel(),
-                            blockHelper.getTotalClearedLines());
-                        MediaPlayer.Play(menuBGM);
-                        gameState = GameStates.MainMenu;
-                    }
                 }
 
                 if (gameState == GameStates.Tutroial)
@@ -414,6 +403,39 @@ namespace TetroXNA
                     {
                         gameState = GameStates.Playing;
                         escapeDidSomething = true;
+                    }
+
+                    //Pause Menu option exucution
+                    if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
+                    {
+                        switch (pauseGameClass.getMenuOption())
+                        {
+                            case 1:
+                                //Resume
+                                gameState = GameStates.Playing;
+                                break;
+
+                            case 2:
+                                //Save
+                                saveGameClass.recordGameData(store,
+                                    blockHelper.getScore(),
+                                    blockHelper.getLevel(),
+                                    blockHelper.getTotalClearedLines());
+                                MediaPlayer.Play(menuBGM);
+                                gameState = GameStates.MainMenu;
+                                break;
+
+                            case 3:
+                                //Exit
+                                MediaPlayer.Play(menuBGM);
+                                gameState = GameStates.MainMenu;
+                                break;
+
+                            default:
+
+                                break;
+                        }
+                        spaceDidSomething = true;
                     }
                 }
 

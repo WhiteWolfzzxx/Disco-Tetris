@@ -96,6 +96,9 @@ namespace TetroXNA
             //corrects the blocks so they are on the same level
             for (int i = 0; i < activeBlocks.Length; i++)
                 activeBlocks[i].setLevel(level);
+
+            //Adds hold down score
+            score += activeBlocks[0].getScore();
         }
 
         //block hits bottom algorithem
@@ -115,6 +118,8 @@ namespace TetroXNA
                 {
                     for (int i = 0; i < activeBlocks.Length; i++)
                     {
+                        //score for blocks landed
+                        score += 25 + ((level - 1) * 2);
                         activeBlocks[i].savePositions();
                         activeBlocks[i].setBlockCollideBottomFlag(false);
                     }
@@ -178,7 +183,7 @@ namespace TetroXNA
                             store[8, x] = store[8, x - 1];
                             store[9, x] = store[9, x - 1];
                         }
-                        score += (40 * level);
+                        score += (1500 + (100 * (level - 1)));
                         clearedLines++;
                         totalClearedLines++;
                     }

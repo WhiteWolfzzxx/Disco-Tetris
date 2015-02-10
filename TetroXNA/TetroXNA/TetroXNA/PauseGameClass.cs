@@ -21,6 +21,9 @@ namespace TetroXNA
         private bool spaceDidSomething = false;
         private int menuOption = 1;
         private float minMenuChangeTimer = 0.1f;
+
+        public int getMenuOption() { return menuOption; }
+
         public PauseGameClass(SpriteFont f, SpriteFont s)
         {
             bigFont = f;
@@ -32,13 +35,9 @@ namespace TetroXNA
             keyState = Keyboard.GetState();
             //For single key presses
             if (keyState.IsKeyDown(Keys.Space) && spaceDidSomething)
-            {
                 spaceDidSomething = true;
-            }
             else
-            {
                 spaceDidSomething = false;
-            }
             //Navigation
             if (keyState.IsKeyDown(Keys.Up))
             {
