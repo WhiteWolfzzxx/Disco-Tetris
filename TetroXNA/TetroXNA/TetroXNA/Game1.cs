@@ -351,7 +351,14 @@ namespace TetroXNA
                     {
                         if (store[i, 0] == true)
                         {
-                            scoreClass.recordScore(blockHelper.getScore(), stringInputClass.getName());
+                            try
+                            {
+                                scoreClass.recordScore(blockHelper.getScore(), stringInputClass.getName());
+                            }
+                            catch (Exception e)
+                            {
+                                errorHandler.recordError(2, 104, "Saving has failed.", e.ToString());
+                            }
                             gameState = GameStates.GameOver;
                             MediaPlayer.Stop();
                             MediaPlayer.Play(menuBGM);
