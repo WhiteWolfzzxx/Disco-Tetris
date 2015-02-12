@@ -102,7 +102,7 @@ namespace TetroXNA
 
 			retriveScores ();
 
-			//if there ar no file problems continue
+			//if there are no file problems continue
 			if (boolWorkingFileIO) 
             {
 				int j = 0;

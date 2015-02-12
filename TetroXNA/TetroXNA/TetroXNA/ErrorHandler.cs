@@ -23,8 +23,8 @@ namespace TetroXNA
         public ErrorHandler()
         {
             /*DialogResult dialogResult = MessageBox.Show(
-                "For Devloping Perposes\nMay FlashBlock Studio Collect Data in the following:\n-Computer Name\n-User Name\n-Computer Serial Number", 
-                "Computer Sesitive Info Premission", 
+                "For Developing Purposes\nMay FlashBlock Studio Collect Data in the following:\n-Computer Name\n-User Name\n-Computer Serial Number", 
+                "Computer Sensitive Info Permission", 
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Warning);
             if (dialogResult == DialogResult.Yes)
@@ -58,7 +58,7 @@ namespace TetroXNA
                     }
                 }
 
-                //Check to see if there is an exsisting record for current computer
+                //Check to see if there is an existing record for current computer
                 for (int i = 1; i <= numOfRecordFiles; i++ )
                 {
                     if (checkFileForComputerID(@"Error Folder\Error_Record_" + i + ".txt"))
@@ -72,14 +72,14 @@ namespace TetroXNA
                 if (identifyRecordNum == 0)
                 {
                     Console.WriteLine("No Matching record");
-                    Console.WriteLine("Current session will be recoreded in Error_Record_" + (numOfRecordFiles + 1) + ".txt");
+                    Console.WriteLine("Current session will be recorded in Error_Record_" + (numOfRecordFiles + 1) + ".txt");
                     createNewRecord(@"Error Folder\Error_Record_" + (numOfRecordFiles + 1) + ".txt");
                     recordName = "Error_Record_" + (numOfRecordFiles + 1) + ".txt";
                 }
                 else
                 {
                     Console.WriteLine("Found Matching Record");
-                    Console.WriteLine("Current session will be recoreded in Error_Record_" + identifyRecordNum + ".txt");
+                    Console.WriteLine("Current session will be recorded in Error_Record_" + identifyRecordNum + ".txt");
                     recordName = "Error_Record_" + identifyRecordNum + ".txt";
                 }
 
@@ -118,7 +118,7 @@ namespace TetroXNA
                 fs.Close();
                 if (errorLevel == 3)
                 {
-                    MessageBox.Show("Ciritical Error!\nError code: " + errorCode + "\nRefer to " + recordName +
+                    MessageBox.Show("Critical Error!\nError code: " + errorCode + "\nRefer to " + recordName +
                         "\nLocation: " + Path.GetFullPath(recordName).ToString(), "TetroXNA Error", 
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Process.GetCurrentProcess().Kill();
@@ -147,7 +147,7 @@ namespace TetroXNA
                 sw.WriteLine("File Created " + currentDateTime.ToString());
                 sw.WriteLine("");
                 sw.WriteLine("---------------SYSTEM INFO--------------");
-                sw.WriteLine("Operateing System:\t" + operatingSystem);
+                sw.WriteLine("Operating System:\t" + operatingSystem);
                 sw.WriteLine("Computer Name:\t\t" + computerName);
                 sw.WriteLine("Current User:\t\t" + userName);
                 sw.WriteLine("Computer Manufacturer:\t" + computerManufacturer);
@@ -163,7 +163,7 @@ namespace TetroXNA
 
                 sw.Close();
                 fs.Close();
-                Console.WriteLine("Created Error Record Sucsessfully");
+                Console.WriteLine("Created Error Record Successfully");
             }
             catch (Exception d)
             {
@@ -266,7 +266,7 @@ namespace TetroXNA
                     numOfCPU = queryObj["NumberOfProcessors"].ToString();
                     numOfLogicCPU = queryObj["NumberOfLogicalProcessors"].ToString();
                     userName = queryObj["UserName"].ToString();
-                    totalRAM = (Convert.ToDouble(queryObj["TotalPhysicalMemory"]) / 1000000000).ToString() + " GB";    //divid by billion to convert byte to gigibyte
+                    totalRAM = (Convert.ToDouble(queryObj["TotalPhysicalMemory"]) / 1000000000).ToString() + " GB";    //divide by billion to convert byte to gigabyte
                 }
                 Console.WriteLine("Computer System Data retrieved");
             }
@@ -294,7 +294,7 @@ namespace TetroXNA
                 {
                     nameGPU = sysVC["Name"].ToString();
                 }
-                Console.WriteLine("GPU Data retrived");
+                Console.WriteLine("GPU Data retrieved");
             }
             catch
             {

@@ -101,11 +101,11 @@ namespace TetroXNA
             score += activeBlocks[0].getScore();
         }
 
-        //block hits bottom algorithem
-        //controls the steps to eventally save the positions
+        //block hits bottom algorithm
+        //controls the steps to eventually save the positions
         private void stopBlocks()
         {
-            //If one playerblock has something under it
+            //If one player_block has something under it
             //Stops other player blocks going down if one can't and timer counts down then save positions
             if (activeBlocks[0].getBlockCollideBottomFlag() ||
                 activeBlocks[1].getBlockCollideBottomFlag() ||
@@ -156,7 +156,7 @@ namespace TetroXNA
         }
 
         //Controls how lines are cleared and found
-        //Controls scoreing when a line is cleared
+        //Controls scoring when a line is cleared
         private void lineDetection()
         {
             if (lineCheckTimer >= minLineCheckTimer)
@@ -251,8 +251,8 @@ namespace TetroXNA
             }
         }
 
-        //Block syic detect and reasign so all blocks stop
-        //AKA if one player controled block stops all stop
+        //Block syic detect and reassign so all blocks stop
+        //AKA if one player controlled block stops all stop
         private void syncActiveBlocks()
         {
             if ((activeBlocks[0].getStopActiveBlocks()) ||

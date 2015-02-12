@@ -94,7 +94,7 @@ namespace TetroXNA
             checkRightFlag();
 
             //Flag if the bottom of the blocks are hitting something
-            //boolean if statment compressed
+            //boolean if statement compressed
             blockCollideBottomFlag = ((locationY == 19) || (store[locationX, (locationY + 1)] == true) || (stopActiveBlocks == true));
 
             //PlayerBlock will move downward forcefully HAHAHA!!!!
@@ -129,7 +129,7 @@ namespace TetroXNA
             canGoLeftFlag = !((locationX == 0) || store[(locationX - 1), locationY]);
         }
 
-        //Checks to detect other blocks or bounderies to rotate
+        //Checks to detect other blocks or boundaries to rotate
         private void canRotateBlockFlag()
         {
             canRotateBlocksFlag = !(
@@ -190,7 +190,7 @@ namespace TetroXNA
             }
         }
 
-        //Constructor for player controled blocks
+        //Constructor for player controlled blocks
         //PATTERN ALGORITHEM HERE
         public void resetBlocks()
         {
@@ -201,14 +201,14 @@ namespace TetroXNA
             rotateState = 0;
         }
 
-        //Constructor refrance to relocate player controled blocks
+        //Constructor reference to relocate player controlled blocks
         public void resetPlayerBlockPos()
         {
             locationX = blockConFigClass.resetPattern("X");
             locationY = blockConFigClass.resetPattern("Y");
         }
 
-        //Colision detections for player blocks
+        //Collision detections for player blocks
         private void checkBounds(bool[,] store)
         {
             if (locationX > 9)

@@ -38,11 +38,11 @@ namespace TetroXNA
         bool muted;
         public static bool consoleShown, fullscreen;
         bool[,] store = new bool[10, 20];				//Block storing
-        string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
-        const int SW_HIDE = 0; //Constant ints for show/hide console.
+        const int SW_HIDE = 0; //Constant integers for show/hide console.
         const int SW_SHOW = 5;
+        string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
         IntPtr handle = GetConsoleWindow();
-        Vector2[,] lines = new Vector2[10, 20]; 		//block placeing grid
+        Vector2[,] lines = new Vector2[10, 20]; 		//block placing grid
         Texture2D[,] blocks = new Texture2D[10, 20];	//Block store show
         SingleBlockHelper[] activeBlocks = new SingleBlockHelper[4];	//Blocks that the player can move
         XmlDocument settingsRecord;
@@ -178,7 +178,7 @@ namespace TetroXNA
                 scoreBackground = Content.Load<Texture2D>(@"Textures\TetroBorder");
                 gameBackground = Content.Load<Texture2D>(@"Textures\Tetro Game Background");
 
-                //Load the player controled blocks
+                //Load the player controlled blocks
                 blockHelper = new BlockHelper(activeBlocks, lines, store, playBGM);
                 blockHelper.setColors();
                 activeBlocks = blockHelper.loadPlayerBlocks(Content);
@@ -245,7 +245,7 @@ namespace TetroXNA
                         gameState = GameStates.MainMenu;
                 }
 
-                //Swich case is for what option the palyer chooses
+                //Switch case is for what option the player chooses
                 if (gameState == GameStates.MainMenu)
                 {
                     mainMenuClass.Update(gameTime);
@@ -340,7 +340,7 @@ namespace TetroXNA
                     (gameState == GameStates.Debug) ||
                     (gameState == GameStates.Tutroial && !tutorialClass.getIsTutorialPaused())) //DO NOT update if tutorial needs to show hint
                 {
-                    #region Update Game Algorithym
+                    #region Update Game Algorithm
                     blockHelper.setActiveBlocks(activeBlocks);
                     blockHelper.BlockHelperUpdate(gameTime);		//The Method that asks questions about all player blocks
                     activeBlocks = blockHelper.getActiveBlocks();
@@ -398,14 +398,14 @@ namespace TetroXNA
                 if (gameState == GameStates.PauseGame)
                 {
                     pauseGameClass.update(gameTime);
-                    //unpause game
+                    //un_pause game
                     if (keyState.IsKeyDown(Keys.Escape) && !escapeDidSomething)
                     {
                         gameState = GameStates.Playing;
                         escapeDidSomething = true;
                     }
 
-                    //Pause Menu option exucution
+                    //Pause Menu option execution
                     if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
                     {
                         switch (pauseGameClass.getMenuOption())
@@ -555,7 +555,7 @@ namespace TetroXNA
                     (gameState == GameStates.Debug) ||
                     (gameState == GameStates.Tutroial))
                 {
-                    //Draws the player controled blocks
+                    //Draws the player controlled blocks
                     for (int i = 0; i < activeBlocks.Length; i++)
                         activeBlocks[i].Draw(spriteBatch);
 

@@ -14,6 +14,7 @@ namespace TetroXNA
 {
     public class GameOverClass
     {
+        private bool calledInputBox = false;
         private string playerName;
         private SpriteFont font;
         private StringInputClass nameClass = new StringInputClass();
@@ -21,8 +22,7 @@ namespace TetroXNA
         //private Label label = new Label();
        // private TextBox textBox = new TextBox();
        // private Button buttonOk = new Button();
-        //private Button buttonCancel = new Button();
-        private bool calledInputBox = false;
+        //private Button buttonCancel = new Button();        
 
         public GameOverClass(SpriteFont f)
         {
