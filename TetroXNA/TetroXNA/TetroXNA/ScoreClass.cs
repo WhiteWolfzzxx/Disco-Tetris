@@ -105,9 +105,7 @@ namespace TetroXNA
 			//if there are no file problems continue
 			if (boolWorkingFileIO) 
             {
-				int j = 0;
-
-				for (int i = 0; i < 10; i++) 
+				for (int i = 0, j = 0; i < 10; i++, j++) 
                 {
 					if (sc > Convert.ToInt32(textHighScores1[i]) && i == j) 
                     {
@@ -125,12 +123,12 @@ namespace TetroXNA
 						textHighScores2 [i] = textHighScores1 [j];
                         textNames2[i] = textNames1[j];
 					}
-					j++;
 				}
 			}
 
 			//Write the new scores to the file
-			try{
+			try
+            {
                 dummy = 1;
                 
                 while (dummy == 1)

@@ -75,6 +75,12 @@ namespace TetroXNA
             System.Console.WriteLine("Update Game Over");
         }
 
+        public string getName()
+        {
+            playerName = nameClass.getName();
+            return playerName;
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             System.Console.WriteLine("Draw Game Over");

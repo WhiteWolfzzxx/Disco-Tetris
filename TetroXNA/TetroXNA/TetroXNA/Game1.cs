@@ -351,14 +351,6 @@ namespace TetroXNA
                     {
                         if (store[i, 0] == true)
                         {
-                            try
-                            {
-                                scoreClass.recordScore(blockHelper.getScore(), stringInputClass.getName());
-                            }
-                            catch (Exception e)
-                            {
-                                errorHandler.recordError(2, 104, "Saving has failed.", e.ToString());
-                            }
                             gameState = GameStates.GameOver;
                             MediaPlayer.Stop();
                             MediaPlayer.Play(menuBGM);
@@ -446,6 +438,14 @@ namespace TetroXNA
                     //Main Menu
                     if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
                     {
+                        try
+                        {
+                            scoreClass.recordScore(blockHelper.getScore(), gameOverClass.getName());
+                        }
+                        catch (Exception e)
+                        {
+                            errorHandler.recordError(2, 104, "Saving has failed.", e.ToString());
+                        }
                         gameState = GameStates.MainMenu;
                         spaceDidSomething = true;
                     }
