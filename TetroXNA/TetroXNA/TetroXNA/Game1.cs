@@ -74,8 +74,8 @@ namespace TetroXNA
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = 600;
             graphics.PreferredBackBufferWidth = 700;
-            try 
-	        {
+            try
+            {
                 XmlDocument settings = new XmlDocument();
                 settings.Load("tetroSettings.xml");
                 try //Nested try-catches to prevent total file rewrite.
@@ -113,14 +113,14 @@ namespace TetroXNA
                     settings.SelectSingleNode("/TetroSettings/Muted").InnerText = "false";
                 }
                 settings.Save("tetroSettings.xml");
-	        }
-	        catch //Creates the file should it not exist.
-	        {
-		        XmlDocument settings = new XmlDocument();
+            }
+            catch //Creates the file should it not exist.
+            {
+                XmlDocument settings = new XmlDocument();
                 XmlNode rootNode = settings.CreateElement("TetroSettings");
                 settings.AppendChild(rootNode);
                 XmlNode userNode = settings.CreateElement("Fullscreen");
-                userNode.InnerText = "false";                
+                userNode.InnerText = "false";
                 rootNode.AppendChild(userNode);
                 userNode = settings.CreateElement("ConsoleShown");
                 userNode.InnerText = "true";
@@ -130,7 +130,7 @@ namespace TetroXNA
                 rootNode.AppendChild(userNode);
                 settings.Save("tetroSettings.xml");
                 graphics.IsFullScreen = false;
-	        }            
+            }
         }
 
         /// <summary>
@@ -385,7 +385,7 @@ namespace TetroXNA
                 }
 
                 if (gameState == GameStates.Debug)
-                {}
+                { }
 
                 if (gameState == GameStates.PauseGame)
                 {
@@ -476,22 +476,22 @@ namespace TetroXNA
                                 break;
 
                             case 2:
-                                if(consoleShown)
-                                     {
-                                        //Hide the window
-                                        ShowWindow(handle, SW_HIDE); // 0 = SW_HIDE                                        
-                                     }                
-                                if(!consoleShown)
-                                     {
-                                        //Show window again
-                                        ShowWindow(handle, SW_SHOW); //5 = SW_SHOWNORMA
-                                     }
+                                if (consoleShown)
+                                {
+                                    //Hide the window
+                                    ShowWindow(handle, SW_HIDE); // 0 = SW_HIDE                                        
+                                }
+                                if (!consoleShown)
+                                {
+                                    //Show window again
+                                    ShowWindow(handle, SW_SHOW); //5 = SW_SHOWNORMA
+                                }
                                 consoleShown = !consoleShown;
                                 break;
 
-                            case 3:                                           
+                            case 3:
                                 MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
-                                muted = !muted;                           
+                                muted = !muted;
                                 break;
 
                             case 4:
@@ -517,7 +517,7 @@ namespace TetroXNA
             }
             catch (Exception d)
             {
-                errorHandler.recordError( 3, 103, "Updating has failed", d.ToString());
+                errorHandler.recordError(3, 103, "Updating has failed", d.ToString());
             }
         }
         /// <summary>
@@ -538,7 +538,7 @@ namespace TetroXNA
                     creditClass.Draw(spriteBatch);
 
                 if (gameState == GameStates.MainMenu)
-                    mainMenuClass.Draw(spriteBatch);                
+                    mainMenuClass.Draw(spriteBatch);
 
                 if ((gameState == GameStates.Playing) ||
                     (gameState == GameStates.PauseGame))
@@ -597,7 +597,7 @@ namespace TetroXNA
                 if (gameState == GameStates.Tutroial)
                 {
                     tutorialClass.Draw(spriteBatch);
-                    spriteBatch.DrawString(smallFont, "game1 store " + store[9,19].ToString(), new Vector2(400,10), Color.Blue);
+                    spriteBatch.DrawString(smallFont, "game1 store " + store[9, 19].ToString(), new Vector2(400, 10), Color.Blue);
                 }
 
                 spriteBatch.End();

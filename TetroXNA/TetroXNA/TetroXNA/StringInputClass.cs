@@ -281,13 +281,25 @@ namespace TetroXNA
                         playerName += "Z";
                         keyDidSomething = true;
                     }
-                } 
+                }
+                else if (keyboard.IsKeyDown(Keys.Back))
+                {
+                    keyPressed = true;
+                    if (!keyDidSomething)
+                    {
+                        if (playerName.Length > 0)
+                        {
+                            playerName = playerName.Substring(0, playerName.Length - 1);
+                        }
+                        keyDidSomething = true;
+                    }
+                }
                 else
                 {
                     keyPressed = false;
                 }
             }
-            if (keyboard.IsKeyDown(Keys.Back))
+            else if (keyboard.IsKeyDown(Keys.Back))
             {
                 keyPressed = true;
                 if (!keyDidSomething)
