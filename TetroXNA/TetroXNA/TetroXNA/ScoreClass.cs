@@ -40,10 +40,9 @@ namespace TetroXNA
             blueIntensity = menuProperties.getBlue();
             greenIntensity = menuProperties.getGreen();
             menuProperties.colorChanger();
-			retriveScores ();
 		}
 
-		private void retriveScores()
+		public void retriveScores()
 		{
 			boolWorkingFileIO = true;
 

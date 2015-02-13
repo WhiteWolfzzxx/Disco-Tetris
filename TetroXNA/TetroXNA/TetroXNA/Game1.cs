@@ -311,6 +311,7 @@ namespace TetroXNA
                                 #endregion
                             case 5:
                                 #region High Scores
+                                scoreClass.retriveScores();
                                 gameState = GameStates.HighScoreScreen;
                                 break;
                                 #endregion
