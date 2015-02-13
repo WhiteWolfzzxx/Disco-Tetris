@@ -123,7 +123,7 @@ namespace TetroXNA
                     return 1;
 
                 case 2:
-                    //Tutroial
+                    //Tutorial
                     return 2;
 
                 case 3:

@@ -16,11 +16,11 @@ namespace TetroXNA
         private bool tutorialPaused = true;
         private bool showMessage = true;
         private bool gotoMenu = false;
+        private int messageNum = 1;
         private float timer = 0.0f;
         private float minTimer = 1.0f;
         private Texture2D tutorialBackground;
         private SpriteFont font;
-        private int messageNum = 1;
         private Vector2[] messageLinePos = new Vector2[10];
 
         public void setGotoMenu(bool gt) { gotoMenu = gt; }
@@ -45,8 +45,8 @@ namespace TetroXNA
 
         //Tutorial Logic
         //constructors at the menu will reset this class
-        //each state is the message num
-        //message num incriments every time the timer reachs it's set limit allowing the player to play
+        //each state is the message number
+        //message number increments every time the timer reaches it's set limit allowing the player to play
         public void Update(GameTime gameTime)
         {
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -142,8 +142,8 @@ namespace TetroXNA
                 switch (messageNum)
                 {
                     case 1:
-                        spriteBatch.DrawString(font, "welcome to tetro", messageLinePos[0], Color.White);
-                        spriteBatch.DrawString(font, "the objective of tetro is to ", messageLinePos[1], Color.White);
+                        spriteBatch.DrawString(font, "Welcome to Tetro", messageLinePos[0], Color.White);
+                        spriteBatch.DrawString(font, "the objective of Tetro is to ", messageLinePos[1], Color.White);
                         spriteBatch.DrawString(font, "score the most points as", messageLinePos[2], Color.White);
                         spriteBatch.DrawString(font, "possible", messageLinePos[3], Color.White);
                         spriteBatch.DrawString(font, "press space to continue", messageLinePos[5], Color.White);
@@ -156,7 +156,7 @@ namespace TetroXNA
                         spriteBatch.DrawString(font, "press space to continue", messageLinePos[5], Color.White);
                         break;
                     case 3:
-                        spriteBatch.DrawString(font, "the line below has one", messageLinePos[0], Color.White);
+                        spriteBatch.DrawString(font, "The line below has one", messageLinePos[0], Color.White);
                         spriteBatch.DrawString(font, "spot open. you need to", messageLinePos[1], Color.White);
                         spriteBatch.DrawString(font, "rotate the blocks", messageLinePos[2], Color.White);
                         spriteBatch.DrawString(font, "press the up arrow", messageLinePos[4], Color.White);
@@ -176,7 +176,7 @@ namespace TetroXNA
                         spriteBatch.DrawString(font, "Press the down arrow", messageLinePos[4], Color.White);
                         break;
                     case 6:
-                        spriteBatch.DrawString(font, "Congradulations", messageLinePos[0], Color.White);
+                        spriteBatch.DrawString(font, "Congratulations", messageLinePos[0], Color.White);
                         spriteBatch.DrawString(font, "you have completed the ", messageLinePos[1], Color.White);
                         spriteBatch.DrawString(font, "tutorial.  Now go to", messageLinePos[2], Color.White);
                         spriteBatch.DrawString(font, "menu and select play", messageLinePos[3], Color.White);

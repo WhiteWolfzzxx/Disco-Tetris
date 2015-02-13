@@ -38,11 +38,11 @@ namespace TetroXNA
         bool muted;
         public static bool consoleShown, fullscreen;
         bool[,] store = new bool[10, 20];				//Block storing
-        string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
-        const int SW_HIDE = 0; //Constant ints for show/hide console.
+        const int SW_HIDE = 0; //Constant integers for show/hide console.
         const int SW_SHOW = 5;
+        string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
         IntPtr handle = GetConsoleWindow();
-        Vector2[,] lines = new Vector2[10, 20]; 		//block placeing grid
+        Vector2[,] lines = new Vector2[10, 20]; 		//block placing grid
         Texture2D[,] blocks = new Texture2D[10, 20];	//Block store show
         SingleBlockHelper[] activeBlocks = new SingleBlockHelper[4];	//Blocks that the player can move
         XmlDocument settingsRecord;
@@ -74,8 +74,8 @@ namespace TetroXNA
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = 600;
             graphics.PreferredBackBufferWidth = 700;
-            try 
-	        {
+            try
+            {
                 XmlDocument settings = new XmlDocument();
                 settings.Load("tetroSettings.xml");
                 try //Nested try-catches to prevent total file rewrite.
@@ -113,14 +113,14 @@ namespace TetroXNA
                     settings.SelectSingleNode("/TetroSettings/Muted").InnerText = "false";
                 }
                 settings.Save("tetroSettings.xml");
-	        }
-	        catch //Creates the file should it not exist.
-	        {
-		        XmlDocument settings = new XmlDocument();
+            }
+            catch //Creates the file should it not exist.
+            {
+                XmlDocument settings = new XmlDocument();
                 XmlNode rootNode = settings.CreateElement("TetroSettings");
                 settings.AppendChild(rootNode);
                 XmlNode userNode = settings.CreateElement("Fullscreen");
-                userNode.InnerText = "false";                
+                userNode.InnerText = "false";
                 rootNode.AppendChild(userNode);
                 userNode = settings.CreateElement("ConsoleShown");
                 userNode.InnerText = "true";
@@ -130,7 +130,7 @@ namespace TetroXNA
                 rootNode.AppendChild(userNode);
                 settings.Save("tetroSettings.xml");
                 graphics.IsFullScreen = false;
-	        }            
+            }
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace TetroXNA
                 scoreBackground = Content.Load<Texture2D>(@"Textures\TetroBorder");
                 gameBackground = Content.Load<Texture2D>(@"Textures\Tetro Game Background");
 
-                //Load the player controled blocks
+                //Load the player controlled blocks
                 blockHelper = new BlockHelper(activeBlocks, lines, store, playBGM);
                 blockHelper.setColors();
                 activeBlocks = blockHelper.loadPlayerBlocks(Content);
@@ -245,7 +245,7 @@ namespace TetroXNA
                         gameState = GameStates.MainMenu;
                 }
 
-                //Swich case is for what option the palyer chooses
+                //Switch case is for what option the player chooses
                 if (gameState == GameStates.MainMenu)
                 {
                     mainMenuClass.Update(gameTime);
@@ -311,6 +311,7 @@ namespace TetroXNA
                                 #endregion
                             case 5:
                                 #region High Scores
+                                scoreClass.retriveScores(); //This must be called once
                                 gameState = GameStates.HighScoreScreen;
                                 break;
                                 #endregion
@@ -340,7 +341,7 @@ namespace TetroXNA
                     (gameState == GameStates.Debug) ||
                     (gameState == GameStates.Tutroial && !tutorialClass.getIsTutorialPaused())) //DO NOT update if tutorial needs to show hint
                 {
-                    #region Update Game Algorithym
+                    #region Update Game Algorithm
                     blockHelper.setActiveBlocks(activeBlocks);
                     blockHelper.BlockHelperUpdate(gameTime);		//The Method that asks questions about all player blocks
                     activeBlocks = blockHelper.getActiveBlocks();
@@ -351,7 +352,6 @@ namespace TetroXNA
                     {
                         if (store[i, 0] == true)
                         {
-                            scoreClass.recordScore(blockHelper.getScore(), stringInputClass.getName());
                             gameState = GameStates.GameOver;
                             MediaPlayer.Stop();
                             MediaPlayer.Play(menuBGM);
@@ -386,19 +386,19 @@ namespace TetroXNA
                 }
 
                 if (gameState == GameStates.Debug)
-                {}
+                { }
 
                 if (gameState == GameStates.PauseGame)
                 {
                     pauseGameClass.update(gameTime);
-                    //unpause game
+                    //un_pause game
                     if (keyState.IsKeyDown(Keys.Escape) && !escapeDidSomething)
                     {
                         gameState = GameStates.Playing;
                         escapeDidSomething = true;
                     }
 
-                    //Pause Menu option exucution
+                    //Pause Menu option execution
                     if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
                     {
                         switch (pauseGameClass.getMenuOption())
@@ -439,6 +439,14 @@ namespace TetroXNA
                     //Main Menu
                     if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
                     {
+                        try
+                        {
+                            scoreClass.recordScore(blockHelper.getScore(), gameOverClass.getName());
+                        }
+                        catch (Exception e)
+                        {
+                            errorHandler.recordError(2, 104, "Saving has failed.", e.ToString());
+                        }
                         gameState = GameStates.MainMenu;
                         spaceDidSomething = true;
                     }
@@ -469,22 +477,22 @@ namespace TetroXNA
                                 break;
 
                             case 2:
-                                if(consoleShown)
-                                     {
-                                        //Hide the window
-                                        ShowWindow(handle, SW_HIDE); // 0 = SW_HIDE                                        
-                                     }                
-                                if(!consoleShown)
-                                     {
-                                        //Show window again
-                                        ShowWindow(handle, SW_SHOW); //5 = SW_SHOWNORMA
-                                     }
+                                if (consoleShown)
+                                {
+                                    //Hide the window
+                                    ShowWindow(handle, SW_HIDE); // 0 = SW_HIDE                                        
+                                }
+                                if (!consoleShown)
+                                {
+                                    //Show window again
+                                    ShowWindow(handle, SW_SHOW); //5 = SW_SHOWNORMA
+                                }
                                 consoleShown = !consoleShown;
                                 break;
 
-                            case 3:                                           
+                            case 3:
                                 MediaPlayer.IsMuted = !MediaPlayer.IsMuted;
-                                muted = !muted;                           
+                                muted = !muted;
                                 break;
 
                             case 4:
@@ -510,7 +518,7 @@ namespace TetroXNA
             }
             catch (Exception d)
             {
-                errorHandler.recordError( 3, 103, "Updating has failed", d.ToString());
+                errorHandler.recordError(3, 103, "Updating has failed", d.ToString());
             }
         }
         /// <summary>
@@ -531,7 +539,7 @@ namespace TetroXNA
                     creditClass.Draw(spriteBatch);
 
                 if (gameState == GameStates.MainMenu)
-                    mainMenuClass.Draw(spriteBatch);                
+                    mainMenuClass.Draw(spriteBatch);
 
                 if ((gameState == GameStates.Playing) ||
                     (gameState == GameStates.PauseGame))
@@ -548,7 +556,7 @@ namespace TetroXNA
                     (gameState == GameStates.Debug) ||
                     (gameState == GameStates.Tutroial))
                 {
-                    //Draws the player controled blocks
+                    //Draws the player controlled blocks
                     for (int i = 0; i < activeBlocks.Length; i++)
                         activeBlocks[i].Draw(spriteBatch);
 
@@ -585,12 +593,12 @@ namespace TetroXNA
                     settingsClass.Draw(spriteBatch);
 
                 if (gameState == GameStates.HighScoreScreen)
-                    scoreClass.Draw(spriteBatch, smallFont);
+                    scoreClass.Draw(spriteBatch, bigFont);
 
                 if (gameState == GameStates.Tutroial)
                 {
                     tutorialClass.Draw(spriteBatch);
-                    spriteBatch.DrawString(smallFont, "game1 store " + store[9,19].ToString(), new Vector2(400,10), Color.Blue);
+                    spriteBatch.DrawString(smallFont, "game1 store " + store[9, 19].ToString(), new Vector2(400, 10), Color.Blue);
                 }
 
                 spriteBatch.End();

@@ -14,14 +14,14 @@ namespace TetroXNA
 {
     public class PauseGameClass
     {
-        private SpriteFont bigFont;
-        private SpriteFont smallFont;
-        private float menuChangeTimer;
-        private KeyboardState keyState;
         private bool spaceDidSomething = false;
         private int menuOption = 1;
         private float minMenuChangeTimer = 0.1f;
-
+        private float menuChangeTimer;
+        private SpriteFont bigFont;
+        private SpriteFont smallFont;
+        private KeyboardState keyState;
+        
         public int getMenuOption() { return menuOption; }
 
         public PauseGameClass(SpriteFont f, SpriteFont s)

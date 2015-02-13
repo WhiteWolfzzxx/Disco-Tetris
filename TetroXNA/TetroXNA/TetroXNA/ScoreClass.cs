@@ -40,10 +40,9 @@ namespace TetroXNA
             blueIntensity = menuProperties.getBlue();
             greenIntensity = menuProperties.getGreen();
             menuProperties.colorChanger();
-			retriveScores ();
 		}
 
-		private void retriveScores()
+		public void retriveScores()
 		{
 			boolWorkingFileIO = true;
 
@@ -102,12 +101,10 @@ namespace TetroXNA
 
 			retriveScores ();
 
-			//if there ar no file problems continue
+			//if there are no file problems continue
 			if (boolWorkingFileIO) 
             {
-				int j = 0;
-
-				for (int i = 0; i < 10; i++) 
+				for (int i = 0, j = 0; i < 10; i++, j++) 
                 {
 					if (sc > Convert.ToInt32(textHighScores1[i]) && i == j) 
                     {
@@ -125,12 +122,12 @@ namespace TetroXNA
 						textHighScores2 [i] = textHighScores1 [j];
                         textNames2[i] = textNames1[j];
 					}
-					j++;
 				}
 			}
 
 			//Write the new scores to the file
-			try{
+			try
+            {
                 dummy = 1;
                 
                 while (dummy == 1)
@@ -181,19 +178,19 @@ namespace TetroXNA
 		{
             spriteBatch.Draw(background, Vector2.Zero, Color.White);
 
-            spriteBatch.Draw(scoreTitle, new Vector2(5, 40), new Color(redIntensity, greenIntensity, blueIntensity));
+            spriteBatch.Draw(scoreTitle, new Vector2(5, 5), new Color(redIntensity, greenIntensity, blueIntensity));
 
 			for (int i = 0; i < 10; i++)
             {
                 if (i < 9)
                 {
                     spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textHighScores1[i] + "     " + textNames1[i]),
-                                                    new Vector2(200, (250 + (i * 25))), Color.White); 
+                                                    new Vector2(150, (175 + (i * 40))), Color.White); 
                 }
                 else if(i == 9)
                 {
                     spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textHighScores1[i] + "     " + textNames1[i]),
-                                                    new Vector2(188, (250 + (i * 25))), Color.White);
+                                                    new Vector2(150-12, (175 + (i * 40))), Color.White);
                 }
 			}
 		}

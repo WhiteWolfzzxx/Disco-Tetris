@@ -24,8 +24,8 @@ namespace TetroXNA
             lines = ln;
         }
 
-        //Constructor for the grid placment x,y
-        //AKA use simple nums for placement
+        //Constructor for the grid placement x,y
+        //AKA use simple numbers for placement
         public Vector2[,] resetLinesGrid()
         {
             for (int z = 0; z < 10; z++)

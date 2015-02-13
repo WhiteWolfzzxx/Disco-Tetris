@@ -96,7 +96,7 @@ namespace TetroXNA
             switch (menuOption)
             {
                 case 1:
-                    //Fullscreen
+                    //Full_Screen
                     fullScreen = !fullScreen;
                     return 1;
 
@@ -134,7 +134,7 @@ namespace TetroXNA
                 {
                     spriteBatch.DrawString(smallFont, "Show Console", new Vector2(285, 250), Color.LightGray);
                 }
-                if (!fullScreen) //If not fullscreen button displays fullscreen, while fullscreen button displays windowed.
+                if (!fullScreen) //If not full screen button displays full screen, while full screen button displays windowed.
                 {
                     spriteBatch.DrawString(bigFont, "Fullscreen", new Vector2(220, 320), Color.LightGray);
                 }

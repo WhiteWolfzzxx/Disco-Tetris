@@ -6,13 +6,13 @@ using System.Text;
 namespace TetroXNA
 {
     public class MenuProperties
-    {
-        private int redIntensity = 0;
-        private int greenIntensity = 50;
-        private int blueIntensity = 100;
+    {        
         private bool redIncrease = true;
         private bool greenIncrease = true;
         private bool blueIncrease = true;
+        private int redIntensity = 0;
+        private int greenIntensity = 50;
+        private int blueIntensity = 100;
 
         public int getRed() { return redIntensity; }
         public int getBlue() { return blueIntensity; }
