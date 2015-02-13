@@ -189,8 +189,8 @@ namespace TetroXNA
                 }
                 else if(i == 9)
                 {
-                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textHighScores1[i] + "     " + textNames1[i]),
-                                                    new Vector2(150-12, (175 + (i * 40))), Color.White);
+                    spriteBatch.DrawString(font, ((i + 1).ToString() + "    " + textHighScores1[i] + "     " + textNames1[i]),
+                                                    new Vector2(150-16, (175 + (i * 40))), Color.White);
                 }
 			}
 		}
