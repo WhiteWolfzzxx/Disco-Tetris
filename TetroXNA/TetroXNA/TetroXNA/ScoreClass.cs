@@ -178,19 +178,19 @@ namespace TetroXNA
 		{
             spriteBatch.Draw(background, Vector2.Zero, Color.White);
 
-            spriteBatch.Draw(scoreTitle, new Vector2(5, 40), new Color(redIntensity, greenIntensity, blueIntensity));
+            spriteBatch.Draw(scoreTitle, new Vector2(5, 5), new Color(redIntensity, greenIntensity, blueIntensity));
 
 			for (int i = 0; i < 10; i++)
             {
                 if (i < 9)
                 {
                     spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textHighScores1[i] + "     " + textNames1[i]),
-                                                    new Vector2(200, (250 + (i * 25))), Color.White); 
+                                                    new Vector2(150, (175 + (i * 40))), Color.White); 
                 }
                 else if(i == 9)
                 {
                     spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textHighScores1[i] + "     " + textNames1[i]),
-                                                    new Vector2(188, (250 + (i * 25))), Color.White);
+                                                    new Vector2(150-12, (175 + (i * 40))), Color.White);
                 }
 			}
 		}

@@ -593,7 +593,7 @@ namespace TetroXNA
                     settingsClass.Draw(spriteBatch);
 
                 if (gameState == GameStates.HighScoreScreen)
-                    scoreClass.Draw(spriteBatch, smallFont);
+                    scoreClass.Draw(spriteBatch, bigFont);
 
                 if (gameState == GameStates.Tutroial)
                 {
