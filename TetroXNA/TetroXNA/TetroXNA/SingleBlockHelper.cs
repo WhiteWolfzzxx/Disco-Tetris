@@ -163,10 +163,10 @@ namespace TetroXNA
             }
             else
             {
-                if (level < 6)
-                    minDownTimer = 1.0f - ((level - 1) * 0.2f);
+                if (level < 18)
+                    minDownTimer = 1.0f - ((level - 1) * 0.05f);
                 else
-                    minDownTimer = 0.1f;
+                    minDownTimer = 0.2f;
             }
             //Checks flags to go left
             if (keyState.IsKeyDown(Keys.Left) && canGoLeftFlag && !otherCantGoLeftFlag)
