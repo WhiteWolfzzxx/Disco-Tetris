@@ -103,7 +103,7 @@ namespace TetroXNA
                 locationY += 1;
                 downTimer = 0.0f;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+            if (Keyboard.GetState().IsKeyDown(Keys.Down) && (downTimer >= minDownTimer - .02f)) //slows the score incriment down while holding down
                 score = level;
             else
                 score = 0;
