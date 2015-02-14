@@ -86,7 +86,7 @@ namespace TetroXNA
                     attribute.Value = "";
                     userNode.Attributes.Append(attribute);
                     XmlAttribute nameAttribute = create.CreateAttribute("Name");
-                    nameAttribute.Value = "John Doe";
+                    nameAttribute.Value = "AAA";
                     userNode.Attributes.Append(nameAttribute);
                     rootNode.AppendChild(userNode);
                 }
@@ -184,12 +184,12 @@ namespace TetroXNA
             {
                 if (i < 9)
                 {
-                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textHighScores1[i] + "     " + textNames1[i]),
+                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textNames1[i] + "     " + textHighScores1[i]),
                                                     new Vector2(150, (175 + (i * 40))), Color.White); 
                 }
                 else if(i == 9)
                 {
-                    spriteBatch.DrawString(font, ((i + 1).ToString() + "    " + textHighScores1[i] + "     " + textNames1[i]),
+                    spriteBatch.DrawString(font, ((i + 1).ToString() + "    " + textNames1[i] + "     " + textHighScores1[i]),
                                                     new Vector2(150-16, (175 + (i * 40))), Color.White);
                 }
 			}

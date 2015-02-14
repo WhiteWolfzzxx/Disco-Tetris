@@ -23,7 +23,7 @@ namespace TetroXNA
 
         public StringInputClass()
         {
-
+            playerName = "AAA";
         }
 
         public void Update(GameTime gameTime)
