@@ -135,7 +135,7 @@ namespace TetroXNA
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tutorialBackground, new Vector2(360, 275), Color.Blue);
+            spriteBatch.Draw(tutorialBackground, new Vector2(348, 275), Color.Blue);
             #region Messages
             if (showMessage)
             {

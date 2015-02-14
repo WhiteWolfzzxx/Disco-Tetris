@@ -41,7 +41,7 @@ namespace TetroXNA
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(background, Vector2.Zero, Color.White);
+            spriteBatch.Draw(background, Vector2.Zero, Color.Blue);
 
             spriteBatch.Draw(logo, new Vector2(375, 175), Color.White);
 

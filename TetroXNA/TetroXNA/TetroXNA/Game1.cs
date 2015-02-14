@@ -544,18 +544,26 @@ namespace TetroXNA
                 if ((gameState == GameStates.Playing) ||
                     (gameState == GameStates.PauseGame))
                 {
-                    spriteBatch.Draw(gameBackground, Vector2.Zero, Color.White);
+                    spriteBatch.Draw(gameBackground, Vector2.Zero, Color.Blue);
                     spriteBatch.Draw(scoreBackground, new Vector2(316, 0), Color.White);
                     spriteBatch.Draw(scoreBackground, Vector2.Zero, Color.White);
                     spriteBatch.DrawString(bigFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(350, 300), Color.White);
                     spriteBatch.DrawString(bigFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 350), Color.White);
                     spriteBatch.DrawString(bigFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 400), Color.White);
+                    spriteBatch.DrawString(bigFont, "Next Pattern", new Vector2(340, 10), Color.White);
                 }
 
                 if ((gameState == GameStates.Playing) ||
                     (gameState == GameStates.Debug) ||
                     (gameState == GameStates.Tutroial))
                 {
+                    if (gameState == GameStates.Tutroial)
+                    {
+                        spriteBatch.Draw(gameBackground, Vector2.Zero, Color.Blue);
+                    }
+                    spriteBatch.Draw(scoreBackground, new Vector2(316, 0), Color.White);
+                    spriteBatch.Draw(scoreBackground, Vector2.Zero, Color.White);
+
                     //Draws the player controlled blocks
                     for (int i = 0; i < activeBlocks.Length; i++)
                         activeBlocks[i].Draw(spriteBatch);
@@ -579,7 +587,7 @@ namespace TetroXNA
 
                 if (gameState == GameStates.PauseGame)
                 {
-                    spriteBatch.DrawString(bigFont, "PAUSE", new Vector2(350, 450), Color.White);
+                    spriteBatch.DrawString(bigFont, "PAUSE", new Vector2(60, 50), Color.White);
                     pauseGameClass.draw(spriteBatch);
                 }
 
@@ -596,10 +604,7 @@ namespace TetroXNA
                     scoreClass.Draw(spriteBatch, bigFont);
 
                 if (gameState == GameStates.Tutroial)
-                {
                     tutorialClass.Draw(spriteBatch);
-                    spriteBatch.DrawString(smallFont, "game1 store " + store[9, 19].ToString(), new Vector2(400, 10), Color.Blue);
-                }
 
                 spriteBatch.End();
 

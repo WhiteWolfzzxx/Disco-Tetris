@@ -176,7 +176,7 @@ namespace TetroXNA
 
 		public void Draw(SpriteBatch spriteBatch, SpriteFont font)
 		{
-            spriteBatch.Draw(background, Vector2.Zero, Color.White);
+            spriteBatch.Draw(background, Vector2.Zero, Color.Blue);
 
             spriteBatch.Draw(scoreTitle, new Vector2(5, 5), new Color(redIntensity, greenIntensity, blueIntensity));
 

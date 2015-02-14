@@ -120,9 +120,9 @@ namespace TetroXNA
         }
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(background, Vector2.Zero, Color.White);
+            spriteBatch.Draw(background, Vector2.Zero, Color.Blue);
 
-            spriteBatch.Draw(settingsTitle, new Vector2(25, 50), new Color(redIntensity, greenIntensity, blueIntensity));
+            spriteBatch.Draw(settingsTitle, new Vector2(25, 20), new Color(redIntensity, greenIntensity, blueIntensity));
 
             if (menuOption == 1)
             {
