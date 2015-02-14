@@ -26,11 +26,12 @@ namespace TetroXNA
         Boolean boolWorkingFileIO = true;
         MenuProperties menuProperties = new MenuProperties();
         Texture2D scoreTitle, background;
+        SpriteFont smallFont;
         XmlDocument scoresWrite, scoresRead;
 
-        public ScoreClass ()
+        public ScoreClass (SpriteFont sf)
 		{
-
+            smallFont = sf;
 		}
 
 		//High Score Screen Update
@@ -179,17 +180,19 @@ namespace TetroXNA
             spriteBatch.Draw(background, Vector2.Zero, Color.Blue);
 
             spriteBatch.Draw(scoreTitle, new Vector2(5, 5), new Color(redIntensity, greenIntensity, blueIntensity));
+            spriteBatch.DrawString(smallFont, "Press space", new Vector2(10, 540), Color.White);
+            spriteBatch.DrawString(smallFont, "to go back", new Vector2(10, 570), Color.White);
 
 			for (int i = 0; i < 10; i++)
             {
                 if (i < 9)
                 {
-                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textNames1[i] + "     " + textHighScores1[i]),
+                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textNames1[i] + "    " + textHighScores1[i]),
                                                     new Vector2(150, (175 + (i * 40))), Color.White); 
                 }
                 else if(i == 9)
                 {
-                    spriteBatch.DrawString(font, ((i + 1).ToString() + "    " + textNames1[i] + "     " + textHighScores1[i]),
+                    spriteBatch.DrawString(font, ((i + 1).ToString() + "    " + textNames1[i] + "    " + textHighScores1[i]),
                                                     new Vector2(150-16, (175 + (i * 40))), Color.White);
                 }
 			}

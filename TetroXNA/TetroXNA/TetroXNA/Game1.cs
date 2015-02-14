@@ -196,11 +196,12 @@ namespace TetroXNA
                 settingsClass.Load(Content);
 
                 //ScoreClass
-                scoreClass = new ScoreClass();
+                scoreClass = new ScoreClass(smallFont);
                 scoreClass.Load(Content);
 
                 //GameOver Class
-                gameOverClass = new GameOverClass(bigFont);
+                gameOverClass = new GameOverClass(bigFont, smallFont);
+                gameOverClass.LoadContent(Content);
 
                 //Tutorial Class
                 tutorialClass = new TutorialClass(smallFont);
@@ -437,7 +438,7 @@ namespace TetroXNA
                     //gameOverClass = new GameOverClass(bigFont);
                     gameOverClass.Update(gameTime);
                     //Main Menu
-                    if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
+                    if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething && gameOverClass.getCanSubmitName())
                     {
                         try
                         {
@@ -560,6 +561,11 @@ namespace TetroXNA
                     if (gameState == GameStates.Tutroial)
                     {
                         spriteBatch.Draw(gameBackground, Vector2.Zero, Color.Blue);
+                        spriteBatch.DrawString(bigFont, "Next Pattern", new Vector2(340, 10), Color.White);
+                    }
+                    else 
+                    {
+                        spriteBatch.DrawString(smallFont, "Press escape to pause", new Vector2(400,570), Color.White);
                     }
                     spriteBatch.Draw(scoreBackground, new Vector2(316, 0), Color.White);
                     spriteBatch.Draw(scoreBackground, Vector2.Zero, Color.White);
@@ -588,6 +594,8 @@ namespace TetroXNA
                 if (gameState == GameStates.PauseGame)
                 {
                     spriteBatch.DrawString(bigFont, "PAUSE", new Vector2(60, 50), Color.White);
+                    spriteBatch.DrawString(smallFont, "Press space to select", new Vector2(400, 540), Color.White);
+                    spriteBatch.DrawString(smallFont, "Press arrows to navigate", new Vector2(400, 570), Color.White);
                     pauseGameClass.draw(spriteBatch);
                 }
 

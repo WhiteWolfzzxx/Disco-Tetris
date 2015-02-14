@@ -13,18 +13,29 @@ namespace TetroXNA
     public class GameOverClass
     {
         private string playerName;
-        private SpriteFont font;
-        private StringInputClass nameClass = new StringInputClass();  
+        private bool canSubmitName = false;
+        private SpriteFont font, smallFont;
+        private StringInputClass nameClass = new StringInputClass();
+        private Texture2D background;
 
-        public GameOverClass(SpriteFont f)
+        public bool getCanSubmitName() { return canSubmitName; }
+
+        public GameOverClass(SpriteFont f, SpriteFont sf)
         {
             font = f;
+            smallFont = sf;
+        }
+
+        public void LoadContent(ContentManager Content)
+        {
+            background = Content.Load<Texture2D>(@"Textures\Tetro GameOver Background");
         }
 
         public void Update(GameTime gameTime)
         {
             nameClass.Update(gameTime);
             System.Console.WriteLine("Update Game Over");
+            canSubmitName = (nameClass.getName().Length == 3);
         }
 
         public string getName()
@@ -36,9 +47,13 @@ namespace TetroXNA
         public void Draw(SpriteBatch spriteBatch)
         {
             System.Console.WriteLine("Draw Game Over");
+            spriteBatch.Draw(background, Vector2.Zero, Color.Blue);
+            spriteBatch.DrawString(smallFont, "Press space to enter the name", new Vector2(10, 570), Color.White);
             spriteBatch.DrawString(font, "Game Over", new Vector2(200, 50), Color.White);
-            spriteBatch.DrawString(font, "Enter your name:", new Vector2(125,200), Color.White);
+            spriteBatch.DrawString(font, "Enter your name:", new Vector2(125, 200), Color.White);
             spriteBatch.DrawString(font, nameClass.getName(), new Vector2(250, 250), Color.Blue);
+            if (!canSubmitName)
+                spriteBatch.DrawString(smallFont, "invalid name please enter three letters", new Vector2(125, 300), Color.Red);
         }
     }
 }

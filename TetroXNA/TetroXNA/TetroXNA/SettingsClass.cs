@@ -123,6 +123,8 @@ namespace TetroXNA
             spriteBatch.Draw(background, Vector2.Zero, Color.Blue);
 
             spriteBatch.Draw(settingsTitle, new Vector2(25, 20), new Color(redIntensity, greenIntensity, blueIntensity));
+            spriteBatch.DrawString(smallFont, "Press space to select", new Vector2(10, 540), Color.White);
+            spriteBatch.DrawString(smallFont, "Press arrows to navigate", new Vector2(10, 570), Color.White);
 
             if (menuOption == 1)
             {

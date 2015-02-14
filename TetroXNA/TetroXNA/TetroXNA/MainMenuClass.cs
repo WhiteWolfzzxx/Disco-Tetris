@@ -75,6 +75,9 @@ namespace TetroXNA
 
             spriteBatch.Draw(title, new Vector2(66, 5), new Color(redIntensity, greenIntensity, blueIntensity));
 
+            spriteBatch.DrawString(smallFont, "Press space to select", new Vector2(10, 540), Color.White);
+            spriteBatch.DrawString(smallFont, "Press arrows to navigate", new Vector2(10, 570), Color.White);
+
             if (menuOption == 1)
             {
                 spriteBatch.DrawString(smallFont, "Load Game", new Vector2(75, 325), Color.LightGray);
