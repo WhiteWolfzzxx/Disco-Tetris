@@ -33,6 +33,9 @@ namespace TetroXNA
         private Color[,] blockColor = new Color[10, 20];
         private Random random = new Random();
         private Vector2[,] lines;
+        private SoundEffect 
+            blockGroundSoundEffect,
+            lineClearedSoundEffect;
 
         public int getLevel() { return level; }
         public int getTotalClearedLines() { return totalClearedLines; }
@@ -67,11 +70,13 @@ namespace TetroXNA
         }
 
         //Constructor
-        public BlockHelper(SingleBlockHelper[] atb, Vector2[,] ln, bool[,] st)
+        public BlockHelper(SingleBlockHelper[] atb, Vector2[,] ln, bool[,] st, SoundEffect bl, SoundEffect lc)
         {
             activeBlocks = atb;
             lines = ln;
             store = st;
+            blockGroundSoundEffect = bl;
+            lineClearedSoundEffect = lc;
         }
 
         //tasks in update order
@@ -114,6 +119,7 @@ namespace TetroXNA
                     activeBlocks[i].setCanGoDownFlag(false);
                 if (stopBlocksTimer >= activeBlocks[0].getMinTimer())
                 {
+                    blockGroundSoundEffect.Play();
                     for (int i = 0; i < activeBlocks.Length; i++)
                     {
                         //score for blocks landed
@@ -183,6 +189,7 @@ namespace TetroXNA
                         score += (1500 + (100 * (level - 1)));
                         clearedLines++;
                         totalClearedLines++;
+                        lineClearedSoundEffect.Play();
                     }
                 }
                 lineCheckTimer = 0.0f;

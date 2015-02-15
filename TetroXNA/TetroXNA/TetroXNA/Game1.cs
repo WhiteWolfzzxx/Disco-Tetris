@@ -32,6 +32,7 @@ namespace TetroXNA
         SpriteFont bigFont, smallFont;
 
         Song playBGM, menuBGM;
+        SoundEffect menuSoundEffect, blockGroundSoundEffect, lineClearedSoundEffect;
 
         bool escapeDidSomething = false;
         bool spaceDidSomething = false;
@@ -163,7 +164,10 @@ namespace TetroXNA
                 smallFont = Content.Load<SpriteFont>(@"Fonts\smallFont");
                 bigFont = Content.Load<SpriteFont>(@"Fonts\bigFont");
 
-                //BGM
+                //Sounds
+                menuSoundEffect = Content.Load<SoundEffect>(@"Audio\TetroEffect3");
+                blockGroundSoundEffect = Content.Load<SoundEffect>(@"Audio\TetroEffect4");
+                lineClearedSoundEffect = Content.Load<SoundEffect>(@"Audio\TetroEffect5");
                 playBGM = Content.Load<Song>(@"Audio\TetroSong4");
                 menuBGM = Content.Load<Song>(@"Audio\TetroSong3");
                 MediaPlayer.IsRepeating = true;
@@ -179,7 +183,7 @@ namespace TetroXNA
                 gameBackground = Content.Load<Texture2D>(@"Textures\Tetro Game Background");
 
                 //Load the player controlled blocks
-                blockHelper = new BlockHelper(activeBlocks, lines, store);
+                blockHelper = new BlockHelper(activeBlocks, lines, store, blockGroundSoundEffect, lineClearedSoundEffect);
                 blockHelper.setColors();
                 activeBlocks = blockHelper.loadPlayerBlocks(Content);
 
@@ -252,6 +256,7 @@ namespace TetroXNA
                     mainMenuClass.Update(gameTime);
                     if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
                     {
+                        menuSoundEffect.Play();
                         switch (mainMenuClass.detectGameState())
                         {
                             case 1:
@@ -371,6 +376,7 @@ namespace TetroXNA
                     //pause game
                     if (keyState.IsKeyDown(Keys.Escape) && !escapeDidSomething)
                     {
+                        menuSoundEffect.Play();
                         gameState = GameStates.PauseGame;
                         escapeDidSomething = true;
                     }
@@ -386,15 +392,13 @@ namespace TetroXNA
                     }
                 }
 
-                if (gameState == GameStates.Debug)
-                { }
-
                 if (gameState == GameStates.PauseGame)
                 {
                     pauseGameClass.update(gameTime);
                     //un_pause game
                     if (keyState.IsKeyDown(Keys.Escape) && !escapeDidSomething)
                     {
+                        menuSoundEffect.Play();
                         gameState = GameStates.Playing;
                         escapeDidSomething = true;
                     }
@@ -402,6 +406,7 @@ namespace TetroXNA
                     //Pause Menu option execution
                     if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
                     {
+                        menuSoundEffect.Play();
                         switch (pauseGameClass.getMenuOption())
                         {
                             case 1:
@@ -440,6 +445,7 @@ namespace TetroXNA
                     //Main Menu
                     if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething && gameOverClass.getCanSubmitName())
                     {
+                        menuSoundEffect.Play();
                         try
                         {
                             scoreClass.recordScore(blockHelper.getScore(), gameOverClass.getName());
@@ -460,6 +466,7 @@ namespace TetroXNA
                     //Main Menu
                     if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
                     {
+                        menuSoundEffect.Play();
                         gameState = GameStates.MainMenu;
                         spaceDidSomething = true;
                     }
@@ -470,6 +477,7 @@ namespace TetroXNA
                     settingsClass.Update(gameTime);
                     if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
                     {
+                        menuSoundEffect.Play();
                         switch (settingsClass.changeSetting())
                         {
                             case 1:
