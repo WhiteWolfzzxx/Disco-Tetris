@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace TetroXNA
 {
@@ -21,6 +22,7 @@ namespace TetroXNA
         private float minTimer = 1.0f;
         private Texture2D tutorialBackground;
         private SpriteFont font;
+        private Song menuBGM;
         private Vector2[] messageLinePos = new Vector2[10];
 
         public void setGotoMenu(bool gt) { gotoMenu = gt; }
@@ -29,9 +31,10 @@ namespace TetroXNA
         public bool getGotoMenu() { return gotoMenu; }
         public bool getIsTutorialPaused() { return tutorialPaused; }
 
-        public TutorialClass(SpriteFont ft)
+        public TutorialClass(SpriteFont ft, Song mb)
         {
             font = ft;
+            menuBGM = mb;
             for (int i = 0; i < messageLinePos.Length; i++)
             {
                 messageLinePos[i] = new Vector2(375, 285 + (i * 30));
@@ -127,6 +130,7 @@ namespace TetroXNA
                     showMessage = true;
                     if (Keyboard.GetState().IsKeyDown(Keys.Space))
                     {
+                        MediaPlayer.Play(menuBGM);
                         gotoMenu = true;
                     }
                 }

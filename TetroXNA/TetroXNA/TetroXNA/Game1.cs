@@ -208,7 +208,7 @@ namespace TetroXNA
                 gameOverClass.LoadContent(Content);
 
                 //Tutorial Class
-                tutorialClass = new TutorialClass(smallFont);
+                tutorialClass = new TutorialClass(smallFont, menuBGM);
                 tutorialClass.LoadContent(Content);
 
                 //PauseGame Class
