@@ -548,7 +548,7 @@ namespace TetroXNA
                     spriteBatch.Draw(gameBackground, Vector2.Zero, Color.Blue);
                     spriteBatch.Draw(scoreBackground, new Vector2(316, 0), Color.White);
                     spriteBatch.Draw(scoreBackground, Vector2.Zero, Color.White);
-                    spriteBatch.DrawString(bigFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(350, 300), Color.White);
+                    spriteBatch.DrawString(bigFont, "Score:" + blockHelper.getScore().ToString(), new Vector2(350, 300), Color.White);
                     spriteBatch.DrawString(bigFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 350), Color.White);
                     spriteBatch.DrawString(bigFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 400), Color.White);
                     spriteBatch.DrawString(bigFont, "Next Pattern", new Vector2(340, 10), Color.White);
@@ -602,7 +602,7 @@ namespace TetroXNA
                 if (gameState == GameStates.GameOver)
                 {
                     gameOverClass.Draw(spriteBatch);
-                    spriteBatch.DrawString(bigFont, "Your score is: " + blockHelper.getScore().ToString(), new Vector2(125, 150), Color.White);
+                    spriteBatch.DrawString(bigFont, "Your score: " + blockHelper.getScore().ToString(), new Vector2(125, 150), Color.White);
                 }
 
                 if (gameState == GameStates.Controls)
