@@ -164,7 +164,7 @@ namespace TetroXNA
                 bigFont = Content.Load<SpriteFont>(@"Fonts\bigFont");
 
                 //BGM
-                playBGM = Content.Load<Song>(@"Audio\discoTetrisTitleScreenMainMenu");
+                playBGM = Content.Load<Song>(@"Audio\TetroSong4");
                 menuBGM = Content.Load<Song>(@"Audio\TetroSong3");
                 MediaPlayer.IsRepeating = true;
                 MediaPlayer.Play(menuBGM);
@@ -179,7 +179,7 @@ namespace TetroXNA
                 gameBackground = Content.Load<Texture2D>(@"Textures\Tetro Game Background");
 
                 //Load the player controlled blocks
-                blockHelper = new BlockHelper(activeBlocks, lines, store, playBGM);
+                blockHelper = new BlockHelper(activeBlocks, lines, store);
                 blockHelper.setColors();
                 activeBlocks = blockHelper.loadPlayerBlocks(Content);
 

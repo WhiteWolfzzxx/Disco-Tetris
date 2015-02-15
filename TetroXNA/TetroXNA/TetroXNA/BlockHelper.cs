@@ -28,7 +28,6 @@ namespace TetroXNA
             randTimer,
             minRandTimer = 0.01f,
             stopBlocksTimer;
-        private Song playBGM;
         private SingleBlockHelper[] activeBlocks;
         private Color[] color = new Color[10];
         private Color[,] blockColor = new Color[10, 20];
@@ -68,12 +67,11 @@ namespace TetroXNA
         }
 
         //Constructor
-        public BlockHelper(SingleBlockHelper[] atb, Vector2[,] ln, bool[,] st, Song pl)
+        public BlockHelper(SingleBlockHelper[] atb, Vector2[,] ln, bool[,] st)
         {
             activeBlocks = atb;
             lines = ln;
             store = st;
-            playBGM = pl;
         }
 
         //tasks in update order
@@ -141,7 +139,6 @@ namespace TetroXNA
             {
                 clearedLines = 0;
                 level++;
-                MediaPlayer.Play(playBGM);
             }
         }
 
