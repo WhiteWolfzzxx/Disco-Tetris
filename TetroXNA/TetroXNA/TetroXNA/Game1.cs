@@ -165,7 +165,7 @@ namespace TetroXNA
 
                 //BGM
                 playBGM = Content.Load<Song>(@"Audio\discoTetrisTitleScreenMainMenu");
-                menuBGM = Content.Load<Song>(@"Audio\TetroMusic2");
+                menuBGM = Content.Load<Song>(@"Audio\TetroSong3");
                 MediaPlayer.IsRepeating = true;
                 MediaPlayer.Play(menuBGM);
 
