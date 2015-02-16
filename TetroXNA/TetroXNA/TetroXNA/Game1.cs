@@ -167,7 +167,7 @@ namespace TetroXNA
                 //Sounds
                 menuSoundEffect = Content.Load<SoundEffect>(@"Audio\TetroEffect3");
                 blockGroundSoundEffect = Content.Load<SoundEffect>(@"Audio\TetroEffect4");
-                lineClearedSoundEffect = Content.Load<SoundEffect>(@"Audio\TetroEffect5");
+                lineClearedSoundEffect = Content.Load<SoundEffect>(@"Audio\TetroEffect6");
                 playBGM = Content.Load<Song>(@"Audio\TetroSong4");
                 menuBGM = Content.Load<Song>(@"Audio\TetroSong3");
                 MediaPlayer.IsRepeating = true;
