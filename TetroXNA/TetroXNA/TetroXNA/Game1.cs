@@ -261,7 +261,6 @@ namespace TetroXNA
                         {
                             case 1:
                                 #region Play
-                                blockHelper = new BlockHelper(activeBlocks, lines, store, blockGroundSoundEffect, lineClearedSoundEffect);
                                 store = boardClass.resetStore();
                                 for (int i = 0; i < activeBlocks.Length; i++)
                                 {
