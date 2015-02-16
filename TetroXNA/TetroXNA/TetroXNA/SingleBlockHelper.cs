@@ -26,7 +26,7 @@ namespace TetroXNA
             rotateState = 0,
             locationX, locationY, pattern, index, level,
             redIntensity, blueIntensity, greenIntensity,
-            nextPattern = 4,
+            nextPattern,
             score = 0;
         private float 
             moveTimer = 0.0f,
@@ -61,8 +61,9 @@ namespace TetroXNA
         public void setStore(bool[,] st) { store = st; }
         public void setLevel(int lv) { level = lv; }
         public void setNextPattern(int patt) { nextPattern = patt; }
+        public void setPattern(int pat) { pattern = pat; }
 
-        public SingleBlockHelper(int locationX1, int locationY1, Texture2D block1, Vector2[,] lns, int patt, int inx, bool[,] st)
+        public SingleBlockHelper(int locationX1, int locationY1, Texture2D block1, Vector2[,] lns, int patt, int inx, bool[,] st, int np)
         {
             locationX = locationX1;
             locationY = locationY1;
@@ -73,6 +74,7 @@ namespace TetroXNA
             blockConFigClass = new BlockConFigClass(pattern, index, block1);
             resetPlayerBlockPos();
             store = st;
+            nextPattern = np;
         }
 
         public bool[,] SingleBlockHelperUpdate(GameTime gameTime)
@@ -194,8 +196,6 @@ namespace TetroXNA
         //PATTERN ALGORITHEM HERE
         public void resetBlocks()
         {
-            pattern = nextPattern;
-            nextPattern = random.Next(1, 8);		////////////THIS IS THE PATTERN RANDOMIZER: CHANGE WHEN TESTING!!!!!
             blockConFigClass = new BlockConFigClass(pattern, index, block);
             resetPlayerBlockPos();
             rotateState = 0;

@@ -16,12 +16,13 @@ namespace TetroXNA
     public class BlockHelper
     {
         private bool[,] store;
-        private int 
-            pattern = 2,
+        private int
+            pattern,
             score,
             level = 1,
             totalClearedLines = 0,
-            clearedLines = 0;
+            clearedLines = 0,
+            nextPattern = 2;
         private float 
             lineCheckTimer = 0.2f,
             minLineCheckTimer = 1.0f,
@@ -77,6 +78,7 @@ namespace TetroXNA
             store = st;
             blockGroundSoundEffect = bl;
             lineClearedSoundEffect = lc;
+            patternRandomizer();
         }
 
         //tasks in update order
@@ -204,12 +206,21 @@ namespace TetroXNA
                 (activeBlocks[2].getStopActiveBlocks()) &&
                 (activeBlocks[3].getStopActiveBlocks()))
             {
+                patternRandomizer();
                 for (int i = 0; i < activeBlocks.Length; i++)
                 {
                     activeBlocks[i].setStopActiveBlocks(false);
+                    activeBlocks[i].setNextPattern(nextPattern);
+                    activeBlocks[i].setPattern(pattern);
                     activeBlocks[i].resetBlocks();
                 }
             }
+        }
+
+        private void patternRandomizer()
+        {
+            pattern = nextPattern;
+            nextPattern = random.Next(1, 8);		////////////THIS IS THE PATTERN RANDOMIZER: CHANGE WHEN TESTING!!!!!
         }
 
         //Update the game grid and player blocks
@@ -300,7 +311,8 @@ namespace TetroXNA
                     lines,
                     pattern,
                     i,
-                    store);
+                    store,
+                    nextPattern);
             }
             return activeBlocks;
         }

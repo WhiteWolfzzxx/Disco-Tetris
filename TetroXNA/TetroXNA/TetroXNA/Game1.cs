@@ -261,6 +261,7 @@ namespace TetroXNA
                         {
                             case 1:
                                 #region Play
+                                blockHelper = new BlockHelper(activeBlocks, lines, store, blockGroundSoundEffect, lineClearedSoundEffect);
                                 store = boardClass.resetStore();
                                 for (int i = 0; i < activeBlocks.Length; i++)
                                 {
@@ -281,7 +282,7 @@ namespace TetroXNA
                                 store = boardClass.resetStore();
                                 for (int i = 0; i < activeBlocks.Length; i++)
                                 {
-                                    activeBlocks[i].setNextPattern(2);
+                                    activeBlocks[i].setPattern(2);
                                     activeBlocks[i].resetBlocks();
                                     activeBlocks[i].setStore(store);
                                     activeBlocks[i].resetPlayerBlockPos();
@@ -358,11 +359,11 @@ namespace TetroXNA
                     {
                         if (store[i, 0] == true)
                         {
-                            gameState = GameStates.GameOver;
-                            MediaPlayer.Stop();
-                            MediaPlayer.Play(menuBGM);
-                            MediaPlayer.IsRepeating = true;
-                        }
+                             gameState = GameStates.GameOver;
+                             MediaPlayer.Stop();
+                             MediaPlayer.Play(menuBGM);
+                             MediaPlayer.IsRepeating = true;
+                         }
                     }
                     #endregion
                 }
@@ -592,11 +593,14 @@ namespace TetroXNA
                     spriteBatch.DrawString(smallFont, "STORE: " + store[9, 19].ToString(), new Vector2(350, 400), Color.White);
                     spriteBatch.DrawString(smallFont, "Can go down: " + activeBlocks[0].getCanGoDownFlag().ToString(), new Vector2(350, 425), Color.White);
                     spriteBatch.DrawString(smallFont, "Next Pattern: " + activeBlocks[0].getNextPattern().ToString(), new Vector2(350, 450), Color.White);
-                    spriteBatch.DrawString(smallFont, "Pattern: " + activeBlocks[0].getPattern().ToString(), new Vector2(350, 475), Color.White);
-                    spriteBatch.DrawString(smallFont, "Block Speed: " + activeBlocks[0].getMinTimer().ToString(), new Vector2(350, 500), Color.White);
-                    spriteBatch.DrawString(smallFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(350, 525), Color.White);
-                    spriteBatch.DrawString(smallFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 550), Color.White);
-                    spriteBatch.DrawString(smallFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 575), Color.White);
+                    spriteBatch.DrawString(smallFont, "Pattern 0: " + activeBlocks[0].getPattern().ToString(), new Vector2(350, 475), Color.White);
+                    spriteBatch.DrawString(smallFont, "Pattern 1: " + activeBlocks[1].getPattern().ToString(), new Vector2(350, 500), Color.White);
+                    spriteBatch.DrawString(smallFont, "Pattern 2: " + activeBlocks[2].getPattern().ToString(), new Vector2(350, 525), Color.White);
+                    spriteBatch.DrawString(smallFont, "Pattern 3: " + activeBlocks[3].getPattern().ToString(), new Vector2(350, 550), Color.White);
+                    //spriteBatch.DrawString(smallFont, "Block Speed: " + activeBlocks[0].getMinTimer().ToString(), new Vector2(350, 500), Color.White);
+                    //spriteBatch.DrawString(smallFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(350, 525), Color.White);
+                    //spriteBatch.DrawString(smallFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 550), Color.White);
+                    //spriteBatch.DrawString(smallFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 575), Color.White);
                 }
 
                 if (gameState == GameStates.PauseGame)
