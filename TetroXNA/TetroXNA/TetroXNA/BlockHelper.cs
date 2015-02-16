@@ -13,6 +13,7 @@ namespace TetroXNA
 {
     //Class is for general properties of multiple block interactions
     //Mainly for the interaction of the four blocks controlled by the player and how it interacts with the stored blocks
+    //This class also acts as a parent class to the single block helper class
     public class BlockHelper
     {
         private bool[,] store;

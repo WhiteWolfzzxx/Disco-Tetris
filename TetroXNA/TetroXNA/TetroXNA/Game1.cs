@@ -13,38 +13,44 @@ using Microsoft.Xna.Framework.Media;
 
 namespace TetroXNA
 {
-    /// <summary>
-    /// Repo name is FPS
-    /// Test Whitewolfzzxx
-    /// This is the main type for your game
-    /// </summary>
+    //This is the main class file for Tetro
+    //This runs the entire game
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        enum GameStates { CreditScreen, MainMenu, Playing, GameOver, HighScoreScreen, PauseGame, Debug, Controls, Tutroial };
+        #region Variables
+        enum GameStates { CreditScreen, MainMenu, Playing, GameOver, HighScoreScreen, PauseGame, Debug, Settings, Tutroial };
         GameStates gameState = GameStates.CreditScreen;
 
-        Texture2D scoreBackground;
-        Texture2D gameBackground;
-
-        SpriteFont bigFont, smallFont;
-
-        Song playBGM, menuBGM;
-        SoundEffect menuSoundEffect, blockGroundSoundEffect, lineClearedSoundEffect;
-
-        bool escapeDidSomething = false;
-        bool spaceDidSomething = false;
-        bool muted;
-        public static bool consoleShown, fullscreen;
-        bool[,] store = new bool[10, 20];				//Block storing
-        const int SW_HIDE = 0; //Constant integers for show/hide console.
+        Texture2D 
+            scoreBackground,
+            gameBackground;
+        SpriteFont 
+            bigFont, 
+            smallFont;
+        Song 
+            playBGM, 
+            menuBGM;
+        SoundEffect 
+            menuSoundEffect, 
+            blockGroundSoundEffect, 
+            lineClearedSoundEffect;
+        bool 
+            escapeDidSomething = false,
+            spaceDidSomething = false,
+            muted;
+        public static bool 
+            consoleShown, 
+            fullscreen;
+        bool[,] store = new bool[10, 20];	                            //Block storing			
+        const int SW_HIDE = 0;
         const int SW_SHOW = 5;
         string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
         IntPtr handle = GetConsoleWindow();
-        Vector2[,] lines = new Vector2[10, 20]; 		//block placing grid
-        Texture2D[,] blocks = new Texture2D[10, 20];	//Block store show
+        Vector2[,] lines = new Vector2[10, 20]; 		                //Block placeing board positions
+        Texture2D[,] blocks = new Texture2D[10, 20];	                //Block store show
         SingleBlockHelper[] activeBlocks = new SingleBlockHelper[4];	//Blocks that the player can move
         XmlDocument settingsRecord;
         MainMenuClass mainMenuClass;
@@ -60,7 +66,7 @@ namespace TetroXNA
         CreditClass creditClass;
         GameOverClass gameOverClass;
         KeyboardState keyState;
-
+        #endregion
 
         //Importing commands for show/hide console.
         [DllImport("kernel32.dll")]
@@ -75,6 +81,7 @@ namespace TetroXNA
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferHeight = 600;
             graphics.PreferredBackBufferWidth = 700;
+            #region XML load settings
             try
             {
                 XmlDocument settings = new XmlDocument();
@@ -93,9 +100,7 @@ namespace TetroXNA
                 {
                     consoleShown = Convert.ToBoolean(settings.SelectSingleNode("/TetroSettings/ConsoleShown").InnerText.ToString());
                     if (!consoleShown)
-                    {
                         ShowWindow(handle, SW_HIDE);
-                    }
                 }
                 catch
                 {
@@ -105,9 +110,7 @@ namespace TetroXNA
                 {
                     muted = Convert.ToBoolean(settings.SelectSingleNode("/TetroSettings/Muted").InnerText.ToString());
                     if (muted)
-                    {
                         MediaPlayer.IsMuted = muted;
-                    }
                 }
                 catch
                 {
@@ -132,26 +135,17 @@ namespace TetroXNA
                 settings.Save("tetroSettings.xml");
                 graphics.IsFullScreen = false;
             }
+            #endregion
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
+        //This is the main class constructor
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             errorHandler.recordError(1, 101, "Application Initialize", null);
             base.Initialize();
-
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
+        //This function loads all of Tetro's content like sprites and music files
         protected override void LoadContent()
         {
             try
@@ -159,8 +153,8 @@ namespace TetroXNA
                 #region LoadContent
                 // Create a new SpriteBatch, which can be used to draw textures.
                 spriteBatch = new SpriteBatch(GraphicsDevice);
-                //TODO: use this.Content to load your game content here 
 
+                //Fonts
                 smallFont = Content.Load<SpriteFont>(@"Fonts\smallFont");
                 bigFont = Content.Load<SpriteFont>(@"Fonts\bigFont");
 
@@ -213,7 +207,6 @@ namespace TetroXNA
 
                 //PauseGame Class
                 pauseGameClass = new PauseGameClass(bigFont, smallFont);
-
                 #endregion
             }
             catch (Exception d)
@@ -222,15 +215,13 @@ namespace TetroXNA
             }
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        //This is Tetro's main update function
+        //The game logic is in here
         protected override void Update(GameTime gameTime)
         {
             try
             {
+                #region Update
                 keyState = Keyboard.GetState();
 
                 //Single Key press escape,  if escape is still down it still already did something
@@ -239,20 +230,23 @@ namespace TetroXNA
                 //Single Key press Space,  if space is still down it still already did something
                 spaceDidSomething = (keyState.IsKeyDown(Keys.Space) && spaceDidSomething);
 
-                // For Mobile devices, this logic will close the Game when the Back button is pressed
+                //For Mobile devices, this logic will close the Game when the Back button is pressed
                 if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                     Exit();
 
                 if (gameState == GameStates.CreditScreen)
                 {
+                    #region Credit Screen
                     //Update BGM and GameState
                     if (creditClass.ChangeScreen(gameTime))
                         gameState = GameStates.MainMenu;
+                    #endregion
                 }
 
                 //Switch case is for what option the player chooses
                 if (gameState == GameStates.MainMenu)
                 {
+                    #region Main Menu Screen
                     mainMenuClass.Update(gameTime);
                     if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
                     {
@@ -261,6 +255,7 @@ namespace TetroXNA
                         {
                             case 1:
                                 #region Play
+                                //Run constructors to play a new game
                                 store = boardClass.resetStore();
                                 for (int i = 0; i < activeBlocks.Length; i++)
                                 {
@@ -277,7 +272,7 @@ namespace TetroXNA
                                 #endregion
                             case 2:
                                 #region Tutorial
-                                //run constructors for tutorial
+                                //Run constructors for tutorial
                                 store = boardClass.resetStore();
                                 for (int i = 0; i < activeBlocks.Length; i++)
                                 {
@@ -307,7 +302,7 @@ namespace TetroXNA
                                 #endregion
                             case 3:
                                 #region Settings
-                                gameState = GameStates.Controls;
+                                gameState = GameStates.Settings;
                                 break;
                                 #endregion
                             case 4:
@@ -317,7 +312,9 @@ namespace TetroXNA
                                 #endregion
                             case 5:
                                 #region High Scores
-                                scoreClass.retriveScores(); //This must be called once
+                                //Retrieve score twice to generate file if it does not exist
+                                scoreClass.retrieveScores();
+                                scoreClass.retrieveScores();
                                 gameState = GameStates.HighScoreScreen;
                                 break;
                                 #endregion
@@ -341,61 +338,68 @@ namespace TetroXNA
                         }
                         spaceDidSomething = true;
                     }
+                    #endregion
                 }
 
                 if ((gameState == GameStates.Playing) ||
                     (gameState == GameStates.Debug) ||
-                    (gameState == GameStates.Tutroial && !tutorialClass.getIsTutorialPaused())) //DO NOT update if tutorial needs to show hint
+                    (gameState == GameStates.Tutroial && !tutorialClass.getIsTutorialPaused()))
                 {
                     #region Update Game Algorithm
                     blockHelper.setActiveBlocks(activeBlocks);
-                    blockHelper.BlockHelperUpdate(gameTime);		//The Method that asks questions about all player blocks
+                    blockHelper.BlockHelperUpdate(gameTime);
                     activeBlocks = blockHelper.getActiveBlocks();
                     #endregion
 
                     #region Gameover Detection
+                    //If a block hits the top of the board it is game over
                     for (int i = 0; i < 10; i++)
                     {
                         if (store[i, 0] == true)
                         {
-                             gameState = GameStates.GameOver;
-                             MediaPlayer.Stop();
-                             MediaPlayer.Play(menuBGM);
-                             MediaPlayer.IsRepeating = true;
-                         }
+                            gameState = GameStates.GameOver;
+                            MediaPlayer.Stop();
+                            MediaPlayer.Play(menuBGM);
+                            MediaPlayer.IsRepeating = true;
+                        }
                     }
                     #endregion
                 }
 
                 if (gameState == GameStates.Playing)
                 {
-                    //debug screen
+                    #region Playing Game Screen
+                    //Go to the Debug screen to see field values
                     if (Keyboard.GetState().IsKeyDown(Keys.D))
                         gameState = GameStates.Debug;
 
-                    //pause game
+                    //Go to the pause game menu
                     if (keyState.IsKeyDown(Keys.Escape) && !escapeDidSomething)
                     {
                         menuSoundEffect.Play();
                         gameState = GameStates.PauseGame;
                         escapeDidSomething = true;
                     }
+                    #endregion
                 }
 
                 if (gameState == GameStates.Tutroial)
                 {
+                    #region Tutoial Screen
                     tutorialClass.Update(gameTime);
                     if (tutorialClass.getGotoMenu() && !spaceDidSomething)
                     {
                         gameState = GameStates.MainMenu;
                         spaceDidSomething = true;
                     }
+                    #endregion
                 }
 
                 if (gameState == GameStates.PauseGame)
                 {
+                    #region Pause Game Menu Screen
                     pauseGameClass.update(gameTime);
-                    //un_pause game
+                    //Unpause the game
                     if (keyState.IsKeyDown(Keys.Escape) && !escapeDidSomething)
                     {
                         menuSoundEffect.Play();
@@ -436,11 +440,12 @@ namespace TetroXNA
                         }
                         spaceDidSomething = true;
                     }
+                    #endregion
                 }
 
                 if (gameState == GameStates.GameOver)
                 {
-                    //gameOverClass = new GameOverClass(bigFont);
+                    #region Game Over Screen
                     gameOverClass.Update(gameTime);
                     //Main Menu
                     if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething && gameOverClass.getCanSubmitName())
@@ -457,10 +462,12 @@ namespace TetroXNA
                         gameState = GameStates.MainMenu;
                         spaceDidSomething = true;
                     }
+                    #endregion
                 }
 
                 if (gameState == GameStates.HighScoreScreen)
                 {
+                    #region High Score Screen
                     scoreClass.ScoreClassUpdate(gameTime);
 
                     //Main Menu
@@ -470,10 +477,12 @@ namespace TetroXNA
                         gameState = GameStates.MainMenu;
                         spaceDidSomething = true;
                     }
+                    #endregion
                 }
 
-                if (gameState == GameStates.Controls)
+                if (gameState == GameStates.Settings)
                 {
+                    #region Settings Screen
                     settingsClass.Update(gameTime);
                     if (keyState.IsKeyDown(Keys.Space) && !spaceDidSomething)
                     {
@@ -519,28 +528,25 @@ namespace TetroXNA
                                 break;
                         }
                         spaceDidSomething = true;
-                    }
-
-                    // TODO: Add your update logic here			
+                    }	
                     base.Update(gameTime);
+                    #endregion
                 }
+                #endregion
             }
             catch (Exception d)
             {
                 errorHandler.recordError(3, 103, "Updating has failed", d.ToString());
             }
         }
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        
+        //This class draws to the screen so the player can see content like blocks
         protected override void Draw(GameTime gameTime)
         {
             try
             {
+                #region Draw
                 graphics.GraphicsDevice.Clear(Color.Black);
-
-                //TODO: Add your drawing code here
 
                 spriteBatch.Begin();
 
@@ -587,6 +593,7 @@ namespace TetroXNA
 
                 if (gameState == GameStates.Debug)
                 {
+                    #region Debug Screen
                     for (int i = 0; i < activeBlocks.Length; i++)
                         spriteBatch.DrawString(smallFont, "stopFlags: " + activeBlocks[i].getBlockCollideBottomFlag().ToString(), new Vector2(350, 300 + (i * 25)), Color.White);
                     spriteBatch.DrawString(smallFont, "STORE: " + store[9, 19].ToString(), new Vector2(350, 400), Color.White);
@@ -596,10 +603,11 @@ namespace TetroXNA
                     spriteBatch.DrawString(smallFont, "Pattern 1: " + activeBlocks[1].getPattern().ToString(), new Vector2(350, 500), Color.White);
                     spriteBatch.DrawString(smallFont, "Pattern 2: " + activeBlocks[2].getPattern().ToString(), new Vector2(350, 525), Color.White);
                     spriteBatch.DrawString(smallFont, "Pattern 3: " + activeBlocks[3].getPattern().ToString(), new Vector2(350, 550), Color.White);
-                    //spriteBatch.DrawString(smallFont, "Block Speed: " + activeBlocks[0].getMinTimer().ToString(), new Vector2(350, 500), Color.White);
-                    //spriteBatch.DrawString(smallFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(350, 525), Color.White);
-                    //spriteBatch.DrawString(smallFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 550), Color.White);
-                    //spriteBatch.DrawString(smallFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 575), Color.White);
+                    spriteBatch.DrawString(smallFont, "Block Speed: " + activeBlocks[0].getMinTimer().ToString(), new Vector2(350, 275), Color.White);
+                    spriteBatch.DrawString(smallFont, "Score: " + blockHelper.getScore().ToString(), new Vector2(350, 250), Color.White);
+                    spriteBatch.DrawString(smallFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 225), Color.White);
+                    spriteBatch.DrawString(smallFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 200), Color.White);
+                    #endregion
                 }
 
                 if (gameState == GameStates.PauseGame)
@@ -616,7 +624,7 @@ namespace TetroXNA
                     spriteBatch.DrawString(bigFont, "Your score: " + blockHelper.getScore().ToString(), new Vector2(125, 150), Color.White);
                 }
 
-                if (gameState == GameStates.Controls)
+                if (gameState == GameStates.Settings)
                     settingsClass.Draw(spriteBatch);
 
                 if (gameState == GameStates.HighScoreScreen)
@@ -628,6 +636,7 @@ namespace TetroXNA
                 spriteBatch.End();
 
                 base.Draw(gameTime);
+                #endregion
             }
             catch (Exception d)
             {

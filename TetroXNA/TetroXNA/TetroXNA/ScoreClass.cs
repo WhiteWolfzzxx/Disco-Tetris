@@ -43,7 +43,7 @@ namespace TetroXNA
             menuProperties.colorChanger();
 		}
 
-		public void retriveScores()
+        public void retrieveScores()
 		{
 			boolWorkingFileIO = true;
 
@@ -75,6 +75,8 @@ namespace TetroXNA
             }
 			catch 
             {
+                Console.WriteLine("No high score file was found");
+                Console.WriteLine("Generating TetroHighScores.xml");
 				boolWorkingFileIO = false;
                 XmlDocument create = new XmlDocument();
                 XmlNode rootNode = create.CreateElement("TetroScores");
@@ -100,7 +102,7 @@ namespace TetroXNA
 		{
 			boolWorkingFileIO = true;
 
-			retriveScores ();
+            retrieveScores();
 
 			//if there are no file problems continue
 			if (boolWorkingFileIO) 
