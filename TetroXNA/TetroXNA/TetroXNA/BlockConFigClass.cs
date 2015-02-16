@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TetroXNA
 {
+    //This class is used for the arrangement property for the 4 blocks the player controls
+    //This also has how the positioning location for the blocks when they need to rotate a pattern
     public class BlockConFigClass
     {
         private int pattern, index, locationX, locationY;
@@ -23,6 +25,7 @@ namespace TetroXNA
             block = bl;
         }
 
+        //Sets the position of the blocks when the next pattern is generated
         public int resetPattern(string xY)
         {
             #region pattern 1 square
@@ -218,6 +221,7 @@ namespace TetroXNA
             }
         }
 
+        //Rotates the current pattern
         public int rotatePattern(int locationX, int locationY, float rotateTimer, float minRotateTimer, int rotateState, int xYR)
         {
             rTimer = rotateTimer;
@@ -678,7 +682,7 @@ namespace TetroXNA
             }
         }
 
-        //DRAWS THE NEXT PATTERNS!!!!
+        //Draws the next pattern
         public void DrawNextPattern(SpriteBatch spriteBatch, int nextPattern)
         {
             switch (nextPattern)

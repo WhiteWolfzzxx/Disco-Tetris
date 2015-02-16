@@ -24,8 +24,6 @@ namespace TetroXNA
             clearedLines = 0,
             nextPattern = 2;
         private float 
-            lineCheckTimer = 0.2f,
-            minLineCheckTimer = 1.0f,
             randTimer,
             minRandTimer = 0.01f,
             stopBlocksTimer;
@@ -61,8 +59,7 @@ namespace TetroXNA
             color[8] = Color.Brown;
             color[9] = Color.MintCream;
 
-            //sets all colors
-            //TODO set to random color
+            //Sets all colors
             for (int x = 0; x < 10; x++)
             {
                 for (int y = 0; y < 20; y++)
@@ -81,10 +78,9 @@ namespace TetroXNA
             patternRandomizer();
         }
 
-        //tasks in update order
-        public void BlockHelperUpdate(GameTime gameTime) 			////////////////UPADATE!!!!!
+        //Tasks in update order
+        public void BlockHelperUpdate(GameTime gameTime)
         {
-            lineCheckTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             randTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             stopBlocksTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             stopBlocks();
@@ -93,12 +89,12 @@ namespace TetroXNA
             canGoLeft();
             canGoRight();
             UpdatePlayerClass(gameTime);
-            resetPlayerBlocks();			//MUST BE LAST TO UPDATE
+            resetPlayerBlocks();
             lineDetection();
             levelDetection();
             randomColors();
 
-            //corrects the blocks so they are on the same level
+            //Corrects the blocks so they are on the same level
             for (int i = 0; i < activeBlocks.Length; i++)
                 activeBlocks[i].setLevel(level);
 
@@ -106,11 +102,11 @@ namespace TetroXNA
             score += activeBlocks[0].getScore();
         }
 
-        //block hits bottom algorithm
-        //controls the steps to eventually save the positions
+        //Block hits bottom algorithm
+        //Controls the steps to eventually save the positions
         private void stopBlocks()
         {
-            //If one player_block has something under it
+            //If one player block has something under it
             //Stops other player blocks going down if one can't and timer counts down then save positions
             if (activeBlocks[0].getBlockCollideBottomFlag() ||
                 activeBlocks[1].getBlockCollideBottomFlag() ||
@@ -124,7 +120,7 @@ namespace TetroXNA
                     blockGroundSoundEffect.Play();
                     for (int i = 0; i < activeBlocks.Length; i++)
                     {
-                        //score for blocks landed
+                        //Score for blocks landed
                         score += 25 + ((level - 1) * 2);
                         activeBlocks[i].savePositions();
                         activeBlocks[i].setBlockCollideBottomFlag(false);
@@ -140,7 +136,7 @@ namespace TetroXNA
             }
         }
 
-        //LEVEL ALGORITHEM
+        //Level manager
         private void levelDetection()
         {
             if (clearedLines >= 10)
@@ -164,37 +160,24 @@ namespace TetroXNA
         //Controls scoring when a line is cleared
         private void lineDetection()
         {
-            if (lineCheckTimer >= minLineCheckTimer)
+            //Logic:
+            //Checks top to down for a full line
+            //From found line it shifts the blocks above down 1
+            for (int i = 1; i < 20; i++)
             {
-                //Logic:
-                //checks top to down for a full line
-                //from found line it shifts the block above down 1
-                //Timer is present to reduce bug errors
-                for (int i = 1; i < 20; i++)
+                if ((store[0, i] && store[1, i] && store[2, i] && store[3, i] && store[4, i] &&
+                    store[5, i] && store[6, i] && store[7, i] && store[8, i] && store[9, i]) == true)
                 {
-                    if ((store[0, i] && store[1, i] && store[2, i] && store[3, i] && store[4, i] &&
-                        store[5, i] && store[6, i] && store[7, i] && store[8, i] && store[9, i]) == true)
+                    for (int x = i; x > 0; x--)
                     {
-                        for (int x = i; x > 0; x--)
-                        {
-                            store[0, x] = store[0, x - 1];
-                            store[1, x] = store[1, x - 1];
-                            store[2, x] = store[2, x - 1];
-                            store[3, x] = store[3, x - 1];
-                            store[4, x] = store[4, x - 1];
-                            store[5, x] = store[5, x - 1];
-                            store[6, x] = store[6, x - 1];
-                            store[7, x] = store[7, x - 1];
-                            store[8, x] = store[8, x - 1];
-                            store[9, x] = store[9, x - 1];
-                        }
-                        score += (1500 + (100 * (level - 1)));
-                        clearedLines++;
-                        totalClearedLines++;
-                        lineClearedSoundEffect.Play();
+                        for (int z = 0; z < 10; z++ )
+                            store[z, x] = store[z, x - 1];
                     }
+                    score += (1500 + (100 * (level - 1)));
+                    clearedLines++;
+                    totalClearedLines++;
+                    lineClearedSoundEffect.Play();
                 }
-                lineCheckTimer = 0.0f;
             }
         }
 
@@ -220,10 +203,10 @@ namespace TetroXNA
         private void patternRandomizer()
         {
             pattern = nextPattern;
-            nextPattern = random.Next(1, 8);		////////////THIS IS THE PATTERN RANDOMIZER: CHANGE WHEN TESTING!!!!!
+            nextPattern = random.Next(1, 8);
         }
 
-        //Update the game grid and player blocks
+        //Update the game board and player blocks
         private void UpdatePlayerClass(GameTime gameTime)
         {
             for (int i = 0; i < activeBlocks.Length; i++)
@@ -266,8 +249,7 @@ namespace TetroXNA
             }
         }
 
-        //Block syic detect and reassign so all blocks stop
-        //AKA if one player controlled block stops all stop
+        //If one player controlled block stops all stop
         private void syncActiveBlocks()
         {
             if ((activeBlocks[0].getStopActiveBlocks()) ||
@@ -281,7 +263,7 @@ namespace TetroXNA
         }
 
         //Detects other blocks to see if they can't rotate and assigns other blocks to stop rotation
-        //If one player block can't rotate, none can
+        //If one player block can't rotate then none can
         private void canRotateBlocks()
         {
             if ((activeBlocks[0].getCanRotateBlocksFlag() == true) &&
