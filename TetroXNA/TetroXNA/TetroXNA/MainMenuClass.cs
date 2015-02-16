@@ -17,6 +17,7 @@ namespace TetroXNA
         private float minMenuChangeTimer = 0.1f;
         private Texture2D title;
         private Texture2D background;
+        private Texture2D selctionBox;
         private SpriteFont bigFont, smallFont;
         private MenuProperties menuProperties = new MenuProperties();
 
@@ -61,19 +62,26 @@ namespace TetroXNA
             {
                 menuOption = 6;
             }
+
+            menuProperties.UpdateDiscoBall();
         }
 
         public void LoadContent(ContentManager Content)
         {
             title = Content.Load<Texture2D>(@"Textures\TetroTitle");
             background = Content.Load<Texture2D>(@"Textures\Tetro Main Menu Background");
+            selctionBox = Content.Load<Texture2D>(@"Textures\TetroMainMenuSelectionBox");
+            menuProperties.LoadContentDiscoBall(Content);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(background, Vector2.Zero, Color.Blue);
 
+            menuProperties.DrawDiscoBall(spriteBatch);
+
             spriteBatch.Draw(title, new Vector2(66, 5), new Color(redIntensity, greenIntensity, blueIntensity));
+            spriteBatch.Draw(selctionBox, new Vector2(50, 311), Color.Blue);
 
             spriteBatch.DrawString(smallFont, "Press space to select", new Vector2(10, 540), Color.White);
             spriteBatch.DrawString(smallFont, "Press arrows to navigate", new Vector2(10, 570), Color.White);
