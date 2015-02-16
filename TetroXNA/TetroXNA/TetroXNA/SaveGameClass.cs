@@ -9,16 +9,19 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TetroXNA
 {
+    //This class saves all of the bool values of the stored blocks into a flat file
+    //This class also loads the file so the player can resume their game
     public class SaveGameClass
     {
         private bool[,] so = new bool[10, 20];
         private int loadedScore, loadedLevel, loadedTotalClearedLines;
         private static string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
         private string path = baseFolder + @"Save Games\savedGameData.txt";
-        FileStream theFileRead;
-        FileStream theFileWrite;
-        StreamReader saveRead;
-        StreamWriter saveWrite;
+        private ErrorHandler errorHandler = new ErrorHandler();
+        private FileStream theFileRead;
+        private FileStream theFileWrite;
+        private StreamReader saveRead;
+        private StreamWriter saveWrite;
 
         public int getLoadedScore() { return loadedScore; }
         public int getLoadedLevel() { return loadedLevel; }
@@ -27,11 +30,6 @@ namespace TetroXNA
         public SaveGameClass()
         {
             System.IO.Directory.CreateDirectory("Save Games");
-        }
-
-        public void Update(GameTime gameTime)
-        {
-
         }
 
         public void recordGameData(bool[,] st, int sc, int lv, int lns/*test*/)
@@ -59,7 +57,7 @@ namespace TetroXNA
             }
             catch
             {
-                
+                errorHandler.recordError(2, 200, "Save game has failed.", "Save game class has failed to save game");
             }
         }
 
@@ -75,9 +73,7 @@ namespace TetroXNA
                 for (int x = 0; x < 10; x++)
                 {
                     for (int y = 0; y < 20; y++)
-                    {
                         so[x, y] = Convert.ToBoolean(saveRead.ReadLine());
-                    }
                 }
                 loadedScore = Convert.ToInt32(saveRead.ReadLine());
                 loadedLevel = Convert.ToInt32(saveRead.ReadLine());
@@ -88,7 +84,7 @@ namespace TetroXNA
             }
             catch
             {
-
+                errorHandler.recordError(2, 201, "Load game has failed.", "Save game class has failed to load game");
             }
             return so;
         }

@@ -9,16 +9,24 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TetroXNA
 {
+    //This class is designed to display and deal with player input at the main menu screen
     public class MainMenuClass
     {
-        private int menuOption = 1;
-        private int redIntensity, blueIntensity, greenIntensity;
-        private float menuChangeTimer;
-        private float minMenuChangeTimer = 0.1f;
-        private Texture2D title;
-        private Texture2D background;
-        private Texture2D selctionBox;
-        private SpriteFont bigFont, smallFont;
+        private int 
+            menuOption = 1,
+            redIntensity, 
+            blueIntensity, 
+            greenIntensity;
+        private float 
+            menuChangeTimer,
+            minMenuChangeTimer = 0.1f;
+        private Texture2D 
+            title,
+            background,
+            selctionBox;
+        private SpriteFont 
+            bigFont, 
+            smallFont;
         private MenuProperties menuProperties = new MenuProperties();
 
         public MainMenuClass(SpriteFont small, SpriteFont big)
@@ -126,7 +134,7 @@ namespace TetroXNA
 
         public int detectGameState()
         {
-            //playing state
+            //Playing state
             switch (menuOption)
             {
                 case 1:

@@ -10,10 +10,12 @@ namespace TetroXNA
 {
     public class SingleBlockHelper
     {
-        //this class is for single block properties
+        //This class is for single block properties that the player controls
+        //This class acts as a child class to the block helper class because this class returns different flags about bloc properties
+        //That the block helper interacts with
         private bool[,] store;
         private bool
-            stopActiveBlocks, 		//This is used to syic the blocks together
+            stopActiveBlocks, 
             canRotateBlocksFlag = true,
             cantRotateOtherBlockFlag = false,
             canGoLeftFlag = true,
@@ -77,6 +79,7 @@ namespace TetroXNA
             nextPattern = np;
         }
 
+        //Update order for the 4 player controled blocks
         public bool[,] SingleBlockHelperUpdate(GameTime gameTime)
         {
             //Set timers
@@ -85,7 +88,7 @@ namespace TetroXNA
             downTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             rotateTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            //set colors
+            //Set colors
             redIntensity = menuProperties.getRed();
             blueIntensity = menuProperties.getBlue();
             greenIntensity = menuProperties.getGreen();
@@ -96,10 +99,10 @@ namespace TetroXNA
             checkRightFlag();
 
             //Flag if the bottom of the blocks are hitting something
-            //boolean if statement compressed
+            //Boolean if statement compressed
             blockCollideBottomFlag = ((locationY == 19) || (store[locationX, (locationY + 1)] == true) || (stopActiveBlocks == true));
 
-            //PlayerBlock will move downward forcefully HAHAHA!!!!
+            //PlayerBlock will move downward forcefully
             if ((downTimer >= minDownTimer) && canGoDownFlag)
             {
                 locationY += 1;
@@ -112,7 +115,7 @@ namespace TetroXNA
             return store;
         }
 
-        //records the location of the player controlled blocks
+        //Records the location of the player controlled blocks
         public void savePositions()
         {
             stopActiveBlocks = true;
@@ -142,7 +145,7 @@ namespace TetroXNA
                 (store[(locationX + 1), locationY] == true));
         }
 
-        //CONTROL DETECTION AND FUNTION HERE
+        //Player input and level manageing is here
         private void HandleKeyboardInput(KeyboardState keyState, bool[,] store)
         {
             //Checks flags to rotate
@@ -156,7 +159,7 @@ namespace TetroXNA
                     rotateTimer = 0.0f;
             }
             //Shorten the minDown Timer to make the blocks fall faster
-            //LEVEL INCRIMENT SPEED AGORITHEM IS HERE
+            //Level increment speed
             if (keyState.IsKeyDown(Keys.Down))
             {
                 minDownTimer = 0.05f;
@@ -193,7 +196,6 @@ namespace TetroXNA
         }
 
         //Constructor for player controlled blocks
-        //PATTERN ALGORITHEM HERE
         public void resetBlocks()
         {
             blockConFigClass = new BlockConFigClass(pattern, index, block);

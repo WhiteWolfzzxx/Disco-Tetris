@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TetroXNA
 {
+    //This class is designed to accept player input for their name on the high score list
     public class StringInputClass
     {
         private bool keyDidSomething = false;
@@ -23,7 +24,7 @@ namespace TetroXNA
 
         public StringInputClass()
         {
-            playerName = "AAA";
+            playerName = "";
         }
 
         public void Update(GameTime gameTime)
@@ -33,17 +34,10 @@ namespace TetroXNA
             alphabet();
 
             //Single Key press Space
-            if (keyPressed && keyDidSomething)
-            {
-                keyDidSomething = true;
-            }
-            else
-            {
-                keyDidSomething = false;
-            }
+            keyDidSomething = keyPressed && keyDidSomething;
         }
 
-        //I wish there was a better way
+        //Checks almost the entirekeyboard for input
         private void alphabet()
         {
             if (playerName.Length < 3)

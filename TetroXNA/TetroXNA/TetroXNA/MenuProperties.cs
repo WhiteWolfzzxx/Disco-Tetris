@@ -8,22 +8,25 @@ using Microsoft.Xna.Framework.Content;
 
 namespace TetroXNA
 {
+    //This class contains code that serves special tasks like the color phases for the menu and the blocks
     public class MenuProperties
     {        
-        private bool redIncrease = true;
-        private bool greenIncrease = true;
-        private bool blueIncrease = true;
-        private int redIntensity = 0;
-        private int greenIntensity = 50;
-        private int blueIntensity = 100;
-        private static int blockNum = 10000; //100x100
+        private bool 
+            redIncrease = true,
+            greenIncrease = true,
+            blueIncrease = true;
+        private int 
+            redIntensity = 0,
+            greenIntensity = 50,
+            blueIntensity = 100,
+            shine = 0;
+        private static int blockNum = 10000;
         private Vector2[] blockPos = new Vector2[blockNum];
         private Vector2[] startPos = new Vector2[blockNum];
-        private Vector3[] blockColor = new Vector3[blockNum];
-        private Rectangle[] blockRectangle = new Rectangle[blockNum];
+        private float[] blockColor = new float[blockNum];
         private float[] blockScale = new float[blockNum];
         private float[] blockDepth = new float[blockNum];
-        private int shine = 0;
+        private Rectangle[] blockRectangle = new Rectangle[blockNum];
         private Vector2 centerPoint = new Vector2(200, 200);
         private Texture2D discoTexture;
 
@@ -33,76 +36,65 @@ namespace TetroXNA
 
         public MenuProperties()
         {
-            //sets a big square
-            int y = 0;
-            int x = 0;
+            //Creates a grid of squares
+            int x = 0, y = 0;
             for (int i = 0; i < blockNum; i++)
             {
-                startPos[i] = new Vector2(x * 5 + 10, y * 5 + 10); //density of the squares
+                startPos[i] = new Vector2(x * 5 + 10, y * 5 + 10);
                 x++;
                 if ((x >= Math.Sqrt(blockNum)) && (y <= Math.Sqrt(blockNum)))
                 {
                     y++;
                     x = 0;
                 }
-                blockRectangle[i] = new Rectangle(0, 0, 5, 5);  //10,10
-                blockColor[i] = new Vector3(255, 255, 255);
+                blockRectangle[i] = new Rectangle(0, 0, 5, 5);
+                //blockColor[i] = new Vector3(255, 255, 255);
+                blockColor[i] = 255;
             }
         }
 
         public void colorChanger()
         {
+            //Red
             if (redIncrease)
             {
                 redIntensity++;
                 if (redIntensity >= 240)
-                {
                     redIncrease = false;
-                }
             }
             else
             {
                 redIntensity--;
                 if (redIntensity <= 20)
-                {
                     redIncrease = true;
-                }
             }
 
-            //blue
+            //Blue
             if (blueIncrease)
             {
                 blueIntensity += 2;
                 if (blueIntensity >= 240)
-                {
                     blueIncrease = false;
-                }
             }
             else
             {
                 blueIntensity -= 2;
                 if (blueIntensity <= 20)
-                {
                     blueIncrease = true;
-                }
             }
 
-            //green
+            //Green
             if (greenIncrease)
             {
                 greenIntensity += 3;
                 if (greenIntensity >= 240)
-                {
                     greenIncrease = false;
-                }
             }
             else
             {
                 greenIntensity -= 3;
                 if (greenIntensity <= 20)
-                {
                     greenIncrease = true;
-                }
             }
         }
 
@@ -113,45 +105,41 @@ namespace TetroXNA
 
         public void UpdateDiscoBall()
         {
+            //Spins the discoball
             centerPoint.X += 0.3f;
-            if (centerPoint.X > 400)
-            {
-                centerPoint.X = 120;
-            }
-
+            if (centerPoint.X > 350)
+                centerPoint.X = 140;
 
             Random random = new Random();
             for (int i = 0; i < blockNum; i++)
             {
-                blockColor[i] = new Vector3(
-                    .8f + (((Vector2.Distance(centerPoint, startPos[i]) * Vector2.Distance(centerPoint, startPos[i])) * -0.00005f)),
-                    .8f + (((Vector2.Distance(centerPoint, startPos[i]) * Vector2.Distance(centerPoint, startPos[i])) * -0.00005f)),
-                    .8f + (((Vector2.Distance(centerPoint, startPos[i]) * Vector2.Distance(centerPoint, startPos[i])) * -0.00005f)));
+                blockColor[i] = .8f + (((Vector2.Distance(centerPoint, startPos[i]) * Vector2.Distance(centerPoint, startPos[i])) * -0.00005f));
 
                 shine = random.Next(0, 900);
                 if (shine == 0)
-                    blockColor[i] = new Vector3(1f, 1f, 1f);
+                    blockColor[i] = 1;
 
-                blockScale[i] = 1f + (((Vector2.Distance(centerPoint, startPos[i]) * Vector2.Distance(centerPoint, startPos[i])) * -0.00005f));// / (.01f * (float)Vector2.Distance(centerPoint, blockPos[i]));
-
+                blockScale[i] = 1f + (((Vector2.Distance(centerPoint, startPos[i]) * Vector2.Distance(centerPoint, startPos[i])) * -0.00005f));
                 blockDepth[i] = (((Vector2.Distance(centerPoint, startPos[i]) * Vector2.Distance(centerPoint, startPos[i])) * 0.00005f));
             }
         }
 
         public void DrawDiscoBall(SpriteBatch spriteBatch)
         {
+            //The spriteBatch.Begin and end are call multiple times because this requires special depth requirement to display correctly
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, DepthStencilState.Default, RasterizerState.CullNone);
             for (int i = 0; i < blockNum; i++)
             {
+                //This has the equation for the discoball's depth, color and shape
                 spriteBatch.Draw(
                     discoTexture,
-                    (startPos[i] - centerPoint) * new Vector2(blockScale[i] + 1.3f, blockScale[i] + 1.3f) + new Vector2(350, 360),  //position the ball, and there is the roundness size
+                    (startPos[i] - centerPoint) * new Vector2(blockScale[i] + 1.3f, blockScale[i] + 1.3f) + new Vector2(350, 360),
                     null,
-                    new Color(blockColor[i].X, blockColor[i].Y, blockColor[i].Z),
+                    new Color(blockColor[i], blockColor[i], blockColor[i]),
                     0f,
                     new Vector2(blockRectangle[i].Width / 2, blockRectangle[i].Height / 2),
-                    blockScale[i] + 0.3f, //2f
+                    blockScale[i] + 0.3f,
                     SpriteEffects.None,
                     blockDepth[i]);
             }

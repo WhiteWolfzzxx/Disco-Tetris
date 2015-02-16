@@ -8,18 +8,20 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 namespace TetroXNA
 {
+    //This class is designed to handle the pause menu and stop the game from updating
     public class PauseGameClass
     {
         private bool spaceDidSomething = false;
         private int menuOption = 1;
-        private float minMenuChangeTimer = 0.1f;
-        private float menuChangeTimer;
-        private SpriteFont bigFont;
-        private SpriteFont smallFont;
+        private float 
+            minMenuChangeTimer = 0.1f,
+            menuChangeTimer;
+        private SpriteFont 
+            bigFont,
+            smallFont;
         private KeyboardState keyState;
         
         public int getMenuOption() { return menuOption; }
@@ -56,18 +58,12 @@ namespace TetroXNA
                 }
             }
             if (menuOption > 3)
-            {
                 menuOption = 1;
-            }
             if (menuOption < 1)
-            {
                 menuOption = 3;
-            }
         }
         public void draw(SpriteBatch spriteBatch)
         {
-            //spriteBatch.DrawString(bigFont, "Victoria is Cute", new Vector2(250, 250), Color.Firebrick);
-          //  spriteBatch.DrawString(bigFont, menuOption.ToString(), new Vector2(150, 250), Color.Firebrick);
             if (menuOption == 1)
             {
                 spriteBatch.DrawString(smallFont, "exit", new Vector2(110, 210), Color.White);
@@ -86,7 +82,6 @@ namespace TetroXNA
                 spriteBatch.DrawString(bigFont, "Exit", new Vector2(80, 250), Color.White);
                 spriteBatch.DrawString(smallFont, "resume", new Vector2(110, 320), Color.White);
             }
-
         }
     }
 }

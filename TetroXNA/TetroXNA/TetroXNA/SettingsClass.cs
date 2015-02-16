@@ -11,21 +11,27 @@ using System.IO;
 
 namespace TetroXNA
 {
+    //This class is designed to handle the settings screen
+    //The player can customize the settings to their needs
     public class SettingsClass
     {
-        private bool spaceDidSomething = false;
-        private bool fullScreen = false;
-        private bool consoleShown = true;
-        private int menuOption = 1;
-        private int redIntensity, greenIntensity, blueIntensity;
-        private float menuChangeTimer;
-        private float minMenuChangeTimer = 0.1f;
+        private bool 
+            spaceDidSomething = false,
+            fullScreen = false,
+            consoleShown = true;
+        private int 
+            menuOption = 1,
+            redIntensity, 
+            greenIntensity, 
+            blueIntensity;
+        private float 
+            menuChangeTimer,
+            minMenuChangeTimer = 0.1f;
         private SpriteFont bigFont, smallFont;
         private Texture2D settingsTitle, background;
         private MenuProperties menuProperties = new MenuProperties();
         KeyboardState keyState;
        
-        
         public SettingsClass(SpriteFont small, SpriteFont big)
         {
             bigFont = big;
@@ -50,16 +56,8 @@ namespace TetroXNA
 
             menuChangeTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            //Single Key press Space
             //If key is still held down
-            if (keyState.IsKeyDown(Keys.Space) && spaceDidSomething)
-            {
-                spaceDidSomething = true;
-            }
-            else
-            {
-                spaceDidSomething = false;
-            }
+            spaceDidSomething = keyState.IsKeyDown(Keys.Space) && spaceDidSomething;
 
             //Navigate the menu
             if (Keyboard.GetState().IsKeyDown(Keys.Up))
@@ -81,36 +79,32 @@ namespace TetroXNA
 
             //Resets the menu options
             if (menuOption > 4)
-            {
                 menuOption = 1;
-            }
             if (menuOption < 1)
-            {
                 menuOption = 4;
-            }
         }
 
         public int changeSetting()
         {
-            //playing state
+            //Playing state
             switch (menuOption)
             {
                 case 1:
-                    //Full_Screen
+                    //Full Screen
                     fullScreen = !fullScreen;
                     return 1;
 
                 case 2:
-                    //Shows-Hides the console
+                    //Shows or Hides the console
                     consoleShown = !consoleShown;
                     return 2;
 
                 case 3:
-                    //Mute sound
+                    //Mute music
                     return 3;
 
                 case 4:
-                    //Back to Main
+                    //Back to Main Menu
                     return 4;
 
                 default:
@@ -151,12 +145,12 @@ namespace TetroXNA
                 spriteBatch.DrawString(smallFont, "Sound", new Vector2(325, 250), Color.LightGray);
                 if (consoleShown)
                 {
-                    spriteBatch.DrawString(bigFont, "Hide Console", new Vector2(210, 320), Color.LightGray); 
+                    spriteBatch.DrawString(bigFont, "Hide Console", new Vector2(210, 320), Color.LightGray);
                 }
                 if (!consoleShown)
                 {
-                    spriteBatch.DrawString(bigFont, "Show Console", new Vector2(190, 320), Color.LightGray); 
-                }                
+                    spriteBatch.DrawString(bigFont, "Show Console", new Vector2(190, 320), Color.LightGray);
+                }
                 if (!fullScreen)
                 {
                     spriteBatch.DrawString(smallFont, "Fullscreen", new Vector2(300, 440), Color.LightGray);
@@ -193,19 +187,5 @@ namespace TetroXNA
                 spriteBatch.DrawString(smallFont, "Sound", new Vector2(325, 440), Color.LightGray);
             }
         }
-
-        // Noah wrote this
-        public void settingStartup()
-        {
-            if (File.Exists("settings.txt"))
-            {
-                //have to assign variables from a read file
-            }
-            else
-            { 
-                
-            }
-        }
-
     }
 }

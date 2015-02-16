@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TetroXNA
 {
+    //This class is designed for the game over screen and uses the string input class to get the name of the player
     public class GameOverClass
     {
         private string playerName;

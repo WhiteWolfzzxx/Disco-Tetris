@@ -15,8 +15,10 @@ namespace TetroXNA
 {
     public class ScoreClass
     {
+        //This class is designed to handle the high score menu and how to record new high scores
+        //This class also encrypts high scores so the file cannot be tampered with
         int redIntensity, blueIntensity, greenIntensity;
-        Int32 dummy; //Used for the write once.
+        Int32 dummy;
         String[] textHighScores1 = new string[10];
         String[] textHighScores2 = new string[10];
         String[] encryptedHighScores1 = new string[10];
@@ -97,14 +99,14 @@ namespace TetroXNA
 			}
 		}
 
-		//Records Scores in a flat file on hard drive
+		//Records Scores to an xml file on hard drive
 		public void recordScore(int sc, string n)
 		{
 			boolWorkingFileIO = true;
 
             retrieveScores();
 
-			//if there are no file problems continue
+			//If there are no file problems continue
 			if (boolWorkingFileIO) 
             {
 				for (int i = 0, j = 0; i < 10; i++, j++) 

@@ -12,14 +12,18 @@ using Microsoft.Xna.Framework.Media;
 
 namespace TetroXNA
 {
+    //This class is designed to display messages about how to play Tetro
+    //The tutorial screen mostly reuses the play state code and the tutorial will pause to show the messages
     public class TutorialClass
     {
-        private bool tutorialPaused = true;
-        private bool showMessage = true;
-        private bool gotoMenu = false;
+        private bool 
+            tutorialPaused = true,
+            showMessage = true,
+            gotoMenu = false;
         private int messageNum = 1;
-        private float timer = 0.0f;
-        private float minTimer = 1.0f;
+        private float 
+            timer = 0.0f,
+            minTimer = 1.0f;
         private Texture2D tutorialBackground;
         private SpriteFont font;
         private Song menuBGM;
@@ -47,9 +51,9 @@ namespace TetroXNA
         }
 
         //Tutorial Logic
-        //constructors at the menu will reset this class
-        //each state is the message number
-        //message number increments every time the timer reaches it's set limit allowing the player to play
+        //Constructors at the menu will reset this class
+        //Each state is the message number
+        //Message number increments every time the timer reaches it's set limit allowing the player to play
         public void Update(GameTime gameTime)
         {
             timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
