@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace TetroXNA
 {
+    //This class for creating the game board so the math is easier for the programmer to understand for block placement
     public class BoardClass
     {
         private bool[,] store;
@@ -25,29 +26,25 @@ namespace TetroXNA
         }
 
         //Constructor for the grid placement x,y
-        //AKA use simple numbers for placement
+        //This will set up the board so the programmers can use simple numbers for placement instead of pixels
         public Vector2[,] resetLinesGrid()
         {
             for (int z = 0; z < 10; z++)
             {
                 for (int i = 0; i < 20; i++)
-                {
                     lines[z, i] = new Vector2(16 + (30 * z), (30 * i));
-                }
             }
             return lines;
         }
 
         //Constructor for store array
-        //used for keeping track of blocks on the board that the player doesn't control
+        //Used for keeping track of blocks on the board that the player doesn't control
         public bool[,] resetStore()
         {
             for (int x = 0; x < 10; x++)
             {
                 for (int y = 0; y < 20; y++)
-                {
                     store[x, y] = false;
-                }
             }
             return store;
         }
@@ -58,9 +55,7 @@ namespace TetroXNA
             for (int z = 0; z < 10; z++)
             {
                 for (int i = 0; i < 20; i++)
-                {
                     blocks[z, i] = Content.Load<Texture2D>(@"Textures\TetrusBlock1");
-                }
             }
             return blocks;
         }

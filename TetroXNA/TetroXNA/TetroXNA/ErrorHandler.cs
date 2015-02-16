@@ -9,12 +9,21 @@ using System.Diagnostics;
 
 namespace TetroXNA
 {
+    //This class records the computer's basic information such as operating system and RAM
+    //This class handles how Tetro will crash and dump the error information into a flat file
     public class ErrorHandler
     {
-        private bool existingRecordFiles = true, collectPersonalPCInfo = true;
-        private int numOfRecordFiles = 0, identifyRecordNum = 0;
-        private string operatingSystem, computerName, computerManufacturer,
-            numOfCPU, numOfLogicCPU, totalRAM, nameCPU, nameGPU, serialNum, computerModel, userName, recordName;
+        private bool 
+            existingRecordFiles = true, 
+            collectPersonalPCInfo = true;
+        private int 
+            numOfRecordFiles = 0, 
+            identifyRecordNum = 0;
+        private string 
+            operatingSystem, computerName, computerManufacturer,
+            numOfCPU, numOfLogicCPU, totalRAM, 
+            nameCPU, nameGPU, serialNum, 
+            computerModel, userName, recordName;
         private FileStream fs;
         private StreamWriter sw;
         private StreamReader sr;
@@ -22,20 +31,6 @@ namespace TetroXNA
 
         public ErrorHandler()
         {
-            /*DialogResult dialogResult = MessageBox.Show(
-                "For Developing Purposes\nMay FlashBlock Studio Collect Data in the following:\n-Computer Name\n-User Name\n-Computer Serial Number", 
-                "Computer Sensitive Info Permission", 
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Warning);
-            if (dialogResult == DialogResult.Yes)
-            {
-                collectPersonalPCInfo = true;
-            }
-            else if (dialogResult == DialogResult.No)
-            {
-                collectPersonalPCInfo = false;
-            }*/
-
             gatherSystemInfo();
             System.IO.Directory.CreateDirectory("Error Folder");
         }
@@ -44,7 +39,7 @@ namespace TetroXNA
         {
             try 
             {
-                //checks to see how many record files
+                //Checks to see how many record files exsits
                 while (existingRecordFiles)
                 {
                     if (File.Exists(@"Error Folder\Error_Record_" + (numOfRecordFiles + 1) + ".txt"))
@@ -58,7 +53,7 @@ namespace TetroXNA
                     }
                 }
 
-                //Check to see if there is an existing record for current computer
+                //Check to see if there is an existing record for the current computer and user
                 for (int i = 1; i <= numOfRecordFiles; i++ )
                 {
                     if (checkFileForComputerID(@"Error Folder\Error_Record_" + i + ".txt"))
@@ -68,7 +63,7 @@ namespace TetroXNA
                     }
                 }
 
-                //If no file was found or match
+                //If no file was found or no file that matched
                 if (identifyRecordNum == 0)
                 {
                     Console.WriteLine("No Matching record");
@@ -83,7 +78,7 @@ namespace TetroXNA
                     recordName = "Error_Record_" + identifyRecordNum + ".txt";
                 }
 
-                //APPEND FILE
+                //Append to the file
                 fs = new FileStream(@"Error Folder/" + recordName,
                             FileMode.Append,
                             FileAccess.Write);
@@ -130,7 +125,6 @@ namespace TetroXNA
                     "Error Record Warning",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
-                
             }
         }
 
@@ -174,6 +168,7 @@ namespace TetroXNA
             }
         }
 
+        //This looks for an error file that perfectly matches the computer's current specs
         private bool checkFileForComputerID(string filename)
         {
             string data;
@@ -186,7 +181,7 @@ namespace TetroXNA
             sr.ReadLine();
             sr.ReadLine();
             sr.ReadLine();
-            data = sr.ReadLine().Substring(19);  //operating system from file
+            data = sr.ReadLine().Substring(19);
             if (operatingSystem.Equals(data))
             {
                 data = sr.ReadLine().Substring(16);

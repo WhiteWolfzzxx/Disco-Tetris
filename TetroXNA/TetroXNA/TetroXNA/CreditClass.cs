@@ -9,10 +9,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TetroXNA
 {
+    //This class displays the credit screen when Tetro starts
     public class CreditClass
     {
-        private float changeScreenTimer = 0.0f;
-        private float minChangeScreenTimer = 4.0f;
+        private float 
+            changeScreenTimer = 0.0f,
+            minChangeScreenTimer = 4.0f;
         private SpriteFont bigFont, smallFont;
         private Texture2D logo, background;
 
@@ -27,9 +29,7 @@ namespace TetroXNA
             changeScreenTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (changeScreenTimer > minChangeScreenTimer)
-            {
                 return true;
-            }
             return false;
         }
 
