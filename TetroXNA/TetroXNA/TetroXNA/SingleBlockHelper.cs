@@ -79,7 +79,7 @@ namespace TetroXNA
             nextPattern = np;
         }
 
-        //Update order for the 4 player controled blocks
+        //Update order for the 4 player controlled blocks
         public bool[,] SingleBlockHelperUpdate(GameTime gameTime)
         {
             //Set timers
@@ -108,7 +108,7 @@ namespace TetroXNA
                 locationY += 1;
                 downTimer = 0.0f;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down) && (downTimer >= minDownTimer - .02f)) //slows the score incriment down while holding down
+            if (Keyboard.GetState().IsKeyDown(Keys.Down) && (downTimer >= minDownTimer - .02f)) //slows the score increment down while holding down
                 score = level;
             else
                 score = 0;
@@ -145,7 +145,7 @@ namespace TetroXNA
                 (store[(locationX + 1), locationY] == true));
         }
 
-        //Player input and level manageing is here
+        //Player input and level managing is here
         private void HandleKeyboardInput(KeyboardState keyState, bool[,] store)
         {
             //Checks flags to rotate

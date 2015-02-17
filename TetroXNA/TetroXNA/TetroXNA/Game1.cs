@@ -86,7 +86,7 @@ namespace TetroXNA
             {
                 XmlDocument settings = new XmlDocument();
                 settings.Load("tetroSettings.xml");
-                try //Nested try-catches to prevent total file rewrite.
+                try //Nested try-catches to prevent total file rewrite to prevent settings reset.
                 {
                     fullscreen = Convert.ToBoolean(settings.SelectSingleNode("/TetroSettings/Fullscreen").InnerText.ToString());
                     graphics.IsFullScreen = fullscreen;

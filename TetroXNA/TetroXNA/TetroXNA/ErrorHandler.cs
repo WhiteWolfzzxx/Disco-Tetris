@@ -39,7 +39,7 @@ namespace TetroXNA
         {
             try 
             {
-                //Checks to see how many record files exsits
+                //Checks to see how many record files exists
                 while (existingRecordFiles)
                 {
                     if (File.Exists(@"Error Folder\Error_Record_" + (numOfRecordFiles + 1) + ".txt"))

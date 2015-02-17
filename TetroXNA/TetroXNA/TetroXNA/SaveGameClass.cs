@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace TetroXNA
 {
-    //This class saves all of the bool values of the stored blocks into a flat file
+    //This class saves all of the boolean values of the stored blocks into a flat file
     //This class also loads the file so the player can resume their game
     public class SaveGameClass
     {
