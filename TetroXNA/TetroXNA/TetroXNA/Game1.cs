@@ -93,6 +93,7 @@ namespace TetroXNA
                 }
                 catch
                 {
+                    Console.WriteLine("Fullscreen value is invalid; setting to false.");
                     settings.SelectSingleNode("/TetroSettings/Fullscreen").InnerText = "false";
                     graphics.IsFullScreen = false;
                 }
@@ -104,6 +105,7 @@ namespace TetroXNA
                 }
                 catch
                 {
+                    Console.WriteLine("Show Console value is invalid; setting to true.");
                     settings.SelectSingleNode("/TetroSettings/ConsoleShown").InnerText = "true";
                 }
                 try
@@ -114,12 +116,15 @@ namespace TetroXNA
                 }
                 catch
                 {
+                    Console.WriteLine("Muted value is invalid; setting to false.");
                     settings.SelectSingleNode("/TetroSettings/Muted").InnerText = "false";
                 }
                 settings.Save("tetroSettings.xml");
             }
             catch //Creates the file should it not exist.
             {
+                Console.WriteLine("Could not load tetroSettings.xml; most likely the file doesn't exist.");
+                Console.WriteLine("Generating tetroSettings.xml and setting all options to default.");
                 XmlDocument settings = new XmlDocument();
                 XmlNode rootNode = settings.CreateElement("TetroSettings");
                 settings.AppendChild(rootNode);

@@ -25,6 +25,8 @@ namespace TetroXNA
         String[] encryptedHighScores2 = new string[10];
         String[] textNames1 = new string[10];
         String[] textNames2 = new string[10];
+        String[] encryptedNames1 = new string[10];
+        String[] encryptedNames2 = new string[10];
         Boolean boolWorkingFileIO = true;
         SpecialEffects specialEffects = new SpecialEffects();
         Texture2D scoreTitle, background;
@@ -57,7 +59,7 @@ namespace TetroXNA
                 for (int i = 0; i < 10; i++)
                 {
                     encryptedHighScores1[i] = scoresRead.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Score"].Value;
-                    textNames1[i] = scoresRead.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Name"].Value;
+                    encryptedNames1[i] = scoresRead.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Name"].Value;
 
                     if (encryptedHighScores1[i] != "")
                     {
@@ -66,6 +68,15 @@ namespace TetroXNA
                     else
                     {
                         textHighScores1[i] = "0";
+                    }
+
+                    if (encryptedNames1[i] != "")
+                    {
+                        textNames1[i] = StringCipher.Decrypt(encryptedNames1[i], "yes");
+                    }
+                    else
+                    {
+                        textNames1[i] = "FDR";
                     }
                     
                     if (textHighScores1[i] == "")
@@ -78,7 +89,7 @@ namespace TetroXNA
 			catch 
             {
                 Console.WriteLine("No high score file was found");
-                Console.WriteLine("Generating TetroHighScores.xml");
+                Console.WriteLine("Generating tetroHighScores.xml");
 				boolWorkingFileIO = false;
                 XmlDocument create = new XmlDocument();
                 XmlNode rootNode = create.CreateElement("TetroScores");
@@ -91,7 +102,7 @@ namespace TetroXNA
                     attribute.Value = "";
                     userNode.Attributes.Append(attribute);
                     XmlAttribute nameAttribute = create.CreateAttribute("Name");
-                    nameAttribute.Value = "FDR";
+                    nameAttribute.Value = "";
                     userNode.Attributes.Append(nameAttribute);
                     rootNode.AppendChild(userNode);
                 }
@@ -144,8 +155,9 @@ namespace TetroXNA
                     for (int i = 0; i < 10; i++)
                     {
                         encryptedHighScores2[i] = StringCipher.Encrypt(textHighScores2[i], "hello");
+                        encryptedNames2[i] = StringCipher.Encrypt(textNames2[i], "yes");
                         scoresWrite.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Score"].Value = encryptedHighScores2[i];
-                        scoresWrite.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Name"].Value = textNames2[i];
+                        scoresWrite.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Name"].Value = encryptedNames2[i];
                     }
                     scoresWrite.Save("tetroHighScores.xml");
                     dummy = 0;
@@ -153,6 +165,8 @@ namespace TetroXNA
 			}
 			catch
             {
+                Console.WriteLine("No high score file was found");
+                Console.WriteLine("Generating tetroHighScores.xml");
 				boolWorkingFileIO = false;
                 XmlDocument create = new XmlDocument();
                 XmlNode rootNode = create.CreateElement("TetroScores");
@@ -165,7 +179,7 @@ namespace TetroXNA
                     attribute.Value = "";
                     userNode.Attributes.Append(attribute);
                     XmlAttribute nameAttribute = create.CreateAttribute("Name");
-                    nameAttribute.Value = "John Doe";
+                    nameAttribute.Value = "";
                     userNode.Attributes.Append(nameAttribute);
                     rootNode.AppendChild(userNode);
                 }

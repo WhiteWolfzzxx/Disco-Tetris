@@ -37,6 +37,11 @@ namespace TetroXNA
             nameClass.Update(gameTime);
             System.Console.WriteLine("Update Game Over");
             canSubmitName = (nameClass.getName().Length == 3);
+            //Inappropriate name blocking.
+            if (nameClass.getName().Equals("ASS"))
+            {
+                canSubmitName = false;
+            }
         }
 
         public string getName()
