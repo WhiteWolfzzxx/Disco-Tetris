@@ -49,7 +49,7 @@ namespace TetroXNA
         const int SW_SHOW = 5;
         string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
         IntPtr handle = GetConsoleWindow();
-        Vector2[,] lines = new Vector2[10, 20]; 		                //Block placeing board positions
+        Vector2[,] lines = new Vector2[10, 20]; 		                //Block placing board positions
         Texture2D[,] blocks = new Texture2D[10, 20];	                //Block store show
         SingleBlockHelper[] activeBlocks = new SingleBlockHelper[4];	//Blocks that the player can move
         XmlDocument settingsRecord;
@@ -385,7 +385,7 @@ namespace TetroXNA
 
                 if (gameState == GameStates.Tutroial)
                 {
-                    #region Tutoial Screen
+                    #region Tutorial Screen
                     tutorialClass.Update(gameTime);
                     if (tutorialClass.getGotoMenu() && !spaceDidSomething)
                     {
@@ -399,7 +399,7 @@ namespace TetroXNA
                 {
                     #region Pause Game Menu Screen
                     pauseGameClass.update(gameTime);
-                    //Unpause the game
+                    //Un_pause the game
                     if (keyState.IsKeyDown(Keys.Escape) && !escapeDidSomething)
                     {
                         menuSoundEffect.Play();

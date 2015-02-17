@@ -91,7 +91,7 @@ namespace TetroXNA
                     attribute.Value = "";
                     userNode.Attributes.Append(attribute);
                     XmlAttribute nameAttribute = create.CreateAttribute("Name");
-                    nameAttribute.Value = "AAA";
+                    nameAttribute.Value = "FDR";
                     userNode.Attributes.Append(nameAttribute);
                     rootNode.AppendChild(userNode);
                 }
@@ -99,7 +99,7 @@ namespace TetroXNA
 			}
 		}
 
-		//Records Scores to an xml file on hard drive
+		//Records Scores to an XML file on hard drive
 		public void recordScore(int sc, string n)
 		{
 			boolWorkingFileIO = true;

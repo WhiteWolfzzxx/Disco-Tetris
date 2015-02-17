@@ -37,7 +37,7 @@ namespace TetroXNA
             keyDidSomething = keyPressed && keyDidSomething;
         }
 
-        //Checks almost the entirekeyboard for input
+        //Checks almost the entire keyboard for input
         private void alphabet()
         {
             if (playerName.Length < 3)
