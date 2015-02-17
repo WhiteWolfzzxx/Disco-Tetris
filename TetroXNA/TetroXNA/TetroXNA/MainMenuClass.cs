@@ -27,7 +27,7 @@ namespace TetroXNA
         private SpriteFont 
             bigFont, 
             smallFont;
-        private MenuProperties menuProperties = new MenuProperties();
+        private SpecialEffects specialEffects = new SpecialEffects();
 
         public MainMenuClass(SpriteFont small, SpriteFont big)
         {
@@ -37,10 +37,10 @@ namespace TetroXNA
 
         public void Update(GameTime gameTime)
         {
-            redIntensity = menuProperties.getRed();
-            blueIntensity = menuProperties.getBlue();
-            greenIntensity = menuProperties.getGreen();
-            menuProperties.colorChanger();
+            redIntensity = specialEffects.getRed();
+            blueIntensity = specialEffects.getBlue();
+            greenIntensity = specialEffects.getGreen();
+            specialEffects.colorChanger();
             menuChangeTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //Navigate the menu
@@ -71,7 +71,7 @@ namespace TetroXNA
                 menuOption = 6;
             }
 
-            menuProperties.UpdateDiscoBall();
+            specialEffects.UpdateDiscoBall();
         }
 
         public void LoadContent(ContentManager Content)
@@ -79,14 +79,14 @@ namespace TetroXNA
             title = Content.Load<Texture2D>(@"Textures\TetroTitle");
             background = Content.Load<Texture2D>(@"Textures\Tetro Main Menu Background");
             selctionBox = Content.Load<Texture2D>(@"Textures\TetroMainMenuSelectionBox");
-            menuProperties.LoadContentDiscoBall(Content);
+            specialEffects.LoadContentDiscoBall(Content);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(background, Vector2.Zero, Color.Blue);
 
-            menuProperties.DrawDiscoBall(spriteBatch);
+            specialEffects.DrawDiscoBall(spriteBatch);
 
             spriteBatch.Draw(title, new Vector2(66, 5), new Color(redIntensity, greenIntensity, blueIntensity));
             spriteBatch.Draw(selctionBox, new Vector2(50, 311), Color.Blue);

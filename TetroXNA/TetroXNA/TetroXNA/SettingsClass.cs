@@ -29,7 +29,7 @@ namespace TetroXNA
             minMenuChangeTimer = 0.1f;
         private SpriteFont bigFont, smallFont;
         private Texture2D settingsTitle, background;
-        private MenuProperties menuProperties = new MenuProperties();
+        private SpecialEffects specialEffects = new SpecialEffects();
         KeyboardState keyState;
        
         public SettingsClass(SpriteFont small, SpriteFont big)
@@ -49,10 +49,10 @@ namespace TetroXNA
             fullScreen = Game1.fullscreen;
             consoleShown = Game1.consoleShown;
 
-            redIntensity = menuProperties.getRed();
-            blueIntensity = menuProperties.getBlue();
-            greenIntensity = menuProperties.getGreen();
-            menuProperties.colorChanger();
+            redIntensity = specialEffects.getRed();
+            blueIntensity = specialEffects.getBlue();
+            greenIntensity = specialEffects.getGreen();
+            specialEffects.colorChanger();
 
             menuChangeTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 

@@ -26,7 +26,7 @@ namespace TetroXNA
         String[] textNames1 = new string[10];
         String[] textNames2 = new string[10];
         Boolean boolWorkingFileIO = true;
-        MenuProperties menuProperties = new MenuProperties();
+        SpecialEffects specialEffects = new SpecialEffects();
         Texture2D scoreTitle, background;
         SpriteFont smallFont;
         XmlDocument scoresWrite, scoresRead;
@@ -39,10 +39,10 @@ namespace TetroXNA
 		//High Score Screen Update
 		public void ScoreClassUpdate(GameTime gameTime)
 		{
-            redIntensity = menuProperties.getRed();
-            blueIntensity = menuProperties.getBlue();
-            greenIntensity = menuProperties.getGreen();
-            menuProperties.colorChanger();
+            redIntensity = specialEffects.getRed();
+            blueIntensity = specialEffects.getBlue();
+            greenIntensity = specialEffects.getGreen();
+            specialEffects.colorChanger();
 		}
 
         public void retrieveScores()

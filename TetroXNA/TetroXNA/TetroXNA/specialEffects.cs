@@ -9,8 +9,8 @@ using Microsoft.Xna.Framework.Content;
 namespace TetroXNA
 {
     //This class contains code that serves special tasks like the color phases for the menu and the blocks
-    public class MenuProperties
-    {        
+    public class SpecialEffects
+    {
         private bool 
             redIncrease = true,
             greenIncrease = true,
@@ -34,7 +34,7 @@ namespace TetroXNA
         public int getBlue() { return blueIntensity; }
         public int getGreen() { return greenIntensity; }
 
-        public MenuProperties()
+        public SpecialEffects()
         {
             //Creates a grid of squares
             int x = 0, y = 0;

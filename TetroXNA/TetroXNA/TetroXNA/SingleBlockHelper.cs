@@ -38,7 +38,7 @@ namespace TetroXNA
             rotateTimer = 0.0f,
             minRotateTimer = 0.2f;
         private Random random = new Random();
-        private MenuProperties menuProperties = new MenuProperties();
+        private SpecialEffects specialEffects = new SpecialEffects();
         private BlockConFigClass blockConFigClass;
         private Texture2D block;
         private Vector2[,] lines;
@@ -89,10 +89,10 @@ namespace TetroXNA
             rotateTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //Set colors
-            redIntensity = menuProperties.getRed();
-            blueIntensity = menuProperties.getBlue();
-            greenIntensity = menuProperties.getGreen();
-            menuProperties.colorChanger();
+            redIntensity = specialEffects.getRed();
+            blueIntensity = specialEffects.getBlue();
+            greenIntensity = specialEffects.getGreen();
+            specialEffects.colorChanger();
 
             canRotateBlockFlag();
             checkLeftFlag();
