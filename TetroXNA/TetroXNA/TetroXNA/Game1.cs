@@ -299,8 +299,7 @@ namespace TetroXNA
                                 store[9, 19] = true;
                                 blockHelper.setLevel(1);
                                 blockHelper.setScore(0);
-                                tutorialClass.setMessageNum(1);
-                                tutorialClass.setGotoMenu(false);
+                                tutorialClass.resetTutorial();
                                 gameState = GameStates.Tutroial;
                                 MediaPlayer.Stop();
                                 MediaPlayer.Play(playBGM);
