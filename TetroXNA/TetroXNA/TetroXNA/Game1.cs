@@ -24,25 +24,25 @@ namespace TetroXNA
         enum GameStates { CreditScreen, MainMenu, Playing, GameOver, HighScoreScreen, PauseGame, Debug, Settings, Tutroial };
         GameStates gameState = GameStates.CreditScreen;
 
-        Texture2D 
+        Texture2D
             scoreBackground,
             gameBackground;
-        SpriteFont 
-            bigFont, 
+        SpriteFont
+            bigFont,
             smallFont;
-        Song 
-            playBGM, 
+        Song
+            playBGM,
             menuBGM;
-        SoundEffect 
-            menuSoundEffect, 
-            blockGroundSoundEffect, 
+        SoundEffect
+            menuSoundEffect,
+            blockGroundSoundEffect,
             lineClearedSoundEffect;
-        bool 
+        bool
             escapeDidSomething = false,
             spaceDidSomething = false,
             muted;
-        public static bool 
-            consoleShown, 
+        public static bool
+            consoleShown,
             fullscreen;
         bool[,] store = new bool[10, 20];	                            //Block storing			
         const int SW_HIDE = 0;
@@ -533,7 +533,7 @@ namespace TetroXNA
                                 break;
                         }
                         spaceDidSomething = true;
-                    }	
+                    }
                     base.Update(gameTime);
                     #endregion
                 }
@@ -544,7 +544,7 @@ namespace TetroXNA
                 errorHandler.recordError(3, 103, "Updating has failed", d.ToString());
             }
         }
-        
+
         //This class draws to the screen so the player can see content like blocks
         protected override void Draw(GameTime gameTime)
         {
@@ -582,9 +582,9 @@ namespace TetroXNA
                         spriteBatch.Draw(gameBackground, Vector2.Zero, Color.Blue);
                         spriteBatch.DrawString(bigFont, "Next Pattern", new Vector2(340, 10), Color.White);
                     }
-                    else 
+                    else
                     {
-                        spriteBatch.DrawString(smallFont, "Press escape to pause", new Vector2(400,570), Color.White);
+                        spriteBatch.DrawString(smallFont, "Press escape to pause", new Vector2(400, 570), Color.White);
                     }
                     spriteBatch.Draw(scoreBackground, new Vector2(316, 0), Color.White);
                     spriteBatch.Draw(scoreBackground, Vector2.Zero, Color.White);
