@@ -17,7 +17,6 @@ namespace TetroXNA
         private int loadedScore, loadedLevel, loadedTotalClearedLines;
         private static string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
         private string path = baseFolder + @"Save Games\savedGameData.txt";
-        private ErrorHandler errorHandler = new ErrorHandler();
         private FileStream theFileRead;
         private FileStream theFileWrite;
         private StreamReader saveRead;
@@ -57,7 +56,7 @@ namespace TetroXNA
             }
             catch
             {
-                errorHandler.recordError(2, 200, "Save game has failed.", "Save game class has failed to save game");
+                Console.WriteLine("Saving has failed.");
             }
         }
 
@@ -84,7 +83,7 @@ namespace TetroXNA
             }
             catch
             {
-                errorHandler.recordError(2, 201, "Load game has failed.", "Save game class has failed to load game");
+                Console.WriteLine("Load has failed.");
             }
             return so;
         }
