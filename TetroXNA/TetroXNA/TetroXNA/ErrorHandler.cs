@@ -11,32 +11,34 @@ namespace TetroXNA
 {
     //This class records the computer's basic information such as operating system and RAM
     //This class handles how Tetro will crash and dump the error information into a flat file
-    public class ErrorHandler
+    public static class ErrorHandler
     {
-        private bool 
+        private static bool 
             existingRecordFiles = true, 
             collectPersonalPCInfo = true;
-        private int 
+        private static int 
             numOfRecordFiles = 0, 
             identifyRecordNum = 0;
-        private string 
+        private static string 
             operatingSystem, computerName, computerManufacturer,
             numOfCPU, numOfLogicCPU, totalRAM, 
             nameCPU, nameGPU, serialNum, 
             computerModel, userName, recordName;
-        private FileStream fs;
-        private StreamWriter sw;
-        private StreamReader sr;
-        private DateTime currentDateTime = DateTime.Now;
+        private static FileStream fs;
+        private static StreamWriter sw;
+        private static StreamReader sr;
+        private static DateTime currentDateTime = DateTime.Now;
 
-        public ErrorHandler()
+        /*public ErrorHandler()
         {
             gatherSystemInfo();
             System.IO.Directory.CreateDirectory("Error Folder");
-        }
+        }*/
 
-        public void recordError(int errorLevel, int errorCode, String helpfulInfo, String errorDetails)
+        public static void recordError(int errorLevel, int errorCode, String helpfulInfo, String errorDetails)
         {
+            gatherSystemInfo();
+            System.IO.Directory.CreateDirectory("Error Folder");
             try 
             {
                 //Checks to see how many record files exists
@@ -128,7 +130,7 @@ namespace TetroXNA
             }
         }
 
-        private void createNewRecord(string filename)
+        private static void createNewRecord(string filename)
         {
             try
             {
@@ -169,7 +171,7 @@ namespace TetroXNA
         }
 
         //This looks for an error file that perfectly matches the computer's current specs
-        private bool checkFileForComputerID(string filename)
+        private static bool checkFileForComputerID(string filename)
         {
             string data;
             fs = new FileStream(filename,
@@ -233,7 +235,7 @@ namespace TetroXNA
             return false;
         }
 
-        private void gatherSystemInfo()
+        private static void gatherSystemInfo()
         {
             ManagementObjectSearcher searcher;
             try

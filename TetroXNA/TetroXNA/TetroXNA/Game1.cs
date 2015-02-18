@@ -55,7 +55,7 @@ namespace TetroXNA
         XmlDocument settingsRecord;
         MainMenuClass mainMenuClass;
         ScoreClass scoreClass;
-        ErrorHandler errorHandler = new ErrorHandler();
+        //ErrorHandler errorHandler = new ErrorHandler();
         SaveGameClass saveGameClass = new SaveGameClass();
         StringInputClass stringInputClass = new StringInputClass();
         PauseGameClass pauseGameClass;
@@ -146,7 +146,7 @@ namespace TetroXNA
         //This is the main class constructor
         protected override void Initialize()
         {
-            errorHandler.recordError(1, 101, "Application Initialize", null);
+            ErrorHandler.recordError(1, 101, "Application Initialize", null);
             base.Initialize();
         }
 
@@ -216,7 +216,7 @@ namespace TetroXNA
             }
             catch (Exception d)
             {
-                errorHandler.recordError(3, 102, "Load Content Failed", d.ToString());
+                ErrorHandler.recordError(3, 102, "Load Content Failed", d.ToString());
             }
         }
 
@@ -462,7 +462,7 @@ namespace TetroXNA
                         }
                         catch (Exception e)
                         {
-                            errorHandler.recordError(2, 104, "Saving has failed.", e.ToString());
+                            ErrorHandler.recordError(2, 104, "Saving has failed.", e.ToString());
                         }
                         gameState = GameStates.MainMenu;
                         spaceDidSomething = true;
@@ -541,7 +541,7 @@ namespace TetroXNA
             }
             catch (Exception d)
             {
-                errorHandler.recordError(3, 103, "Updating has failed", d.ToString());
+                ErrorHandler.recordError(3, 103, "Updating has failed", d.ToString());
             }
         }
 
@@ -645,7 +645,7 @@ namespace TetroXNA
             }
             catch (Exception d)
             {
-                errorHandler.recordError(3, 104, "Drawing has failed", d.ToString());
+                ErrorHandler.recordError(3, 104, "Drawing has failed", d.ToString());
             }
         }
     }
