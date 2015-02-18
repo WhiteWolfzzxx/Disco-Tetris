@@ -76,7 +76,7 @@ namespace TetroXNA
                     }
                     else
                     {
-                        textNames1[i] = "FDR";
+                        textNames1[i] = "AAA";
                     }
                     
                     if (textHighScores1[i] == "")

@@ -55,8 +55,8 @@ namespace TetroXNA
         XmlDocument settingsRecord;
         MainMenuClass mainMenuClass;
         ScoreClass scoreClass;
-        SaveGameClass saveGameClass = new SaveGameClass();
         ErrorHandler errorHandler = new ErrorHandler();
+        SaveGameClass saveGameClass = new SaveGameClass();
         StringInputClass stringInputClass = new StringInputClass();
         PauseGameClass pauseGameClass;
         TutorialClass tutorialClass;
