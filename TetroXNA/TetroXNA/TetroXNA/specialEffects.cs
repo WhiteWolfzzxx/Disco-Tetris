@@ -48,7 +48,6 @@ namespace TetroXNA
                     x = 0;
                 }
                 blockRectangle[i] = new Rectangle(0, 0, 5, 5);
-                //blockColor[i] = new Vector3(255, 255, 255);
                 blockColor[i] = 255;
             }
         }
@@ -105,7 +104,7 @@ namespace TetroXNA
 
         public void UpdateDiscoBall()
         {
-            //Spins the discoball
+            //Spins the disco_ball
             centerPoint.X += 0.3f;
             if (centerPoint.X > 350)
                 centerPoint.X = 140;
@@ -131,7 +130,7 @@ namespace TetroXNA
             spriteBatch.Begin(SpriteSortMode.BackToFront, null, null, DepthStencilState.Default, RasterizerState.CullNone);
             for (int i = 0; i < blockNum; i++)
             {
-                //This has the equation for the discoball's depth, color and shape
+                //This has the equation for the disco_ball's depth, color and shape
                 spriteBatch.Draw(
                     discoTexture,
                     (startPos[i] - centerPoint) * new Vector2(blockScale[i] + 1.3f, blockScale[i] + 1.3f) + new Vector2(350, 360),

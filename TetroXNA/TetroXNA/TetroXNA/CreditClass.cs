@@ -18,12 +18,13 @@ namespace TetroXNA
             greenIntensity;
         private float
             changeScreenTimer = 0.0f,
-            minChangeScreenTimer = 4.0f;
+            minChangeScreenTimer = 6.0f;
         private SpriteFont bigFont, smallFont;
         private Texture2D
             logo,
             background,
-            tetroTitle;
+            tetroTitle,
+            discoBall;
         private SpecialEffects specialEffects = new SpecialEffects();
 
         public CreditClass(SpriteFont small, SpriteFont big)
@@ -50,17 +51,19 @@ namespace TetroXNA
             logo = Content.Load<Texture2D>(@"Textures\Flash-Block Studio Logo");
             background = Content.Load<Texture2D>(@"Textures\Tetro Credits Background");
             tetroTitle = Content.Load<Texture2D>(@"Textures\TetroTitle");
+            discoBall = Content.Load<Texture2D>(@"Textures\Mini Disco");
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (changeScreenTimer <= 2)
+            if (changeScreenTimer <= 3)
             {
                 spriteBatch.Draw(tetroTitle, new Vector2(43, 5), new Rectangle(0, 0, 570, 150), new Color(redIntensity, greenIntensity, blueIntensity), 0.0f, Vector2.Zero, 1.1f, SpriteEffects.None, 0.0f);
                 spriteBatch.DrawString(smallFont, "Published by", new Vector2(275, 250), Color.White);
-                spriteBatch.DrawString(bigFont, "Cognitive Thought Media", new Vector2(80, 300), Color.White);
+                spriteBatch.DrawString(bigFont, "Cognitive Thought Media", new Vector2(40, 300), Color.White);
+                spriteBatch.Draw(discoBall, new Vector2(235, 370), Color.White);
             }
-            if (changeScreenTimer > 2)
+            if (changeScreenTimer > 3)
             {
                 spriteBatch.Draw(background, Vector2.Zero, Color.Blue);
                 spriteBatch.Draw(logo, new Vector2(375, 175), Color.White);
