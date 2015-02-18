@@ -142,7 +142,7 @@ namespace TetroXNA
             }
             if (menuOption == 2)
             {
-                spriteBatch.DrawString(smallFont, "Sound", new Vector2(325, 250), Color.LightGray);
+                spriteBatch.DrawString(smallFont, "Music", new Vector2(325, 250), Color.LightGray);
                 if (consoleShown)
                 {
                     spriteBatch.DrawString(bigFont, "Hide Console", new Vector2(210, 320), Color.LightGray);
@@ -163,7 +163,7 @@ namespace TetroXNA
             if (menuOption == 3)
             {
                 spriteBatch.DrawString(smallFont, "Main Menu", new Vector2(300, 250), Color.LightGray);
-                spriteBatch.DrawString(bigFont, "Sound", new Vector2(275, 320), Color.LightGray);
+                spriteBatch.DrawString(bigFont, "Music", new Vector2(275, 320), Color.LightGray);
                 if (consoleShown)
                 {
                     spriteBatch.DrawString(smallFont, "Hide Console", new Vector2(295, 440), Color.LightGray);
@@ -184,7 +184,7 @@ namespace TetroXNA
                     spriteBatch.DrawString(smallFont, "Windowed", new Vector2(290, 250), Color.LightGray);
                 }
                 spriteBatch.DrawString(bigFont, "Main Menu", new Vector2(220, 320), Color.LightGray);
-                spriteBatch.DrawString(smallFont, "Sound", new Vector2(325, 440), Color.LightGray);
+                spriteBatch.DrawString(smallFont, "Music", new Vector2(325, 440), Color.LightGray);
             }
         }
     }
