@@ -181,7 +181,7 @@ namespace TetroXNA
             sr.ReadLine();
             sr.ReadLine();
             sr.ReadLine();
-            data = sr.ReadLine().Substring(19);
+            data = sr.ReadLine().Substring(18);
             if (operatingSystem.Equals(data))
             {
                 data = sr.ReadLine().Substring(16);
