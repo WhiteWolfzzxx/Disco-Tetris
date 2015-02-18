@@ -31,7 +31,7 @@ namespace TetroXNA
             System.IO.Directory.CreateDirectory("Save Games");
         }
 
-        public void recordGameData(bool[,] st, int sc, int lv, int lns/*test*/)
+        public void recordGameData(bool[,] st, int sc, int lv, int lns)
         {
             try
             {
@@ -57,6 +57,7 @@ namespace TetroXNA
             catch
             {
                 Console.WriteLine("Saving has failed.");
+
             }
         }
 
