@@ -265,6 +265,7 @@ namespace TetroXNA
                                 for (int i = 0; i < activeBlocks.Length; i++)
                                 {
                                     activeBlocks[i].setStore(store);
+                                    activeBlocks[i].resetBlocks();
                                     activeBlocks[i].resetPlayerBlockPos();
                                 }
                                 blockHelper.setLevel(1);
