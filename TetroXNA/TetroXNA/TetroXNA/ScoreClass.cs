@@ -209,13 +209,17 @@ namespace TetroXNA
             {
                 if (i < 9)
                 {
-                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textNames1[i] + "    " + textHighScores1[i]),
-                                                    new Vector2(150, (175 + (i * 40))), Color.White); 
+                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textNames1[i]),
+                                                    new Vector2(150, (175 + (i * 40))), Color.White);
+                    spriteBatch.DrawString(font, textHighScores1[i],
+                                                    new Vector2(400, (175 + (i * 40))), Color.White); 
                 }
                 else if(i == 9)
                 {
-                    spriteBatch.DrawString(font, ((i + 1).ToString() + "    " + textNames1[i] + "    " + textHighScores1[i]),
+                    spriteBatch.DrawString(font, ((i + 1).ToString() + "    " + textNames1[i]),
                                                     new Vector2(150-16, (175 + (i * 40))), Color.White);
+                    spriteBatch.DrawString(font, textHighScores1[i],
+                                                    new Vector2(400, (175 + (i * 40))), Color.White); 
                 }
 			}
 		}
