@@ -27,6 +27,11 @@ namespace TetroXNA
             playerName = "";
         }
 
+        public void resetPlayerName()
+        {
+            playerName = "";
+        }
+
         public void Update(GameTime gameTime)
         {
             keyboard = Keyboard.GetState();

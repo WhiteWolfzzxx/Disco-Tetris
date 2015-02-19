@@ -460,6 +460,7 @@ namespace TetroXNA
                         try
                         {
                             scoreClass.recordScore(blockHelper.getScore(), gameOverClass.getName());
+                            gameOverClass.resetName();
                         }
                         catch (Exception e)
                         {

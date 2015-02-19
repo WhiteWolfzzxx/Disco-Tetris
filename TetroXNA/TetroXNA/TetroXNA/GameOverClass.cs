@@ -27,6 +27,12 @@ namespace TetroXNA
             smallFont = sf;
         }
 
+        public void resetName()
+        {
+            nameClass.resetPlayerName();
+            playerName = "";
+        }
+
         public void LoadContent(ContentManager Content)
         {
             background = Content.Load<Texture2D>(@"Textures\Tetro GameOver Background");
@@ -35,7 +41,6 @@ namespace TetroXNA
         public void Update(GameTime gameTime)
         {
             nameClass.Update(gameTime);
-            System.Console.WriteLine("Update Game Over");
             canSubmitName = (nameClass.getName().Length == 3);
             //Inappropriate name blocking.
             if (nameClass.getName().Equals("ASS"))
@@ -52,7 +57,6 @@ namespace TetroXNA
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            System.Console.WriteLine("Draw Game Over");
             spriteBatch.Draw(background, Vector2.Zero, Color.Blue);
             spriteBatch.DrawString(smallFont, "Press space to enter the name", new Vector2(10, 570), Color.White);
             spriteBatch.DrawString(font, "Game Over", new Vector2(200, 50), Color.White);
