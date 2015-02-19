@@ -55,7 +55,6 @@ namespace TetroXNA
         XmlDocument settingsRecord;
         MainMenuClass mainMenuClass;
         ScoreClass scoreClass;
-        //ErrorHandler errorHandler = new ErrorHandler();
         SaveGameClass saveGameClass = new SaveGameClass();
         StringInputClass stringInputClass = new StringInputClass();
         PauseGameClass pauseGameClass;
@@ -335,6 +334,7 @@ namespace TetroXNA
                                 blockHelper.setLevel(saveGameClass.getLoadedLevel());
                                 blockHelper.setScore(saveGameClass.getLoadedScore());
                                 blockHelper.setTotalClearedLine(saveGameClass.getLoadedTotalClearedLines());
+                                scoreClass.retrieveScores();
                                 MediaPlayer.Play(playBGM);
                                 gameState = GameStates.Playing;
                                 break;
