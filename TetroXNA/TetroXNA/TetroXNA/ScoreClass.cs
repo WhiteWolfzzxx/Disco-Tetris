@@ -27,11 +27,14 @@ namespace TetroXNA
         String[] textNames2 = new string[10];
         String[] encryptedNames1 = new string[10];
         String[] encryptedNames2 = new string[10];
+        int numOneScore = 0;
         Boolean boolWorkingFileIO = true;
         SpecialEffects specialEffects = new SpecialEffects();
         Texture2D scoreTitle, background;
         SpriteFont smallFont;
         XmlDocument scoresWrite, scoresRead;
+
+        public int getNumOneScore() { return numOneScore; }
 
         public ScoreClass (SpriteFont sf)
 		{
@@ -85,6 +88,7 @@ namespace TetroXNA
                     }
                 }
                 scoresRead.Save("tetroHighScores.xml");
+                numOneScore = Convert.ToInt32(textHighScores1[0]);
             }
 			catch 
             {

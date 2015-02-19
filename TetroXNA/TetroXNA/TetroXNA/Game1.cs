@@ -271,6 +271,7 @@ namespace TetroXNA
                                 blockHelper.setLevel(1);
                                 blockHelper.setScore(0);
                                 blockHelper.setTotalClearedLine(0);
+                                scoreClass.retrieveScores();
                                 gameState = GameStates.Playing;
                                 MediaPlayer.Stop();
                                 MediaPlayer.Play(playBGM);
@@ -567,10 +568,19 @@ namespace TetroXNA
                     spriteBatch.Draw(gameBackground, Vector2.Zero, Color.Blue);
                     spriteBatch.Draw(scoreBackground, new Vector2(316, 0), Color.White);
                     spriteBatch.Draw(scoreBackground, Vector2.Zero, Color.White);
-                    spriteBatch.DrawString(bigFont, "Score:" + blockHelper.getScore().ToString(), new Vector2(350, 300), Color.White);
-                    spriteBatch.DrawString(bigFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 350), Color.White);
-                    spriteBatch.DrawString(bigFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 400), Color.White);
+                    spriteBatch.DrawString(bigFont, "High Score:", new Vector2(350, 250), Color.White);
+                    spriteBatch.DrawString(bigFont, "Score:" + blockHelper.getScore().ToString(), new Vector2(350, 400), Color.White);
+                    spriteBatch.DrawString(bigFont, "Lines: " + blockHelper.getTotalClearedLines().ToString(), new Vector2(350, 450), Color.White);
+                    spriteBatch.DrawString(bigFont, "Level: " + blockHelper.getLevel().ToString(), new Vector2(350, 500), Color.White);
                     spriteBatch.DrawString(bigFont, "Next Pattern", new Vector2(340, 10), Color.White);
+
+                    //If the current score is higher
+                    int theCurrentHighScore;
+                    if (scoreClass.getNumOneScore() > blockHelper.getScore())
+                        theCurrentHighScore = scoreClass.getNumOneScore();
+                    else
+                        theCurrentHighScore = blockHelper.getScore();
+                    spriteBatch.DrawString(bigFont, theCurrentHighScore.ToString(), new Vector2(350, 300), Color.White);
                 }
 
                 if ((gameState == GameStates.Playing) ||
@@ -618,8 +628,8 @@ namespace TetroXNA
                 if (gameState == GameStates.PauseGame)
                 {
                     spriteBatch.DrawString(bigFont, "PAUSE", new Vector2(60, 50), Color.White);
-                    spriteBatch.DrawString(smallFont, "Press space to select", new Vector2(400, 540), Color.White);
-                    spriteBatch.DrawString(smallFont, "Press arrows to navigate", new Vector2(400, 570), Color.White);
+                    spriteBatch.DrawString(smallFont, "Press space to select", new Vector2(30, 540), Color.White);
+                    spriteBatch.DrawString(smallFont, "Press arrows to navigate", new Vector2(30, 570), Color.White);
                     pauseGameClass.draw(spriteBatch);
                 }
 
