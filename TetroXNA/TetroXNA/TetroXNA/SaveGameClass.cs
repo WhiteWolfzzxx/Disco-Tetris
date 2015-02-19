@@ -54,10 +54,10 @@ namespace TetroXNA
                 saveWrite.Close();
                 theFileWrite.Close();
             }
-            catch
+            catch (Exception e)
             {
                 Console.WriteLine("Saving has failed.");
-
+                ErrorHandler.recordError(2, 200, "Saving the game has failed.", e.ToString());
             }
         }
 
@@ -82,9 +82,10 @@ namespace TetroXNA
                 saveRead.Close();
                 theFileRead.Close();
             }
-            catch
+            catch (Exception e)
             {
                 Console.WriteLine("Load has failed.");
+                ErrorHandler.recordError(2, 201, "Loading the game has failed.", e.ToString());
             }
             return so;
         }
