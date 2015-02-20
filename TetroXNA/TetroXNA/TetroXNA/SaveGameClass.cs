@@ -44,12 +44,12 @@ namespace TetroXNA
                 {
                     for (int y = 0; y < 20; y++)
                     {
-                        saveWrite.WriteLine(st[x, y].ToString());
+                        saveWrite.WriteLine(StringCipher.Encrypt(st[x, y].ToString(), "w1i7BI&B3J.H2m6SX{jOQ&$NR*33P0"));
                     }
                 }
-                saveWrite.WriteLine(sc.ToString());
-                saveWrite.WriteLine(lv.ToString());
-                saveWrite.WriteLine(lns.ToString());
+                saveWrite.WriteLine(StringCipher.Encrypt(sc.ToString(), "'!Mqi3C0tZENCuw~9aF64/I[j50?e$"));
+                saveWrite.WriteLine(StringCipher.Encrypt(lv.ToString(), "w1i7BI&B3J.H2m6SX{jOQ&$NR*33P0"));
+                saveWrite.WriteLine(StringCipher.Encrypt(lns.ToString(), "w1i7BI&B3J.H2m6SX{jOQ&$NR*33P0"));
 
                 saveWrite.Close();
                 theFileWrite.Close();
@@ -73,11 +73,11 @@ namespace TetroXNA
                 for (int x = 0; x < 10; x++)
                 {
                     for (int y = 0; y < 20; y++)
-                        so[x, y] = Convert.ToBoolean(saveRead.ReadLine());
+                        so[x, y] = Convert.ToBoolean(StringCipher.Decrypt(saveRead.ReadLine(), "w1i7BI&B3J.H2m6SX{jOQ&$NR*33P0"));
                 }
-                loadedScore = Convert.ToInt32(saveRead.ReadLine());
-                loadedLevel = Convert.ToInt32(saveRead.ReadLine());
-                loadedTotalClearedLines = Convert.ToInt32(saveRead.ReadLine());
+                loadedScore = Convert.ToInt32(StringCipher.Decrypt(saveRead.ReadLine(), "'!Mqi3C0tZENCuw~9aF64/I[j50?e$"));
+                loadedLevel = Convert.ToInt32(StringCipher.Decrypt(saveRead.ReadLine(), "w1i7BI&B3J.H2m6SX{jOQ&$NR*33P0"));
+                loadedTotalClearedLines = Convert.ToInt32(StringCipher.Decrypt(saveRead.ReadLine(), "w1i7BI&B3J.H2m6SX{jOQ&$NR*33P0"));
 
                 saveRead.Close();
                 theFileRead.Close();
@@ -86,6 +86,22 @@ namespace TetroXNA
             {
                 Console.WriteLine("Load has failed.");
                 ErrorHandler.recordError(2, 201, "Loading the game has failed.", e.ToString());
+            }
+
+            //Erase the file so the player can't retry to get a high score from a score that is not 0 far in the game.
+            try
+            {
+                theFileWrite = new FileStream(path,
+                                              FileMode.Create,
+                                              FileAccess.Write);
+                saveWrite = new StreamWriter(theFileWrite);
+                saveWrite.Close();
+                theFileWrite.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Erasing the save game file has failed");
+                ErrorHandler.recordError(2, 201, "Erasing the save game file has failed", e.ToString());
             }
             return so;
         }

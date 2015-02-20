@@ -430,12 +430,15 @@ namespace TetroXNA
                                     blockHelper.getScore(),
                                     blockHelper.getLevel(),
                                     blockHelper.getTotalClearedLines());
-                                MediaPlayer.Play(menuBGM);
-                                gameState = GameStates.MainMenu;
+                                gameState = GameStates.Playing;
                                 break;
 
                             case 3:
-                                //Exit
+                                //Save and Exit
+                                saveGameClass.recordGameData(store,
+                                    blockHelper.getScore(),
+                                    blockHelper.getLevel(),
+                                    blockHelper.getTotalClearedLines());
                                 MediaPlayer.Play(menuBGM);
                                 gameState = GameStates.MainMenu;
                                 break;

@@ -66,7 +66,7 @@ namespace TetroXNA
 
                     if (encryptedHighScores1[i] != "")
                     {
-                        textHighScores1[i] = StringCipher.Decrypt(encryptedHighScores1[i], "hello"); 
+                        textHighScores1[i] = StringCipher.Decrypt(encryptedHighScores1[i], "G5bM(1inE|`JT(@GX5?:O=<*t<_EgB"); 
                     }
                     else
                     {
@@ -75,7 +75,7 @@ namespace TetroXNA
 
                     if (encryptedNames1[i] != "")
                     {
-                        textNames1[i] = StringCipher.Decrypt(encryptedNames1[i], "yes");
+                        textNames1[i] = StringCipher.Decrypt(encryptedNames1[i], "US1qeI3{s%XfLP911(zckW3T)-C70F");
                     }
                     else
                     {
@@ -158,8 +158,8 @@ namespace TetroXNA
                     
                     for (int i = 0; i < 10; i++)
                     {
-                        encryptedHighScores2[i] = StringCipher.Encrypt(textHighScores2[i], "hello");
-                        encryptedNames2[i] = StringCipher.Encrypt(textNames2[i], "yes");
+                        encryptedHighScores2[i] = StringCipher.Encrypt(textHighScores2[i], "G5bM(1inE|`JT(@GX5?:O=<*t<_EgB");
+                        encryptedNames2[i] = StringCipher.Encrypt(textNames2[i], "US1qeI3{s%XfLP911(zckW3T)-C70F");
                         scoresWrite.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Score"].Value = encryptedHighScores2[i];
                         scoresWrite.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Name"].Value = encryptedNames2[i];
                     }
