@@ -443,6 +443,12 @@ namespace TetroXNA
                                 gameState = GameStates.MainMenu;
                                 break;
 
+                            case 4:
+                                //Exit without saving
+                                MediaPlayer.Play(menuBGM);
+                                gameState = GameStates.MainMenu;
+                                break;
+
                             default:
 
                                 break;
