@@ -29,9 +29,6 @@ namespace TetroXNA
         private Song menuBGM;
         private Vector2[] messageLinePos = new Vector2[10];
 
-        public void setGotoMenu(bool gt) { gotoMenu = gt; }
-        public void setMessageNum(int mn) { messageNum = mn; }
-
         public bool getGotoMenu() { return gotoMenu; }
         public bool getIsTutorialPaused() { return tutorialPaused; }
 
@@ -40,9 +37,16 @@ namespace TetroXNA
             font = ft;
             menuBGM = mb;
             for (int i = 0; i < messageLinePos.Length; i++)
-            {
                 messageLinePos[i] = new Vector2(375, 285 + (i * 30));
-            }
+        }
+
+        public void resetTutorial()
+        {
+            gotoMenu = false;
+            messageNum = 1;
+            timer = 0.0f;
+            showMessage = true;
+            tutorialPaused = true;
         }
 
         public void LoadContent(ContentManager Content)
@@ -143,7 +147,7 @@ namespace TetroXNA
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(tutorialBackground, new Vector2(348, 275), Color.Blue);
+            spriteBatch.Draw(tutorialBackground, new Vector2(348, 260), Color.Blue);
             #region Messages
             if (showMessage)
             {

@@ -27,11 +27,14 @@ namespace TetroXNA
         String[] textNames2 = new string[10];
         String[] encryptedNames1 = new string[10];
         String[] encryptedNames2 = new string[10];
+        int numOneScore = 0;
         Boolean boolWorkingFileIO = true;
         SpecialEffects specialEffects = new SpecialEffects();
         Texture2D scoreTitle, background;
         SpriteFont smallFont;
         XmlDocument scoresWrite, scoresRead;
+
+        public int getNumOneScore() { return numOneScore; }
 
         public ScoreClass (SpriteFont sf)
 		{
@@ -63,7 +66,7 @@ namespace TetroXNA
 
                     if (encryptedHighScores1[i] != "")
                     {
-                        textHighScores1[i] = StringCipher.Decrypt(encryptedHighScores1[i], "hello"); 
+                        textHighScores1[i] = StringCipher.Decrypt(encryptedHighScores1[i], "G5bM(1inE|`JT(@GX5?:O=<*t<_EgB"); 
                     }
                     else
                     {
@@ -72,7 +75,7 @@ namespace TetroXNA
 
                     if (encryptedNames1[i] != "")
                     {
-                        textNames1[i] = StringCipher.Decrypt(encryptedNames1[i], "yes");
+                        textNames1[i] = StringCipher.Decrypt(encryptedNames1[i], "US1qeI3{s%XfLP911(zckW3T)-C70F");
                     }
                     else
                     {
@@ -85,6 +88,7 @@ namespace TetroXNA
                     }
                 }
                 scoresRead.Save("tetroHighScores.xml");
+                numOneScore = Convert.ToInt32(textHighScores1[0]);
             }
 			catch 
             {
@@ -154,8 +158,8 @@ namespace TetroXNA
                     
                     for (int i = 0; i < 10; i++)
                     {
-                        encryptedHighScores2[i] = StringCipher.Encrypt(textHighScores2[i], "hello");
-                        encryptedNames2[i] = StringCipher.Encrypt(textNames2[i], "yes");
+                        encryptedHighScores2[i] = StringCipher.Encrypt(textHighScores2[i], "G5bM(1inE|`JT(@GX5?:O=<*t<_EgB");
+                        encryptedNames2[i] = StringCipher.Encrypt(textNames2[i], "US1qeI3{s%XfLP911(zckW3T)-C70F");
                         scoresWrite.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Score"].Value = encryptedHighScores2[i];
                         scoresWrite.SelectSingleNode("/TetroScores/Score" + (i + 1)).Attributes["Name"].Value = encryptedNames2[i];
                     }
@@ -205,13 +209,17 @@ namespace TetroXNA
             {
                 if (i < 9)
                 {
-                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textNames1[i] + "    " + textHighScores1[i]),
-                                                    new Vector2(150, (175 + (i * 40))), Color.White); 
+                    spriteBatch.DrawString(font, ((i + 1).ToString() + "     " + textNames1[i]),
+                                                    new Vector2(150, (175 + (i * 40))), Color.White);
+                    spriteBatch.DrawString(font, textHighScores1[i],
+                                                    new Vector2(400, (175 + (i * 40))), Color.White); 
                 }
                 else if(i == 9)
                 {
-                    spriteBatch.DrawString(font, ((i + 1).ToString() + "    " + textNames1[i] + "    " + textHighScores1[i]),
+                    spriteBatch.DrawString(font, ((i + 1).ToString() + "    " + textNames1[i]),
                                                     new Vector2(150-16, (175 + (i * 40))), Color.White);
+                    spriteBatch.DrawString(font, textHighScores1[i],
+                                                    new Vector2(400, (175 + (i * 40))), Color.White); 
                 }
 			}
 		}

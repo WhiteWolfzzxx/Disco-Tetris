@@ -70,7 +70,7 @@ namespace TetroXNA
                 else
                 {
                     Console.WriteLine("Found Matching Record");
-                    Console.WriteLine("Current session will be recorded in Error_Record_" + identifyRecordNum + ".txt");
+                    Console.WriteLine("Current event was recorded in Error_Record_" + identifyRecordNum + ".txt");
                     recordName = "Error_Record_" + identifyRecordNum + ".txt";
                 }
 

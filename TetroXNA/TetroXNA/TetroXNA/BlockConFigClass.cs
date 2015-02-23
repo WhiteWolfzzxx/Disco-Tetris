@@ -234,6 +234,11 @@ namespace TetroXNA
                 {
                     if (rotateState == 1)
                     {
+                        if (locationY == 18)
+                        {
+                            locationY = 17;
+                        }
+
                         if (index == 0)
                         {
                             locationX++;
@@ -665,21 +670,13 @@ namespace TetroXNA
                 rTimer = 0.0f;
             }
             if (xYR == 1)
-            {
                 return locationX;
-            }
             if (xYR == 2)
-            {
                 return locationY;
-            }
             if (xYR == 3)
-            {
                 return rotateState;
-            }
             else
-            {
                 return 0;
-            }
         }
 
         //Draws the next pattern

@@ -57,16 +57,16 @@ namespace TetroXNA
                     menuChangeTimer = 0.0f;
                 }
             }
-            if (menuOption > 3)
+            if (menuOption > 4)
                 menuOption = 1;
             if (menuOption < 1)
-                menuOption = 3;
+                menuOption = 4;
         }
         public void draw(SpriteBatch spriteBatch)
         {
             if (menuOption == 1)
             {
-                spriteBatch.DrawString(smallFont, "exit", new Vector2(110, 210), Color.White);
+                spriteBatch.DrawString(smallFont, "exit without saving", new Vector2(80, 210), Color.White);
                 spriteBatch.DrawString(bigFont, "Resume", new Vector2(60, 250), Color.White);
                 spriteBatch.DrawString(smallFont, "save", new Vector2(110, 320), Color.White);
             }
@@ -74,12 +74,18 @@ namespace TetroXNA
             {
                 spriteBatch.DrawString(smallFont, "resume", new Vector2(110, 210), Color.White);
                 spriteBatch.DrawString(bigFont, "Save", new Vector2(80, 250), Color.White);
-                spriteBatch.DrawString(smallFont, "exit", new Vector2 (110, 320), Color.White);
+                spriteBatch.DrawString(smallFont, "save and exit", new Vector2 (90, 320), Color.White);
             }
             if (menuOption == 3)
             {
                 spriteBatch.DrawString(smallFont, "save", new Vector2(110, 210), Color.White);
-                spriteBatch.DrawString(bigFont, "Exit", new Vector2(80, 250), Color.White);
+                spriteBatch.DrawString(bigFont, "save and exit", new Vector2(23, 250), Color.White, 0.0f, Vector2.Zero, 0.85f, SpriteEffects.None, 1.0f);
+                spriteBatch.DrawString(smallFont, "exit without saving", new Vector2(80, 320), Color.White);
+            }
+            if (menuOption == 4)
+            {
+                spriteBatch.DrawString(smallFont, "save and exit", new Vector2(90, 210), Color.White);
+                spriteBatch.DrawString(bigFont, "exit without saving", new Vector2(23, 255), Color.White, 0.0f, Vector2.Zero, 0.55f, SpriteEffects.None, 1.0f);
                 spriteBatch.DrawString(smallFont, "resume", new Vector2(110, 320), Color.White);
             }
         }
