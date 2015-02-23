@@ -19,13 +19,12 @@ namespace TetroXNA
         private bool[,] store;
         private int
             pattern,
-            multiplier = 1,
             score,
             level = 1,
             totalClearedLines = 0,
             clearedLines = 0,
             nextPattern = 2;
-        private float 
+        private float
             randTimer,
             minRandTimer = 0.01f,
             stopBlocksTimer;
@@ -34,7 +33,7 @@ namespace TetroXNA
         private Color[,] blockColor = new Color[10, 20];
         private Random random = new Random();
         private Vector2[,] lines;
-        private SoundEffect 
+        private SoundEffect
             blockGroundSoundEffect,
             lineClearedSoundEffect;
 
@@ -92,7 +91,7 @@ namespace TetroXNA
             canGoRight();
             UpdatePlayerClass(gameTime);
             resetPlayerBlocks();
-            //lineDetection();
+            lineDetection();
             levelDetection();
             randomColors();
 
@@ -119,7 +118,6 @@ namespace TetroXNA
                     activeBlocks[i].setCanGoDownFlag(false);
                 if (stopBlocksTimer >= activeBlocks[0].getMinTimer())
                 {
-                    multiplier = 0;
                     blockGroundSoundEffect.Play();
                     for (int i = 0; i < activeBlocks.Length; i++)
                     {
@@ -127,10 +125,7 @@ namespace TetroXNA
                         score += 25 + ((level - 1) * 2);
                         activeBlocks[i].savePositions();
                         activeBlocks[i].setBlockCollideBottomFlag(false);
-                        lineDetection();
-                        multiplier++;
                     }
-                    multiplier = 1;
                     stopBlocksTimer = 0.0f;
                 }
             }
@@ -176,10 +171,10 @@ namespace TetroXNA
                 {
                     for (int x = i; x > 0; x--)
                     {
-                        for (int z = 0; z < 10; z++ )
+                        for (int z = 0; z < 10; z++)
                             store[z, x] = store[z, x - 1];
                     }
-                    score += (750 + (100 * (level - 1))) * multiplier;
+                    score += (1500 + (100 * (level - 1)));
                     clearedLines++;
                     totalClearedLines++;
                     lineClearedSoundEffect.Play();
@@ -320,4 +315,3 @@ namespace TetroXNA
         }
     }
 }
-
