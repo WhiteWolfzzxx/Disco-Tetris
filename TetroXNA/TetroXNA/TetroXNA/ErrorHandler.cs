@@ -29,12 +29,6 @@ namespace TetroXNA
         private static StreamReader sr;
         private static DateTime currentDateTime = DateTime.Now;
 
-        /*public ErrorHandler()
-        {
-            gatherSystemInfo();
-            System.IO.Directory.CreateDirectory("Error Folder");
-        }*/
-
         public static void recordError(int errorLevel, int errorCode, String helpfulInfo, String errorDetails)
         {
             gatherSystemInfo();

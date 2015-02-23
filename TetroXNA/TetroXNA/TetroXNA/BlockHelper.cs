@@ -19,6 +19,7 @@ namespace TetroXNA
         private bool[,] store;
         private int
             pattern,
+            multiplier = 1,
             score,
             level = 1,
             totalClearedLines = 0,
@@ -91,7 +92,7 @@ namespace TetroXNA
             canGoRight();
             UpdatePlayerClass(gameTime);
             resetPlayerBlocks();
-            lineDetection();
+            //lineDetection();
             levelDetection();
             randomColors();
 
@@ -118,6 +119,7 @@ namespace TetroXNA
                     activeBlocks[i].setCanGoDownFlag(false);
                 if (stopBlocksTimer >= activeBlocks[0].getMinTimer())
                 {
+                    multiplier = 0;
                     blockGroundSoundEffect.Play();
                     for (int i = 0; i < activeBlocks.Length; i++)
                     {
@@ -125,7 +127,10 @@ namespace TetroXNA
                         score += 25 + ((level - 1) * 2);
                         activeBlocks[i].savePositions();
                         activeBlocks[i].setBlockCollideBottomFlag(false);
+                        lineDetection();
+                        multiplier++;
                     }
+                    multiplier = 1;
                     stopBlocksTimer = 0.0f;
                 }
             }
@@ -174,7 +179,7 @@ namespace TetroXNA
                         for (int z = 0; z < 10; z++ )
                             store[z, x] = store[z, x - 1];
                     }
-                    score += (1500 + (100 * (level - 1)));
+                    score += (750 + (100 * (level - 1))) * multiplier;
                     clearedLines++;
                     totalClearedLines++;
                     lineClearedSoundEffect.Play();
